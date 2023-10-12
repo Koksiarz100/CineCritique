@@ -1,4 +1,5 @@
-import Nav from "./components/layout/Nav"
+import Nav from "./components//layout/Nav/Nav"
+import Banner from "./components/layout/Banner/Banner"
 import './layout.scss'
 
 export const metadata = {
@@ -11,7 +12,7 @@ export default function RootLayout({ children }) {
     <html lang="pl">
       <body>
         <Nav/>
-        {/* Banner */}
+        <Banner/>
         {children}
         <footer></footer> {/* Roboczy footer */}
       </body>
