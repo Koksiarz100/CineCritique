@@ -1,4 +1,4 @@
-import 'page.scss'
+import './page.scss'
 
 export default function Home() {
   return (

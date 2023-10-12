@@ -1,3 +1,6 @@
+import Nav from "./components/layout/Nav"
+import './layout.scss'
+
 export const metadata = {
   title: 'CineCritique',
   description: 'Recenzje filmów i seriali',
@@ -6,7 +9,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="pl">
-      <body>{children}</body>
+      <body>
+        <Nav/>
+        {/* Banner */}
+        {children}
+        <footer></footer> {/* Roboczy footer */}
+      </body>
     </html>
   )
 }
