@@ -1,6 +1,6 @@
 import Nav from "./components//layout/Nav/Nav"
 import Banner from "./components/layout/Banner/Banner"
-import './layout.scss'
+import './styles/layout.scss'
 
 export const metadata = {
   title: 'CineCritique',
