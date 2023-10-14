@@ -4,11 +4,22 @@ export default function Home() {
   return (
     <div className='app-wrapper'>
       <div className='app-searchbar'>
+        <div></div>
+        <div className='app-searchbar-buttons'>
+          <button>Polecane</button>
+          <button>Filmy</button>
+          <button>Seriale</button>
+          <button>Wszystko</button>
+        </div>
         <input type='text' placeholder='Szukaj' />
       </div>
       <div className='app-window'>
         <div className='app-content'>
-          Content
+          <div className='app-warpper'>
+            <div className='app-title'>
+              Content
+            </div>
+          </div>
         </div>
         <div className='app-sidebar'>
           <div className='app-sidebar-wrapper'>
