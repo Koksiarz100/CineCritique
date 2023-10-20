@@ -3,6 +3,7 @@
 import React, { useState } from 'react'
 import { get } from '../actions'
 
+// Stałe tagi, będą pobierane z bazy danych
 const tags = {
   akcja: {id: 1, name: 'akcja', howmuch: 0},
   komedia: {id: 2, name: 'komedia', howmuch: 0},
@@ -28,7 +29,7 @@ const tags = {
 }
 
 export default function Sidebar() {
-  const [checked, setChecked] = useState({
+  const [checked, setChecked] = useState({ // State każdego tagu
     akcja: false,
     komedia: false,
     dramat: false,
@@ -53,12 +54,12 @@ export default function Sidebar() {
   });
 
   const handleChange = (event) => {
-    setChecked({ ...checked, [event.target.name]: event.target.checked });
+    setChecked({ ...checked, [event.target.name]: event.target.checked }); // Zmiana state'u
   }
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    get(checked);
+    get(checked); // Wysyłanie do funkcji get() z actions.jsx (serverside)
   };
 
   return (
@@ -69,7 +70,7 @@ export default function Sidebar() {
         </div>
         <div className='app-sidebar-tags'>
           <form className='app-sidebar-tags-wrapper' onSubmit={handleSubmit}>
-            {Object.keys(tags).map((tag) => (
+            {Object.keys(tags).map((tag) => ( // Mapowanie tagów
               <div className='tag-wrapper' key={tags[tag].id}>
                 <div className='tag-title'>
                   {tags[tag].name}
