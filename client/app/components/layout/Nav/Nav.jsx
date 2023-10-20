@@ -9,9 +9,6 @@ function Nav() {
         <Link href="/">CineCritique</Link>
       </div>
       <div className='nav-links-container'>
-        <Link href='/'>Home</Link>
-        <Link href='/movies'>Movies</Link>
-        <Link href='/series'>TV Shows</Link>
         <Link href='/login'>Login</Link>
       </div>
     </nav>

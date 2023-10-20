@@ -1,5 +1,6 @@
-import Nav from "./components/layout/Nav"
-import './layout.scss'
+import Nav from "./components//layout/Nav/Nav"
+import Banner from "./components/layout/Banner/Banner"
+import './styles/layout.scss'
 
 export const metadata = {
   title: 'CineCritique',
@@ -11,7 +12,7 @@ export default function RootLayout({ children }) {
     <html lang="pl">
       <body>
         <Nav/>
-        {/* Banner */}
+        <Banner/>
         {children}
         <footer></footer> {/* Roboczy footer */}
       </body>
