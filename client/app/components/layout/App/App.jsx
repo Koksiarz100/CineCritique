@@ -1,18 +1,27 @@
-import React from 'react'
+'use client'
 
+import React, { useState, createContext } from 'react'
 import Sidebar from './Sidebar/Sidebar'
 
-export default function App() {
+const CheckedTagsContext = createContext([]);
+
+export default async function App() {
+  const [checkedTags, setCheckedTags] = useState([]);
+
   return (
     <div className='app-window'>
       <div className='app-content'>
         <div className='app-warpper'>
-          <div className='app-title'>
-            Content
-          </div>
+          <CheckedTagsContext.Consumer>
+            {(checkedTags) => (
+              <div className='app-title'>
+                {checkedTags.length > 0 ? `Tagi: ${checkedTags.join(', ')}` : 'Content'}
+              </div>
+            )}
+          </CheckedTagsContext.Consumer>
         </div>
       </div>
-      <Sidebar />
+      <Sidebar checkedTags={checkedTags}/>
     </div>
   )
 }

@@ -1,6 +1,7 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
+import { get } from '../actions'
 
 const tags = {
   akcja: {id: 1, name: 'akcja', howmuch: 0},
@@ -27,6 +28,50 @@ const tags = {
 }
 
 export default function Sidebar() {
+  const [checked, setChecked] = useState({
+    akcja: false,
+    komedia: false,
+    dramat: false,
+    horror: false,
+    thriller: false,
+    fantasy: false,
+    sciFi: false,
+    romans: false,
+    animacja: false,
+    familijny: false,
+    przygodowy: false,
+    sensacyjny: false,
+    kryminal: false,
+    dokumentalny: false,
+    historyczny: false,
+    wojenny: false,
+    sportowy: false,
+    biograficzny: false,
+    western: false,
+    filmNoir: false,
+    musical: false,
+  });
+
+function SubmitButton() {
+  return (
+    <div className='submit-button'>
+      <button type='submit'>
+        Szukaj
+      </button>
+    </div>
+  )
+}
+
+  const handleChange = (event) => {
+    setChecked({ ...checked, [event.target.name]: event.target.checked });
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log(checked);
+    get(checked);
+  };
+
   return (
     <div className='app-sidebar'>
       <div className='app-sidebar-wrapper'>
@@ -34,14 +79,27 @@ export default function Sidebar() {
           Tagi
         </div>
         <div className='app-sidebar-tags'>
-          <div className='app-sidebar-tags-wrapper'>
+          <form className='app-sidebar-tags-wrapper' onSubmit={handleSubmit}>
             {Object.keys(tags).map((tag) => (
               <div className='tag-wrapper'>
-                <div className='tag-title'>{tags[tag].name}</div>
-                <div className='tag-button'><input type='checkbox' name={tags[tag].name} value={tags[tag].id}/></div>
+                <div className='tag-title'>
+                  {tags[tag].name}
+                </div>
+                <div className='tag-button'>
+                  <input 
+                    type='checkbox' 
+                    id={tags[tag].id} 
+                    name={tags[tag].name} 
+                    value={tags[tag].id}
+
+                    checked={checked[tag.name]}
+                    onChange={handleChange}
+                  />
+                </div>
               </div>
             ))}
-          </div>
+            <SubmitButton />
+          </form>
         </div>
       </div>
     </div>
