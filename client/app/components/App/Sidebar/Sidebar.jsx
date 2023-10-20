@@ -74,16 +74,24 @@ export default function Sidebar() {
               <div className='tag-wrapper' key={tags[tag].id}>
                 <div className='tag-title'>
                   {tags[tag].name}
+                  <span className='tag-howmuch'>
+                    {tags[tag].howmuch}
+                  </span>
                 </div>
                 <div className='tag-button'>
-                  <input
-                    type='checkbox' 
-                    id={tags[tag].id} 
-                    name={tags[tag].name} 
-                    value={tags[tag].id}
-                    checked={checked[tag.name]}
-                    onChange={handleChange}
-                  />
+                  <label className='button-wrapper'>
+                    <div className='switch-wrap'>
+                      <input 
+                      type='checkbox'
+                      id={tags[tag].id} 
+                      name={tags[tag].name} 
+                      value={tags[tag].id}
+                      checked={checked[tag.name]}
+                      onChange={handleChange}
+                      />
+                      <div className='switch'></div>
+                    </div>
+                  </label>
                 </div>
               </div>
             ))}
