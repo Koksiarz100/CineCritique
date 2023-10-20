@@ -52,23 +52,12 @@ export default function Sidebar() {
     musical: false,
   });
 
-function SubmitButton() {
-  return (
-    <div className='submit-button'>
-      <button type='submit'>
-        Szukaj
-      </button>
-    </div>
-  )
-}
-
   const handleChange = (event) => {
     setChecked({ ...checked, [event.target.name]: event.target.checked });
   }
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(checked);
     get(checked);
   };
 
@@ -81,24 +70,27 @@ function SubmitButton() {
         <div className='app-sidebar-tags'>
           <form className='app-sidebar-tags-wrapper' onSubmit={handleSubmit}>
             {Object.keys(tags).map((tag) => (
-              <div className='tag-wrapper'>
+              <div className='tag-wrapper' key={tags[tag].id}>
                 <div className='tag-title'>
                   {tags[tag].name}
                 </div>
                 <div className='tag-button'>
-                  <input 
+                  <input
                     type='checkbox' 
                     id={tags[tag].id} 
                     name={tags[tag].name} 
                     value={tags[tag].id}
-
                     checked={checked[tag.name]}
                     onChange={handleChange}
                   />
                 </div>
               </div>
             ))}
-            <SubmitButton />
+            <div className='app-sidebar-submit-button'>
+              <button type='submit'>
+                Szukaj
+              </button>
+            </div>
           </form>
         </div>
       </div>
