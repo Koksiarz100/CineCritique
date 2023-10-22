@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 
 export default function Searchbar() {
   return (
@@ -10,7 +11,9 @@ export default function Searchbar() {
         <button>Seriale</button>
         <button>Wszystko</button>
       </div>
-      <input type='text' placeholder='Szukaj' />
+      <div className='app-searchbar-input'>
+        <input type='text' placeholder='Szukaj' />
+      </div>
     </div>
   )
 }
