@@ -1,7 +1,7 @@
-@use '../../../styles/base.scss';
+@use '../../../styles/globals.scss';
 
 nav {
-  background-color: base.$primary-color;
+  background-color: globals.$primary-color;
   color: white;
   display: flex;
   justify-content: space-between;
