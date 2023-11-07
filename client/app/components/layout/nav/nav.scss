@@ -1,7 +1,7 @@
-@use '../../../styles/base.scss';
+@use '../../../styles/globals.scss';
 
 nav {
-  background-color: base.$primary-color;
+  background-color: globals.$primary-color;
   color: white;
   display: flex;
   justify-content: space-between;
@@ -23,6 +23,10 @@ nav {
     a{
       color: white;
       text-decoration: none;
+
+      .logo-green {
+        color: #7acc88;
+      }
     }
   }
 
@@ -39,6 +43,17 @@ nav {
       color: white;
       margin-left: 20px;
       text-decoration: none;
+
+      .profile-button {
+        width: 32px;
+        transform: scale(1);
+        transition: transform 0.3s ease;
+      }
+
+      .profile-button:hover {
+        transform: scale(1.1);
+        transition: transform 0.3s ease;
+      }
     }
 
     a:hover {

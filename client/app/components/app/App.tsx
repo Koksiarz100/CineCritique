@@ -1,10 +1,18 @@
 'use client'
 
-import React, { useState } from 'react'
-import { get } from '../actions'
+import React, { ChangeEvent, FormEvent, useState } from 'react'
 
-// Stałe tagi, będą pobierane z bazy danych
-const tags = {
+import { get } from './actions'
+
+interface Tag {
+  id: number;
+  name: string;
+  howmuch: number;
+}
+
+type Tags = Record<string, Tag>;
+
+const tags: Tags = {
   akcja: {id: 1, name: 'akcja', howmuch: 0},
   komedia: {id: 2, name: 'komedia', howmuch: 0},
   dramat: {id: 3, name: 'dramat', howmuch: 0},
@@ -28,8 +36,83 @@ const tags = {
   musical: {id: 21, name: 'musical', howmuch: 0},
 }
 
-export default function Sidebar() {
-  const [checked, setChecked] = useState({ // State każdego tagu
+interface Movie {
+  title: string,
+  description: string,
+  image: string
+}
+
+type Movies = Record<string, Movie>;
+
+const movies: Movies = {
+  test1: {
+    title: 'test1',
+    description: 'test1',
+    image: 'test1'
+  },
+  test2: {
+    title: 'test2',
+    description: 'test2',
+    image: 'test2'
+  },
+  test3: {
+    title: 'test3',
+    description: 'test3',
+    image: 'test3'
+  },
+  test4: {
+    title: 'test4',
+    description: 'test4',
+    image: 'test4'
+  },
+  test5: {
+    title: 'test5',
+    description: 'test5',
+    image: 'test5'
+  },
+}
+
+function Card(title: string, description: string, image: string) {
+  return(
+    <div className='card-wrapper'>
+      <div className='card-image'>
+        {image}
+      </div>
+      <div className='card-content'>
+        <div className='card-title'>
+          <h3>{title}</h3>
+        </div>
+        <div className='card-description'>
+          <p>{description}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Carousel(props: any) {
+  const { info } = props;
+  const category = props.title;
+  return (
+    <div className='carousel-wrapper'>
+      <div className='carousel-title'>
+        <h2>{category}</h2>
+      </div>
+      <div className='carousel-content'>
+        {Object.keys(info).map((key) => {
+          return (
+            <div key={key}>
+              {Card(info[key].title, info[key].description, info[key].image)}
+            </div>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
+function Sidebar() {
+  const [checked, setChecked] = useState<Record<string, boolean>>({
     akcja: false,
     komedia: false,
     dramat: false,
@@ -53,11 +136,11 @@ export default function Sidebar() {
     musical: false,
   });
 
-  const handleChange = (event) => {
-    setChecked({ ...checked, [event.target.name]: event.target.checked }); // Zmiana state'u
-  }
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setChecked({ ...checked, [event.target.name]: event.target.checked });
+  };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
     get(checked); // Wysyłanie do funkcji get() z actions.jsx (serverside)
   };
@@ -70,12 +153,14 @@ export default function Sidebar() {
         </div>
         <div className='app-sidebar-tags'>
           <form className='app-sidebar-tags-wrapper' onSubmit={handleSubmit}>
-            {Object.keys(tags).map((tag) => ( // Mapowanie tagów
-              <div className='tag-wrapper' key={tags[tag].id}>
+          {Object.keys(tags).map((tagKey) => { // Mapowanie tagów
+            const tag = tags[tagKey];
+            return (
+              <div className='tag-wrapper' key={tag.id}>
                 <div className='tag-title'>
-                  {tags[tag].name}
+                  {tag.name}
                   <span className='tag-howmuch'>
-                    {tags[tag].howmuch}
+                    {tag.howmuch}
                   </span>
                 </div>
                 <div className='tag-button'>
@@ -83,10 +168,10 @@ export default function Sidebar() {
                     <div className='switch-wrap'>
                       <input 
                       type='checkbox'
-                      id={tags[tag].id} 
-                      name={tags[tag].name} 
-                      value={tags[tag].id}
-                      checked={checked[tag.name]}
+                      id={String(tag.id)} 
+                      name={tag.name} 
+                      value={String(tag.id)}
+                      checked={checked[tagKey]}
                       onChange={handleChange}
                       />
                       <div className='switch'></div>
@@ -94,7 +179,8 @@ export default function Sidebar() {
                   </label>
                 </div>
               </div>
-            ))}
+            )
+          })}
             <div className='app-sidebar-submit-button'>
               <button type='submit'>
                 Szukaj
@@ -103,6 +189,19 @@ export default function Sidebar() {
           </form>
         </div>
       </div>
+    </div>
+  )
+}
+
+export default function App() {
+  return (
+    <div className='app-window'>
+      <div className='app-content'>
+        <div className='app-wrapper'>
+          <Carousel info={movies} title='Akcja'/>
+        </div>
+      </div>
+      <Sidebar/>
     </div>
   )
 }

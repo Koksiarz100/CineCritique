@@ -1,17 +1,18 @@
-@use 'base.scss';
+@use 'globals.scss';
 
 .app-wrapper {
   display: flex;
   flex-direction: column;
   margin: auto;
-  background-color: #fff;
+  background-color: globals.$secondary-color;
+  color: white;
   width: 100%;
 
   .app-searchbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: base.$primary-color;
+    background-color: globals.$primary-color;
     width: 100%;
     height: 50px;
     color: white;
@@ -21,7 +22,7 @@
       height: 50%;
       background-color: transparent;
       color: white;
-      font-size: 16px;
+      font-size: 1.0rem;
       font-weight: 500;
       outline: none;
       margin-right: 40px;
@@ -41,22 +42,37 @@
     }
 
     .app-searchbar-buttons {
-      
       button {
         background-color: transparent;
         border: none;
         color: white;
-        font-size: 16px;
+        font-size: 1.1rem;
         font-weight: 500;
         outline: none;
         cursor: pointer;
         margin-right: 20px;
+        transition: color 0.3s ease;
+      }
+
+      button:after {
+        content: '';
+        display: block;
+        position: relative;
+        top: 3px;
+        width: 0;
+        height: 2px;
+        background-color: #7acc88;
+        transition: width .3s;
+      }
+
+      button:hover:after {
+        width: 100%;
+        transition: width .3s;
       }
 
       button:hover {
-        color: #fccad6;
+        color: #7acc88;
         transition: color 0.3s ease;
-        transform: scale(1.1);
       }
     }
   }
@@ -71,18 +87,57 @@
       width: 80%;
       height: 100%;
 
-      .app-warpper {
+      .app-wrapper {
         display: flex;
         flex-direction: column;
         height: 100%;
         padding: 20px;
+
+        .carousel-wrapper {
+          width: 100%;
+          height: 350px;
+
+          .carousel-content {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+
+            .card-wrapper {
+              display: flex;
+              flex-direction: column;
+              width: 250px;
+              height: 300px;
+              color: white;
+              border-radius: 10px;
+              border: 2px solid white;
+              margin: 0 20px;
+
+              .card-title {
+                width: 100%;
+                font-size: 1.5rem;
+                font-weight: 700;
+                margin-bottom: 10px;
+              }
+
+              .card-description {
+                width: 100%;
+                font-size: 1.0rem;
+                font-weight: 500;
+                margin-bottom: 10px;
+              }
+            }
+          }
+        }
       }
     }
 
     .app-sidebar {
       width: 20%;
       height: 100%;
-      background-color: base.$primary-color;
+      background-color: globals.$primary-color;
       color: white;
   
       .app-sidebar-wrapper {
@@ -105,6 +160,33 @@
             display: flex;
             flex-direction: column;
             height: 100%;
+
+            .app-sidebar-submit-button {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              width: 100%;
+              height: 50px;
+              margin-top: 20px;
+
+              button {
+                width: 75%;
+                height: 100%;
+                background-color: transparent;
+                border: 1px solid white;
+                color: white;
+                font-size: 1.1rem;
+                font-weight: 500;
+                outline: none;
+                cursor: pointer;
+
+                &:hover {
+                  background-color: white;
+                  color: globals.$primary-color;
+                  transition: background-color 0.2s ease;
+                }
+              }
+            }
             
             .button-wrapper {
               .switch-wrap {
@@ -130,7 +212,7 @@
                 &::after {
                   content: '';
                   border-radius: 50%;
-                  background: #ccc;
+                  background: #7acc88;
                   grid-column: 2;
                   transition: background .2s;
                 }
@@ -140,7 +222,7 @@
                 + .switch {
                   grid-template-columns: 1fr 1fr 0fr; 
                   &::after {
-                    background-color: #e01937;
+                    background-color: #007a15;
                   }
                 }
               }
