@@ -193,15 +193,35 @@ function Sidebar() {
   )
 }
 
+function Searchbar() {
+  return (
+    <div className='app-searchbar'>
+      <div></div>
+      <div className='app-searchbar-buttons'>
+        <button>Polecane</button>
+        <button>Filmy</button>
+        <button>Seriale</button>
+        <button>Wszystko</button>
+      </div>
+      <div className='app-searchbar-input'>
+        <input type='text' placeholder='Szukaj' />
+      </div>
+    </div>
+  )
+}
+
 export default function App() {
   return (
-    <div className='app-window'>
-      <div className='app-content'>
+    <>
+      <Searchbar/>
+      <div className='app-window'>
         <div className='app-wrapper'>
+          <Carousel info={movies} title='Nowości'/>
+          <Carousel info={movies} title='Akcja'/>
           <Carousel info={movies} title='Akcja'/>
         </div>
+        <Sidebar/>
       </div>
-      <Sidebar/>
-    </div>
+    </>
   )
 }
