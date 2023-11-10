@@ -72,9 +72,9 @@ const movies: Movies = {
   },
 }
 
-function Card(title: string, description: string, image: string) {
+function Card(title: string, description: string, image: string, animationClass: string = '', key: number) {
   return(
-    <div className='card-wrapper'>
+    <div key={key} className={`card-wrapper ${animationClass}`}>
       <div className='card-image'>
         {image}
       </div>
@@ -91,6 +91,7 @@ function Card(title: string, description: string, image: string) {
 }
 
 function Carousel(props: any) {
+  const [animationClass, setAnimationClass] = useState('');
   const [index, setIndex] = useState(0);
   const { info } = props;
   const category = props.title;
@@ -98,11 +99,34 @@ function Carousel(props: any) {
   const cards: any = Object.values(info);
 
   const handleNext = () => {
-    setIndex((index + 1) % cards.length);
+    setAnimationClass('slide-out-left');
+    setTimeout(() => {
+      setIndex((index + 1) % cards.length);
+      setAnimationClass('slide-in-right');
+      setTimeout(() => {
+        setAnimationClass('');
+      }, 300);
+    }, 300);
+  }
+  
+  const handlePrev = () => {
+    setAnimationClass('slide-out-right');
+    setTimeout(() => {
+      setIndex((index - 1 + cards.length) % cards.length);
+      setAnimationClass('slide-in-left');
+      setTimeout(() => {
+        setAnimationClass('');
+      }, 300);
+    }, 300);
   }
 
-  const handlePrev = () => {
-    setIndex((index - 1 + cards.length) % cards.length);
+  const renderCards = () => {
+    let renderedCards = [];
+    for (let i = 0; i < 5; i++) { // Zmieniamy tę wartość, aby kontrolować liczbę renderowanych kart
+      let cardIndex = (index + i) % cards.length;
+      renderedCards.push(Card(cards[cardIndex].title, cards[cardIndex].description, cards[cardIndex].image, animationClass, cardIndex));
+    }
+    return renderedCards;
   }
 
   return (
@@ -114,9 +138,7 @@ function Carousel(props: any) {
         <div>
           <button onClick={handlePrev}>Poprzedni</button>
         </div>
-        {Card(cards[index % cards.length].title, cards[index % cards.length].description, cards[index % cards.length].image)}
-        {Card(cards[(index + 1) % cards.length].title, cards[(index + 1) % cards.length].description, cards[(index + 1) % cards.length].image)}
-        {Card(cards[(index + 2) % cards.length].title, cards[(index + 2) % cards.length].description, cards[(index + 2) % cards.length].image)}
+        {renderCards()}
         <div>
           <button onClick={handleNext}>Następny</button>
         </div>
