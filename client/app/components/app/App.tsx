@@ -91,21 +91,35 @@ function Card(title: string, description: string, image: string) {
 }
 
 function Carousel(props: any) {
+  const [index, setIndex] = useState(0);
   const { info } = props;
   const category = props.title;
+
+  const cards: any = Object.values(info);
+
+  const handleNext = () => {
+    setIndex((index + 1) % cards.length);
+  }
+
+  const handlePrev = () => {
+    setIndex((index - 1 + cards.length) % cards.length);
+  }
+
   return (
     <div className='carousel-wrapper'>
       <div className='carousel-title'>
         <h2>{category}</h2>
       </div>
       <div className='carousel-content'>
-        {Object.keys(info).map((key) => {
-          return (
-            <div key={key}>
-              {Card(info[key].title, info[key].description, info[key].image)}
-            </div>
-          )
-        })}
+        <div>
+          <button onClick={handlePrev}>Poprzedni</button>
+        </div>
+        {Card(cards[index % cards.length].title, cards[index % cards.length].description, cards[index % cards.length].image)}
+        {Card(cards[(index + 1) % cards.length].title, cards[(index + 1) % cards.length].description, cards[(index + 1) % cards.length].image)}
+        {Card(cards[(index + 2) % cards.length].title, cards[(index + 2) % cards.length].description, cards[(index + 2) % cards.length].image)}
+        <div>
+          <button onClick={handleNext}>Następny</button>
+        </div>
       </div>
     </div>
   )

@@ -108,6 +108,8 @@ main {
             border-radius: 10px;
             border: 2px solid white;
             margin: 0 20px;
+            transition: transform 0.3s ease;
+            transform: translateX(calc(-100% * #{index}));
 
             .card-title {
               width: 100%;
@@ -140,7 +142,7 @@ main {
         padding: 30px;
   
         .app-sidebar-title {
-          font-size: 20px;
+          font-size: 1.5rem;
           font-weight: 700;
           margin-bottom: 20px;
         }
@@ -229,7 +231,7 @@ main {
 
               .tag-title {
                 text-transform: capitalize;
-                font-size: 1.2rem;
+                font-size: 1.1rem;
 
                 .tag-howmuch {
                   margin-left: 5px;
