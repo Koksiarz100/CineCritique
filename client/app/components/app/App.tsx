@@ -72,9 +72,9 @@ const movies: Movies = {
   },
 }
 
-function Card(title: string, description: string, image: string) {
+function Card(title: string, description: string, image: string, animationClass: string = '', key: number) {
   return(
-    <div className='card-wrapper'>
+    <div key={key} className={`card-wrapper ${animationClass}`}>
       <div className='card-image'>
         {image}
       </div>
@@ -91,21 +91,57 @@ function Card(title: string, description: string, image: string) {
 }
 
 function Carousel(props: any) {
+  const [animationClass, setAnimationClass] = useState('');
+  const [index, setIndex] = useState(0);
   const { info } = props;
   const category = props.title;
+
+  const cards: any = Object.values(info);
+
+  const handleNext = () => {
+    setAnimationClass('slide-out-left');
+    setTimeout(() => {
+      setIndex((index + 1) % cards.length);
+      setAnimationClass('slide-in-right');
+      setTimeout(() => {
+        setAnimationClass('');
+      }, 300);
+    }, 300);
+  }
+  
+  const handlePrev = () => {
+    setAnimationClass('slide-out-right');
+    setTimeout(() => {
+      setIndex((index - 1 + cards.length) % cards.length);
+      setAnimationClass('slide-in-left');
+      setTimeout(() => {
+        setAnimationClass('');
+      }, 300);
+    }, 300);
+  }
+
+  const renderCards = () => {
+    let renderedCards = [];
+    for (let i = 0; i < 5; i++) { // Zmieniamy tę wartość, aby kontrolować liczbę renderowanych kart
+      let cardIndex = (index + i) % cards.length;
+      renderedCards.push(Card(cards[cardIndex].title, cards[cardIndex].description, cards[cardIndex].image, animationClass, cardIndex));
+    }
+    return renderedCards;
+  }
+
   return (
     <div className='carousel-wrapper'>
       <div className='carousel-title'>
         <h2>{category}</h2>
       </div>
       <div className='carousel-content'>
-        {Object.keys(info).map((key) => {
-          return (
-            <div key={key}>
-              {Card(info[key].title, info[key].description, info[key].image)}
-            </div>
-          )
-        })}
+        <div>
+          <button onClick={handlePrev}>Poprzedni</button>
+        </div>
+        {renderCards()}
+        <div>
+          <button onClick={handleNext}>Następny</button>
+        </div>
       </div>
     </div>
   )
@@ -193,15 +229,35 @@ function Sidebar() {
   )
 }
 
+function Searchbar() {
+  return (
+    <div className='app-searchbar'>
+      <div></div>
+      <div className='app-searchbar-buttons'>
+        <button>Polecane</button>
+        <button>Filmy</button>
+        <button>Seriale</button>
+        <button>Wszystko</button>
+      </div>
+      <div className='app-searchbar-input'>
+        <input type='text' placeholder='Szukaj' />
+      </div>
+    </div>
+  )
+}
+
 export default function App() {
   return (
-    <div className='app-window'>
-      <div className='app-content'>
+    <>
+      <Searchbar/>
+      <div className='app-window'>
         <div className='app-wrapper'>
+          <Carousel info={movies} title='Nowości'/>
+          <Carousel info={movies} title='Akcja'/>
           <Carousel info={movies} title='Akcja'/>
         </div>
+        <Sidebar/>
       </div>
-      <Sidebar/>
-    </div>
+    </>
   )
 }

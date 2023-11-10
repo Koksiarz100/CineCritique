@@ -4,8 +4,8 @@ import './styles/page.scss'
 
 export default function Home() {
   return (
-    <div  className='app-wrapper'>
+    <main>
       <App />
-    </div>
+    </main>
   )
 }
