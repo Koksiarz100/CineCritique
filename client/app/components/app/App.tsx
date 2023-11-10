@@ -122,7 +122,7 @@ function Carousel(props: any) {
 
   const renderCards = () => {
     let renderedCards = [];
-    for (let i = 0; i < 5; i++) { // Zmieniamy tę wartość, aby kontrolować liczbę renderowanych kart
+    for (let i = 0; i < 3; i++) { // Zmieniamy tę wartość, aby kontrolować liczbę renderowanych kart
       let cardIndex = (index + i) % cards.length;
       renderedCards.push(Card(cards[cardIndex].title, cards[cardIndex].description, cards[cardIndex].image, animationClass, cardIndex));
     }
@@ -135,13 +135,9 @@ function Carousel(props: any) {
         <h2>{category}</h2>
       </div>
       <div className='carousel-content'>
-        <div>
-          <button onClick={handlePrev}>Poprzedni</button>
-        </div>
+        <button className='carousel-button left' onClick={handlePrev}>Poprzedni</button>
         {renderCards()}
-        <div>
-          <button onClick={handleNext}>Następny</button>
-        </div>
+        <button className='carousel-button right' onClick={handleNext}>Następny</button>
       </div>
     </div>
   )

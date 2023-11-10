@@ -7,7 +7,7 @@ export default function Banner() {
       <div className='banner-background'>
         <div className='banner-main'>
           <span className='banner-title'>Filmy i Seriale</span>
-          <h2>Wszystkie filmowe recenzje w zasięgu ręki</h2>
+          <span className='banner-description'>Wszystkie filmowe recenzje w zasięgu ręki</span>
         </div>
       </div>
     </div>
