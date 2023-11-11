@@ -47,38 +47,38 @@ type Movies = Record<string, Movie>;
 
 const movies: Movies = {
   test1: {
-    title: 'Five nights at freddys',
-    description: 'Pięć nocy',
+    title: 'Five nights at freddys: Pięć nocy',
+    description: 'Rating:',
     image: '/fnaf1.jpg'
   },
   test2: {
-    title: 'test2',
-    description: 'test2',
+    title: 'W głowie się nie mieści',
+    description: 'Rating:',
     image: '/fnaf1.jpg'
   },
   test3: {
-    title: 'test3',
-    description: 'test3',
+    title: 'Zaklinacz koni',
+    description: 'Rating:',
     image: '/fnaf1.jpg'
   },
   test4: {
-    title: 'test4',
-    description: 'test4',
+    title: 'Matrix',
+    description: 'Rating:',
     image: '/fnaf1.jpg'
   },
   test5: {
-    title: 'test5',
-    description: 'test5',
+    title: 'Resident Evil',
+    description: 'Rating:',
     image: '/fnaf1.jpg'
   },
   test6: {
-    title: 'test6',
-    description: 'test6',
+    title: 'Noc oczyszczenia',
+    description: 'Rating:',
     image: '/fnaf1.jpg'
   },
   test7: {
-    title: 'test7',
-    description: 'test7',
+    title: 'Kung Fu Panda 2',
+    description: 'Rating:',
     image: '/fnaf1.jpg'
   },
 }
