@@ -106,7 +106,12 @@ function Carousel(props: any) {
   const [index, setIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const { info } = props;
+  const start = props.start;
   const category = props.title;
+
+  useEffect(() => {
+    setIndex(Number(start));
+  }, [start]);
 
   const cards: any = Object.values(info);
 
@@ -274,9 +279,9 @@ export default function App() {
       <Searchbar/>
       <div className='app-window'>
         <div className='app-wrapper'>
-          <Carousel info={movies} title='Nowości'/>
-          <Carousel info={movies} title='Akcja'/>
-          <Carousel info={movies} title='Akcja'/>
+          <Carousel info={movies} title='Nowości' start='0'/>
+          <Carousel info={movies} title='Akcja' start='1'/>
+          <Carousel info={movies} title='Akcja' start='3'/>
         </div>
         <Sidebar/>
       </div>

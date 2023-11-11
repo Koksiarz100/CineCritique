@@ -152,6 +152,10 @@ main {
           overflow: hidden;
           width: 80%;
 
+          @media only screen and (max-width: 768px) {
+            width: 90%;
+          }
+
           .card-wrapper {
             display: flex;
             flex-direction: column;
@@ -228,7 +232,7 @@ main {
               .card-title {
                 display: flex;
                 justify-content: center;
-                align-items: end;
+                align-items: bottom;
                 width: 200px;
                 height: 150px;
                 text-align: center;
@@ -254,6 +258,7 @@ main {
 
         .carousel-buttons {
           margin-top: 20px;
+          
           .carousel-button {
             background-color: transparent;
             border: none;
