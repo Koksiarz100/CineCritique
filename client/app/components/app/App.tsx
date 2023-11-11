@@ -1,6 +1,7 @@
 'use client'
 
-import React, { ChangeEvent, FormEvent, useState } from 'react'
+import React, { ChangeEvent, FormEvent, useState, useEffect } from 'react'
+import Image from 'next/image';
 
 import { get } from './actions'
 
@@ -46,37 +47,47 @@ type Movies = Record<string, Movie>;
 
 const movies: Movies = {
   test1: {
-    title: 'test1',
-    description: 'test1',
-    image: 'test1'
+    title: 'Five nights at freddys',
+    description: 'Pięć nocy',
+    image: '/fnaf1.jpg'
   },
   test2: {
     title: 'test2',
     description: 'test2',
-    image: 'test2'
+    image: '/fnaf1.jpg'
   },
   test3: {
     title: 'test3',
     description: 'test3',
-    image: 'test3'
+    image: '/fnaf1.jpg'
   },
   test4: {
     title: 'test4',
     description: 'test4',
-    image: 'test4'
+    image: '/fnaf1.jpg'
   },
   test5: {
     title: 'test5',
     description: 'test5',
-    image: 'test5'
+    image: '/fnaf1.jpg'
+  },
+  test6: {
+    title: 'test6',
+    description: 'test6',
+    image: '/fnaf1.jpg'
+  },
+  test7: {
+    title: 'test7',
+    description: 'test7',
+    image: '/fnaf1.jpg'
   },
 }
 
 function Card(title: string, description: string, image: string, animationClass: string = '', key: number) {
   return(
     <div key={key} className={`card-wrapper ${animationClass}`}>
-      <div className='card-image'>
-        {image}
+      <div className='card-image-wrapper'>
+        <Image src={image} quality={100} alt={title} width={200} height={300} className='card-image'/>
       </div>
       <div className='card-content'>
         <div className='card-title'>
@@ -102,7 +113,7 @@ function Carousel(props: any) {
     setAnimationClass('slide-out-left');
     setTimeout(() => {
       setIndex((index + 1) % cards.length);
-      setAnimationClass('slide-in-right');
+      setAnimationClass('none');
       setTimeout(() => {
         setAnimationClass('');
       }, 300);
@@ -113,16 +124,22 @@ function Carousel(props: any) {
     setAnimationClass('slide-out-right');
     setTimeout(() => {
       setIndex((index - 1 + cards.length) % cards.length);
-      setAnimationClass('slide-in-left');
+      setAnimationClass('none');
       setTimeout(() => {
         setAnimationClass('');
       }, 300);
     }, 300);
   }
 
+  useEffect(() => {
+    if (index === cards.length) {
+      setIndex(0);
+    }
+  }, [index, cards.length]);
+
   const renderCards = () => {
     let renderedCards = [];
-    for (let i = 0; i < 3; i++) { // Zmieniamy tę wartość, aby kontrolować liczbę renderowanych kart
+    for (let i = 0; i < 7; i++) { // Zmieniamy tę wartość, aby kontrolować liczbę renderowanych kart
       let cardIndex = (index + i) % cards.length;
       renderedCards.push(Card(cards[cardIndex].title, cards[cardIndex].description, cards[cardIndex].image, animationClass, cardIndex));
     }
@@ -135,8 +152,10 @@ function Carousel(props: any) {
         <h2>{category}</h2>
       </div>
       <div className='carousel-content'>
-        <button className='carousel-button left' onClick={handlePrev}>Poprzedni</button>
         {renderCards()}
+      </div>
+      <div className='carousel-buttons'>
+        <button className='carousel-button left' onClick={handlePrev}>Poprzedni</button>
         <button className='carousel-button right' onClick={handleNext}>Następny</button>
       </div>
     </div>
