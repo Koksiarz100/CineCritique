@@ -104,29 +104,41 @@ function Card(title: string, description: string, image: string, animationClass:
 function Carousel(props: any) {
   const [animationClass, setAnimationClass] = useState('');
   const [index, setIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
   const { info } = props;
+  const start = props.start;
   const category = props.title;
+
+  useEffect(() => {
+    setIndex(Number(start));
+  }, [start]);
 
   const cards: any = Object.values(info);
 
   const handleNext = () => {
+    if (isAnimating) return;
+    setIsAnimating(true);
     setAnimationClass('slide-out-left');
     setTimeout(() => {
       setIndex((index + 1) % cards.length);
       setAnimationClass('none');
       setTimeout(() => {
         setAnimationClass('');
+        setIsAnimating(false);
       }, 300);
     }, 300);
   }
   
   const handlePrev = () => {
+    if (isAnimating) return;
+    setIsAnimating(true);
     setAnimationClass('slide-out-right');
     setTimeout(() => {
       setIndex((index - 1 + cards.length) % cards.length);
       setAnimationClass('none');
       setTimeout(() => {
         setAnimationClass('');
+        setIsAnimating(false);
       }, 300);
     }, 300);
   }
@@ -139,7 +151,7 @@ function Carousel(props: any) {
 
   const renderCards = () => {
     let renderedCards = [];
-    for (let i = 0; i < 7; i++) { // Zmieniamy tę wartość, aby kontrolować liczbę renderowanych kart
+    for (let i = 0; i < 7; i++) {
       let cardIndex = (index + i) % cards.length;
       renderedCards.push(Card(cards[cardIndex].title, cards[cardIndex].description, cards[cardIndex].image, animationClass, cardIndex));
     }
@@ -267,9 +279,9 @@ export default function App() {
       <Searchbar/>
       <div className='app-window'>
         <div className='app-wrapper'>
-          <Carousel info={movies} title='Nowości'/>
-          <Carousel info={movies} title='Akcja'/>
-          <Carousel info={movies} title='Akcja'/>
+          <Carousel info={movies} title='Nowości' start='0'/>
+          <Carousel info={movies} title='Akcja' start='1'/>
+          <Carousel info={movies} title='Akcja' start='3'/>
         </div>
         <Sidebar/>
       </div>
