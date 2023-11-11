@@ -1,6 +1,7 @@
 'use client'
 
 import React, { ChangeEvent, FormEvent, useState, useEffect } from 'react'
+import Image from 'next/image';
 
 import { get } from './actions'
 
@@ -46,47 +47,47 @@ type Movies = Record<string, Movie>;
 
 const movies: Movies = {
   test1: {
-    title: 'test1',
-    description: 'test1',
-    image: 'test1'
+    title: 'Five nights at freddys',
+    description: 'Pięć nocy',
+    image: '/fnaf1.jpg'
   },
   test2: {
     title: 'test2',
     description: 'test2',
-    image: 'test2'
+    image: '/fnaf1.jpg'
   },
   test3: {
     title: 'test3',
     description: 'test3',
-    image: 'test3'
+    image: '/fnaf1.jpg'
   },
   test4: {
     title: 'test4',
     description: 'test4',
-    image: 'test4'
+    image: '/fnaf1.jpg'
   },
   test5: {
     title: 'test5',
     description: 'test5',
-    image: 'test5'
+    image: '/fnaf1.jpg'
   },
   test6: {
     title: 'test6',
     description: 'test6',
-    image: 'test6'
+    image: '/fnaf1.jpg'
   },
   test7: {
     title: 'test7',
     description: 'test7',
-    image: 'test7'
+    image: '/fnaf1.jpg'
   },
 }
 
 function Card(title: string, description: string, image: string, animationClass: string = '', key: number) {
   return(
     <div key={key} className={`card-wrapper ${animationClass}`}>
-      <div className='card-image'>
-        {image}
+      <div className='card-image-wrapper'>
+        <Image src={image} quality={100} alt={title} width={200} height={300} className='card-image'/>
       </div>
       <div className='card-content'>
         <div className='card-title'>
