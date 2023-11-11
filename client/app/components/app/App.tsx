@@ -1,6 +1,6 @@
 'use client'
 
-import React, { ChangeEvent, FormEvent, useState } from 'react'
+import React, { ChangeEvent, FormEvent, useState, useEffect } from 'react'
 
 import { get } from './actions'
 
@@ -70,6 +70,16 @@ const movies: Movies = {
     description: 'test5',
     image: 'test5'
   },
+  test6: {
+    title: 'test6',
+    description: 'test6',
+    image: 'test6'
+  },
+  test7: {
+    title: 'test7',
+    description: 'test7',
+    image: 'test7'
+  },
 }
 
 function Card(title: string, description: string, image: string, animationClass: string = '', key: number) {
@@ -102,7 +112,7 @@ function Carousel(props: any) {
     setAnimationClass('slide-out-left');
     setTimeout(() => {
       setIndex((index + 1) % cards.length);
-      setAnimationClass('slide-in-right');
+      setAnimationClass('none');
       setTimeout(() => {
         setAnimationClass('');
       }, 300);
@@ -113,16 +123,22 @@ function Carousel(props: any) {
     setAnimationClass('slide-out-right');
     setTimeout(() => {
       setIndex((index - 1 + cards.length) % cards.length);
-      setAnimationClass('slide-in-left');
+      setAnimationClass('none');
       setTimeout(() => {
         setAnimationClass('');
       }, 300);
     }, 300);
   }
 
+  useEffect(() => {
+    if (index === cards.length) {
+      setIndex(0);
+    }
+  }, [index, cards.length]);
+
   const renderCards = () => {
     let renderedCards = [];
-    for (let i = 0; i < 3; i++) { // Zmieniamy tę wartość, aby kontrolować liczbę renderowanych kart
+    for (let i = 0; i < 7; i++) { // Zmieniamy tę wartość, aby kontrolować liczbę renderowanych kart
       let cardIndex = (index + i) % cards.length;
       renderedCards.push(Card(cards[cardIndex].title, cards[cardIndex].description, cards[cardIndex].image, animationClass, cardIndex));
     }
@@ -135,8 +151,10 @@ function Carousel(props: any) {
         <h2>{category}</h2>
       </div>
       <div className='carousel-content'>
-        <button className='carousel-button left' onClick={handlePrev}>Poprzedni</button>
         {renderCards()}
+      </div>
+      <div className='carousel-buttons'>
+        <button className='carousel-button left' onClick={handlePrev}>Poprzedni</button>
         <button className='carousel-button right' onClick={handleNext}>Następny</button>
       </div>
     </div>
