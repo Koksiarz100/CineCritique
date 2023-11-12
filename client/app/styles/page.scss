@@ -4,6 +4,7 @@ main {
   display: flex;
   flex-direction: column;
   width: 100%;
+  height: auto;
   background-color: globals.$secondary-color;
   color: white;
 
@@ -12,12 +13,12 @@ main {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    background-color: globals.$button-color;
+    width: 100%;
     height: 50px;
-    color: white;
     position: sticky;
     top: 50px;
     z-index: 1000;
+    background-color: globals.$button-color;
 
     @media only screen and (max-width: 768px) {
       flex-direction: column;
@@ -31,21 +32,22 @@ main {
       flex-direction: row;
       justify-content: center;
       align-items: center;
+      width: 80%;
+      height: 100%;
       
       @media only screen and (max-width: 768px) {
         width: 100%;
       }
 
       button {
+        margin: 0 10px 0 10px;
         background-color: transparent;
         border: none;
         color: white;
         font-size: 1.1rem;
-        font-weight: 300;
         outline: none;
-        cursor: pointer;
-        margin: 0 10px 0 10px;
         transition: color 0.3s ease;
+        cursor: pointer;
 
         @media only screen and (max-width: 768px) {
           font-size: 0.9rem;
@@ -79,6 +81,7 @@ main {
       flex-direction: row;
       justify-content: center;
       align-items: center;
+      width: 20%;
 
       @media only screen and (max-width: 768px) {
         margin-top: 10px;
@@ -87,13 +90,11 @@ main {
 
       input {
         width: 300px;
-        height: 50%;
+        height: 20px;
         background-color: transparent;
         color: white;
         font-size: 1.0rem;
-        font-weight: 500;
         outline: none;
-        margin-right: 40px;
         border-top: none;
         border-left: none;
         border-right: none;
@@ -101,9 +102,8 @@ main {
       }
 
       @media only screen and (max-width: 768px) {
-        margin-right: 0;
         width: 250px;
-        height: 30px;
+        margin-bottom: 10px;
       }
       
       ::placeholder {
@@ -118,9 +118,10 @@ main {
   }
 
   .app-window {
-    width: 100%;
     display: flex;
     flex-direction: row;
+    width: 100%;
+    height: auto;
 
     @media only screen and (max-width: 768px) {
       flex-direction: column-reverse;
@@ -130,17 +131,20 @@ main {
       display: flex;
       flex-direction: column;
       width: 80%;
+      height: auto;
+      padding-bottom: 40px;
 
       @media only screen and (max-width: 768px) {
         width: 100%;
       }
 
       .carousel-wrapper {
-        width: 100%;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        width: 100%;
+        height: auto;
 
         .carousel-content {
           display: flex;
@@ -212,13 +216,13 @@ main {
             .card-content {
               display: flex;
               flex-direction: column;
-              width: 200px;
-              height: 300px;
-              background-color: rgb(0, 0, 0, 0.5);
               justify-content: center;
               align-items: center;
               position: relative;
               z-index: 2;
+              width: 200px;
+              height: 300px;
+              background-color: rgb(0, 0, 0, 0.5);
               opacity: 0;
               transition: opacity 0.3s ease;
 
@@ -314,7 +318,7 @@ main {
 
     .app-sidebar {
       width: 20%;
-      height: 100%;
+      height: auto;
       background-color: globals.$primary-color;
       color: white;
 

@@ -9,11 +9,9 @@
   background-color: globals.$primary-color;
   color: white;
   text-align: center;
-  margin-top: 20px;
 
   @media (max-width: 768px) {
     height: auto;
-    margin-top: 60px;
   }
   
   .footer-up-button-wrapper {
@@ -94,6 +92,12 @@
         img {
           margin: 0 10px 0 10px;
           cursor: pointer;
+          transition: 0.3s ease-in-out;
+
+          &:hover {
+            transition: 0.3s ease-in-out;
+            transform: scale(1.1);
+          }
         }
       }
     }
@@ -108,6 +112,10 @@
       a {
         color: white;
         text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
       }
     }
   }
