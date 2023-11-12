@@ -5,7 +5,7 @@ import './nav.scss'
 
 function Nav() {
   return (
-    <nav>
+    <nav id='nav'>
       <div className='nav-logo-container'>
         <Link href="/"><span className='logo-green'>Cine</span>Critique</Link>
       </div>
