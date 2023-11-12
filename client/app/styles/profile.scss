@@ -13,5 +13,48 @@ main{
     color: white;
     position: sticky;
     top: 50px;
+    z-index: 1000;
+}
+.wrapper {
+    flex: 1;
+    display: grid;
+    width: 25%;
+    height: 50px;
+    color: white;
+    position: sticky;
+    top: 110px;
+    z-index: 1000;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: justify;
+}
+  
+.mainside {
+    display: flex;
+}
+.container {
+    height: 100%;
+    width: 25%;
+    position: fixed;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    background-color: globals.$primary-color;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
 
+.profile-content{
+    flex: 3;
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: justify;
+}
+
+.profile-info{
+    text-align: center;
 }
