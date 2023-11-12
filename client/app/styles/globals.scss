@@ -6,6 +6,10 @@ $secondary-color: #000000;
 $tertiary-color: #ffffff;
 $button-color: #007a15;
 
+* {
+  scroll-behavior: smooth;
+}
+
 body {
   width: 100%;
   padding: 0;
