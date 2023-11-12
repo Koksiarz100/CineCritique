@@ -13,7 +13,6 @@ export default function NotFound() {
       <p className='message'>We are so sorry. It seems like we don't have the page you're looking for yet. Keep calm and return to our <b><Link href="/">Home Page</Link></b>.</p>
       <p className='niceday'>Have a nice day!</p>
     </div>
-    <footer></footer>
     </main>
   )
 }
