@@ -1,0 +1,8 @@
+@use 'globals.scss';
+main{
+    color: white;
+}
+.notfound{
+    text-align: center;
+    text-shadow: 3px 3px 3px globals.$primary-color;
+}
