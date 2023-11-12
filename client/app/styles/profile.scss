@@ -1,0 +1,17 @@
+@use 'globals.scss';
+main{
+    color: white;
+}
+
+.profile-title{
+    display: grid;
+    justify-content:center;
+    align-items: center;
+    background-color: globals.$button-color;
+    width: 100%;
+    height: 50px;
+    color: white;
+    position: sticky;
+    top: 50px;
+
+}
