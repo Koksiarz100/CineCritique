@@ -13,7 +13,6 @@ main {
     justify-content: space-between;
     align-items: center;
     background-color: globals.$button-color;
-    width: 100%;
     height: 50px;
     color: white;
     position: sticky;
@@ -25,6 +24,54 @@ main {
       align-items: center;
       justify-content: center;
       height: 80px;
+    }
+
+    .app-searchbar-buttons {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      
+      @media only screen and (max-width: 768px) {
+        width: 100%;
+      }
+
+      button {
+        background-color: transparent;
+        border: none;
+        color: white;
+        font-size: 1.1rem;
+        font-weight: 300;
+        outline: none;
+        cursor: pointer;
+        margin: 0 10px 0 10px;
+        transition: color 0.3s ease;
+
+        @media only screen and (max-width: 768px) {
+          font-size: 0.9rem;
+        }
+      }
+
+      button:after {
+        content: '';
+        display: block;
+        position: relative;
+        top: 3px;
+        width: 0;
+        height: 2px;
+        background-color: #7acc88;
+        transition: width .3s;
+      }
+
+      button:hover:after {
+        width: 100%;
+        transition: width .3s;
+      }
+
+      button:hover {
+        color: #7acc88;
+        transition: color 0.3s ease;
+      }
     }
 
     .app-searchbar-input {
@@ -66,54 +113,6 @@ main {
       
       ::-ms-input-placeholder {
         color: white;
-      }
-    }
-
-    .app-searchbar-buttons {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-      
-      @media only screen and (max-width: 768px) {
-        width: 100%;
-      }
-
-      button {
-        background-color: transparent;
-        border: none;
-        color: white;
-        font-size: 1.1rem;
-        font-weight: 500;
-        outline: none;
-        cursor: pointer;
-        margin-right: 20px;
-        transition: color 0.3s ease;
-
-        @media only screen and (max-width: 768px) {
-          font-size: 0.9rem;
-        }
-      }
-
-      button:after {
-        content: '';
-        display: block;
-        position: relative;
-        top: 3px;
-        width: 0;
-        height: 2px;
-        background-color: #7acc88;
-        transition: width .3s;
-      }
-
-      button:hover:after {
-        width: 100%;
-        transition: width .3s;
-      }
-
-      button:hover {
-        color: #7acc88;
-        transition: color 0.3s ease;
       }
     }
   }

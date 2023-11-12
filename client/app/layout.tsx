@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 
 import Nav from './components/layout/nav/Nav'
 import Banner from './components/layout/banner/Banner'
+import Footer from './components/layout/footer/Footer'
 
 import './styles/globals.scss'
 
@@ -20,9 +21,7 @@ export default function RootLayout({ children,}: { children: React.ReactNode }) 
         <Nav />
         <Banner />
         {children}
-        <footer>
-          {/* Roboczy footer */}
-        </footer>
+        <Footer />
       </body>
     </html>
   )
