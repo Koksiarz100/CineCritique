@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children,}: { children: React.ReactNode }) {
   return (
     <html lang="pl">
-      <body suppressHydrationWarning={true}>
+      <body suppressHydrationWarning={true} id='body'>
         <Nav />
         <Banner />
         {children}
