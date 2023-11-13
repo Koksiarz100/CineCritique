@@ -53,10 +53,19 @@ function Sidebar(image:string, nickname:string, email:string, information:string
     )
   }
 
+  
 
   function MainContent(){
     return (
-    <div className='profile-content'></div>
+    <div className='profile-content'>
+      <div className='profile-statistics'>
+        <div className='statistics-title'>Statystyki</div>
+      </div>
+      <div className='profile-review-content'>
+        <div className='review-title'>Twoje recenzje</div>
+        <div className='review-loop'></div>
+      </div>
+    </div>
     )
   }
 
