@@ -81,6 +81,26 @@ const movies: Movies = {
     description: 'test7',
     image: '/fnaf1.jpg'
   },
+  test8: {
+    title: 'test8',
+    description: 'test8',
+    image: '/fnaf1.jpg'
+  },
+  test9: {
+    title: 'test9',
+    description: 'test9',
+    image: '/fnaf1.jpg'
+  },
+  test10: {
+    title: 'test10',
+    description: 'test10',
+    image: '/fnaf1.jpg'
+  },
+  test11: {
+    title: 'test11',
+    description: 'test11',
+    image: '/fnaf1.jpg'
+  },
 }
 
 function Card(title: string, description: string, image: string, animationClass: string = '', key: number) {
@@ -151,7 +171,7 @@ function Carousel(props: any) {
 
   const renderCards = () => {
     let renderedCards = [];
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 11; i++) {
       let cardIndex = (index + i) % cards.length;
       renderedCards.push(Card(cards[cardIndex].title, cards[cardIndex].description, cards[cardIndex].image, animationClass, cardIndex));
     }
@@ -169,88 +189,6 @@ function Carousel(props: any) {
       <div className='carousel-buttons'>
         <button className='carousel-button left' onClick={handlePrev}>Poprzedni</button>
         <button className='carousel-button right' onClick={handleNext}>Następny</button>
-      </div>
-    </div>
-  )
-}
-
-function Sidebar() {
-  const [checked, setChecked] = useState<Record<string, boolean>>({
-    akcja: false,
-    komedia: false,
-    dramat: false,
-    horror: false,
-    thriller: false,
-    fantasy: false,
-    sciFi: false,
-    romans: false,
-    animacja: false,
-    familijny: false,
-    przygodowy: false,
-    sensacyjny: false,
-    kryminal: false,
-    dokumentalny: false,
-    historyczny: false,
-    wojenny: false,
-    sportowy: false,
-    biograficzny: false,
-    western: false,
-    filmNoir: false,
-    musical: false,
-  });
-
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setChecked({ ...checked, [event.target.name]: event.target.checked });
-  };
-
-  const handleSubmit = (event: FormEvent) => {
-    event.preventDefault();
-    get(checked); // Wysyłanie do funkcji get() z actions.jsx (serverside)
-  };
-
-  return (
-    <div className='app-sidebar'>
-      <div className='app-sidebar-wrapper'>
-        <div className='app-sidebar-title'>
-          Tagi
-        </div>
-        <div className='app-sidebar-tags'>
-          <form className='app-sidebar-tags-wrapper' onSubmit={handleSubmit}>
-          {Object.keys(tags).map((tagKey) => { // Mapowanie tagów
-            const tag = tags[tagKey];
-            return (
-              <div className='tag-wrapper' key={tag.id}>
-                <div className='tag-title'>
-                  {tag.name}
-                  <span className='tag-howmuch'>
-                    {tag.howmuch}
-                  </span>
-                </div>
-                <div className='tag-button'>
-                  <label className='button-wrapper'>
-                    <div className='switch-wrap'>
-                      <input 
-                      type='checkbox'
-                      id={String(tag.id)} 
-                      name={tag.name} 
-                      value={String(tag.id)}
-                      checked={checked[tagKey]}
-                      onChange={handleChange}
-                      />
-                      <div className='switch'></div>
-                    </div>
-                  </label>
-                </div>
-              </div>
-            )
-          })}
-            <div className='app-sidebar-submit-button'>
-              <button type='submit'>
-                Szukaj
-              </button>
-            </div>
-          </form>
-        </div>
       </div>
     </div>
   )
@@ -283,7 +221,6 @@ export default function App() {
           <Carousel info={movies} title='Akcja' start='1'/>
           <Carousel info={movies} title='Akcja' start='3'/>
         </div>
-        <Sidebar/>
       </div>
     </>
   )
