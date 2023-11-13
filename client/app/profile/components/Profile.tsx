@@ -16,7 +16,7 @@ function Sidebar() {
     )
   }
 
-export default function Prof() {
+export default function Profiles() {
     return (
       <>
         <div className='profile-title'>Profil</div>

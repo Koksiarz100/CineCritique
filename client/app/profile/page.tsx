@@ -1,9 +1,9 @@
-import Prof from "../components/app/Profile"
-import '../styles/profile.scss'
+import Profiles from "./components/Profile"
+import './styles/profile.scss'
 export default function Profile() {
     return (
       <main>
-        <Prof/>
+        <Profiles/>
       </main>
     )
   }
