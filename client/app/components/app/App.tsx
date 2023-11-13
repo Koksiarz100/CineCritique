@@ -171,7 +171,7 @@ function Carousel(props: any) {
 
   const renderCards = () => {
     let renderedCards = [];
-    for (let i = 0; i < 11; i++) {
+    for (let i = 0; i < 9; i++) {
       let cardIndex = (index + i) % cards.length;
       renderedCards.push(Card(cards[cardIndex].title, cards[cardIndex].description, cards[cardIndex].image, animationClass, cardIndex));
     }
@@ -197,7 +197,7 @@ function Carousel(props: any) {
 function Searchbar() {
   return (
     <div className='app-searchbar'>
-      <div></div>
+      <div className='app-searchbar-margin'></div>
       <div className='app-searchbar-buttons'>
         <button>Polecane</button>
         <button>Filmy</button>

@@ -27,12 +27,16 @@ main {
       height: 80px;
     }
 
+    .app-searchbar-margin {
+      width: 20%;
+    }
+
     .app-searchbar-buttons {
       display: flex;
       flex-direction: row;
       justify-content: center;
       align-items: center;
-      width: 80%;
+      width: 60%;
       height: 100%;
       
       @media only screen and (max-width: 768px) {
