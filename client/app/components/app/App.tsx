@@ -1,41 +1,7 @@
 'use client'
 
-import React, { ChangeEvent, FormEvent, useState, useEffect } from 'react'
+import React, { Suspense ,useState, useEffect } from 'react'
 import Image from 'next/image';
-
-import { get } from './actions'
-
-interface Tag {
-  id: number;
-  name: string;
-  howmuch: number;
-}
-
-type Tags = Record<string, Tag>;
-
-const tags: Tags = {
-  akcja: {id: 1, name: 'akcja', howmuch: 0},
-  komedia: {id: 2, name: 'komedia', howmuch: 0},
-  dramat: {id: 3, name: 'dramat', howmuch: 0},
-  horror: {id: 4, name: 'horror', howmuch: 0},
-  thriller: {id: 5, name: 'thriller', howmuch: 0},
-  fantasy: {id: 6, name: 'fantasy', howmuch: 0},
-  sciFi: {id: 7, name: 'sci-fi', howmuch: 0},
-  romans: {id: 8, name: 'romans', howmuch: 0},
-  animacja: {id: 9, name: 'animacja', howmuch: 0},
-  familijny: {id: 10, name: 'familijny', howmuch: 0},
-  przygodowy: {id: 11, name: 'przygodowy', howmuch: 0},
-  sensacyjny: {id: 12, name: 'sensacyjny', howmuch: 0},
-  kryminal: {id: 13, name: 'kryminal', howmuch: 0},
-  dokumentalny: {id: 14, name: 'dokumentalny', howmuch: 0},
-  historyczny: {id: 15, name: 'historyczny', howmuch: 0},
-  wojenny: {id: 16, name: 'wojenny', howmuch: 0},
-  sportowy: {id: 17, name: 'sportowy', howmuch: 0},
-  biograficzny: {id: 18, name: 'biograficzny', howmuch: 0},
-  western: {id: 19, name: 'western', howmuch: 0},
-  filmNoir: {id: 20, name: 'film-noir', howmuch: 0},
-  musical: {id: 21, name: 'musical', howmuch: 0},
-}
 
 interface Movie {
   title: string,
@@ -54,52 +20,52 @@ const movies: Movies = {
   test2: {
     title: 'test2',
     description: 'test2',
-    image: '/fnaf1.jpg'
+    image: '/placeholder.png'
   },
   test3: {
     title: 'test3',
     description: 'test3',
-    image: '/fnaf1.jpg'
+    image: '/placeholder.png'
   },
   test4: {
     title: 'test4',
     description: 'test4',
-    image: '/fnaf1.jpg'
+    image: '/placeholder.png'
   },
   test5: {
     title: 'test5',
     description: 'test5',
-    image: '/fnaf1.jpg'
+    image: '/placeholder.png'
   },
   test6: {
     title: 'test6',
     description: 'test6',
-    image: '/fnaf1.jpg'
+    image: '/placeholder.png'
   },
   test7: {
     title: 'test7',
     description: 'test7',
-    image: '/fnaf1.jpg'
+    image: '/placeholder.png'
   },
   test8: {
     title: 'test8',
     description: 'test8',
-    image: '/fnaf1.jpg'
+    image: '/placeholder.png'
   },
   test9: {
     title: 'test9',
     description: 'test9',
-    image: '/fnaf1.jpg'
+    image: '/placeholder.png'
   },
   test10: {
     title: 'test10',
     description: 'test10',
-    image: '/fnaf1.jpg'
+    image: '/placeholder.png'
   },
   test11: {
     title: 'test11',
     description: 'test11',
-    image: '/fnaf1.jpg'
+    image: '/placeholder.png'
   },
 }
 
@@ -171,7 +137,7 @@ function Carousel(props: any) {
 
   const renderCards = () => {
     let renderedCards = [];
-    for (let i = 0; i < 9; i++) {
+    for (let i = 0; i < 11; i++) {
       let cardIndex = (index + i) % cards.length;
       renderedCards.push(Card(cards[cardIndex].title, cards[cardIndex].description, cards[cardIndex].image, animationClass, cardIndex));
     }
@@ -184,11 +150,13 @@ function Carousel(props: any) {
         <h2>{category}</h2>
       </div>
       <div className='carousel-content'>
+        <button className='carousel-button left' onClick={handlePrev}>
+          <Image src='/carousel/arrow-left.png' quality={100} alt='arrow-left' width={72} height={72} className='carousel-button-image'/>
+        </button>
         {renderCards()}
-      </div>
-      <div className='carousel-buttons'>
-        <button className='carousel-button left' onClick={handlePrev}>Poprzedni</button>
-        <button className='carousel-button right' onClick={handleNext}>Następny</button>
+        <button className='carousel-button right' onClick={handleNext}>
+          <Image src='/carousel/arrow-right.png' quality={100} alt='arrow-right' width={72} height={72} className='carousel-button-image'/>
+        </button>
       </div>
     </div>
   )

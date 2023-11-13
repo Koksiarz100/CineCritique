@@ -164,6 +164,39 @@ main {
             width: 90%;
           }
 
+          .carousel-button {
+            background-color: transparent;
+            border: none;
+            margin: 0 10px 0 10px;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            position: absolute;
+            z-index: 2;
+            outline: none;
+            scale: 1.0;
+            transition: scale 0.3s ease;
+  
+            &:hover {
+              scale: 1.1;
+              transition: scale 0.3s ease;
+            }
+
+            &.left {
+              left: 0;
+              @media only screen and (max-width: 768px) {
+                left: -30px;
+              }
+            }
+
+            &.right {
+              right: 0;
+              @media only screen and (max-width: 768px) {
+                right: -25px;
+              }
+            }
+          }
+
           .card-wrapper {
             display: flex;
             flex-direction: column;
@@ -260,61 +293,6 @@ main {
                 font-size: 1.0rem;
                 font-weight: 500;
               }
-            }
-          }
-        }
-
-        .carousel-buttons {
-          margin-top: 20px;
-          
-          .carousel-button {
-            background-color: transparent;
-            border: none;
-            margin: 0 10px 0 10px;
-            color: white;
-            font-size: 1.1rem;
-            cursor: pointer;
-  
-            &:hover {
-              color: #7acc88;
-              transition: color 0.3s ease;
-            }
-  
-            &:after {
-              content: '';
-              display: block;
-              position: relative;
-              top: 3px;
-              width: 0;
-              height: 2px;
-              background-color: #7acc88;
-              transition: width .3s;
-            }
-      
-            &:hover:after {
-              width: 100%;
-              transition: width .3s;
-            }
-  
-            @media only screen and (max-width: 768px) {
-              width: 30px;
-              height: 30px;
-              border-radius: 50%;
-              background-color: #7acc88;
-              content-visibility: hidden;
-              position: absolute;
-            }
-          }
-
-          .left {
-            @media only screen and (max-width: 768px) {
-              left: 15px;
-            }
-          }
-  
-          .right {
-            @media only screen and (max-width: 768px) {
-              right: 15px;
             }
           }
         }
