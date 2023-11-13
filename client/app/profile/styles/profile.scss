@@ -19,16 +19,18 @@ main{
     flex: 1;
     display: grid;
     width: 25%;
-    height: 50px;
+    height: 100%;
     color: white;
     position: sticky;
     top: 110px;
+    //align-self: center;
     z-index: 1000;
     margin-left: 10px;
     margin-right: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
     text-align: justify;
+
 }
   
 .mainside {
