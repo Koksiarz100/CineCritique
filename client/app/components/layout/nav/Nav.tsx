@@ -11,7 +11,7 @@ function Nav() {
       </div>
       <div className='nav-links-container'>
         <Link href='/login'>
-          <Image src='/user_light.png' className='profile-button' alt='login' width={32} height={32}/>
+          <Image src='/layout/nav/user_light.png' className='profile-button' alt='login' width={32} height={32}/>
         </Link>
       </div>
     </nav>
