@@ -1,7 +1,8 @@
 'use client'
 
-import React, { Suspense ,useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Image from 'next/image';
+import { useSwipeable } from 'react-swipeable';
 
 interface Movie {
   title: string,
@@ -69,7 +70,7 @@ const movies: Movies = {
   },
 }
 
-function Card(title: string, description: string, image: string, animationClass: string = '', key: number) {
+function Card(title: string, description: string, image: string, animationClass: string = '', key: string) {
   return(
     <div key={key} className={`card-wrapper ${animationClass}`}>
       <div className='card-image-wrapper'>
@@ -92,12 +93,7 @@ function Carousel(props: any) {
   const [index, setIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const { info } = props;
-  const start = props.start;
   const category = props.title;
-
-  useEffect(() => {
-    setIndex(Number(start));
-  }, [start]);
 
   const cards: any = Object.values(info);
 
@@ -135,11 +131,18 @@ function Carousel(props: any) {
     }
   }, [index, cards.length]);
 
+  const swipeHandlers = useSwipeable({
+    onSwipedLeft: () => handleNext(),
+    onSwipedRight: () => handlePrev(),
+    trackMouse: true
+  });
+
   const renderCards = () => {
     let renderedCards = [];
-    for (let i = 0; i < 11; i++) {
+    for (let i = 0; i < 21; i++) {
       let cardIndex = (index + i) % cards.length;
-      renderedCards.push(Card(cards[cardIndex].title, cards[cardIndex].description, cards[cardIndex].image, animationClass, cardIndex));
+      let uniqueKey = `${cardIndex}-${i}`;
+      renderedCards.push(Card(cards[cardIndex].title, cards[cardIndex].description, cards[cardIndex].image, animationClass, uniqueKey));
     }
     return renderedCards;
   }
@@ -149,7 +152,7 @@ function Carousel(props: any) {
       <div className='carousel-title'>
         <h2>{category}</h2>
       </div>
-      <div className='carousel-content'>
+      <div className='carousel-content' {...swipeHandlers}>
         <button className='carousel-button left' onClick={handlePrev}>
           <Image src='/carousel/arrow-left.png' quality={100} alt='arrow-left' width={72} height={72} className='carousel-button-image'/>
         </button>
@@ -185,9 +188,11 @@ export default function App() {
       <Searchbar/>
       <div className='app-window'>
         <div className='app-wrapper'>
-          <Carousel info={movies} title='Nowości' start='0'/>
-          <Carousel info={movies} title='Akcja' start='1'/>
-          <Carousel info={movies} title='Akcja' start='3'/>
+          <Carousel info={movies} title='Nowości'/>
+          <Carousel info={movies} title='Akcja'/>
+          <Carousel info={movies} title='Przygodowe'/>
+          <Carousel info={movies} title='Horror'/>
+          <Carousel info={movies} title='Dramat'/>
         </div>
       </div>
     </>

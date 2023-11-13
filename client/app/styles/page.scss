@@ -172,10 +172,14 @@ main {
             font-size: 1.1rem;
             cursor: pointer;
             position: absolute;
-            z-index: 2;
+            z-index: 5;
             outline: none;
             scale: 1.0;
             transition: scale 0.3s ease;
+
+            @media only screen and (max-width: 768px) {
+              display: none;
+            }
   
             &:hover {
               scale: 1.1;
@@ -184,16 +188,10 @@ main {
 
             &.left {
               left: 0;
-              @media only screen and (max-width: 768px) {
-                left: -30px;
-              }
             }
 
             &.right {
               right: 0;
-              @media only screen and (max-width: 768px) {
-                right: -25px;
-              }
             }
           }
 
@@ -206,6 +204,11 @@ main {
             color: white;
             margin: 0 20px;
             transition: transform 0.3s ease;
+
+            &:hover {
+              transform: scale(1.05);
+              transition: transform 0.3s ease;
+            }
 
             &.none{
               animation: none;
@@ -273,7 +276,7 @@ main {
               .card-title {
                 display: flex;
                 justify-content: center;
-                align-items: bottom;
+                align-items: flex-end;
                 width: 200px;
                 height: 150px;
                 text-align: center;
