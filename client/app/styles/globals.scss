@@ -2,9 +2,11 @@
 
 // Color pallete
 $primary-color: #005e10;
-$secondary-color: #000000;
+$secondary-color: #007a15;
 $tertiary-color: #ffffff;
-$button-color: #007a15;
+$accent-color: #7acc88;
+
+$background-gradient: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(23,23,23,1) 50%, rgba(0,0,0,1) 100%);
 
 * {
   scroll-behavior: smooth;

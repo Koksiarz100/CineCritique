@@ -12,12 +12,10 @@ export default function Footer() {
       </div>
       <div className='footer-content'>
         <div className='footer-info'>
-          <span className='footer-title'>Kontakt</span>
           <div className='footer-info-box'><Image src='/layout/footer/email.png' alt='emial' width={32} height={32} />test.email@gmail.com</div>
           <div className='footer-info-box'><Image src='/layout/footer/tel.png' alt='tel' width={32} height={32} />111 222 333</div>
         </div>
         <div className='footer-socials'>
-          <span className='footer-title'>Social Media</span>
           <div className='footer-socials-wrapper'>
             <Image src='/layout/footer/facebook.png' alt='facebook' width={32} height={32}/>
             <Image src='/layout/footer/youtube.png' alt='twitter' width={32} height={32}/>
@@ -26,7 +24,6 @@ export default function Footer() {
           </div>
         </div>
         <div className='footer-nav'>
-          <span className='footer-title'>Nawigacja</span>
           <Link href='/'>Strona główna</Link>
           <Link href='/'>O nas</Link>
           <Link href='/'>Regulamin</Link>
