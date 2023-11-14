@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image';
 import { useSwipeable } from 'react-swipeable';
 
@@ -97,7 +97,7 @@ function Carousel(props: any) {
 
   const cards: any = Object.values(info);
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     if (isAnimating) return;
     setIsAnimating(true);
     setAnimationClass('slide-out-left');
@@ -107,9 +107,9 @@ function Carousel(props: any) {
       setTimeout(() => {
         setAnimationClass('');
         setIsAnimating(false);
-      }, 300);
-    }, 300);
-  }
+      }, 200);
+    }, 200);
+  }, [index, isAnimating, cards.length]);
   
   const handlePrev = () => {
     if (isAnimating) return;
@@ -121,8 +121,8 @@ function Carousel(props: any) {
       setTimeout(() => {
         setAnimationClass('');
         setIsAnimating(false);
-      }, 300);
-    }, 300);
+      }, 200);
+    }, 200);
   }
 
   useEffect(() => {
@@ -136,6 +136,13 @@ function Carousel(props: any) {
     onSwipedRight: () => handlePrev(),
     trackMouse: true
   });
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      handleNext();
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [handleNext]);
 
   const renderCards = () => {
     let renderedCards = [];
