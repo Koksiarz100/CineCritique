@@ -1,23 +1,22 @@
-const http = require('http');
+const express = require('express');
 const { akcja } = require('./data');
-
-const hostname = '127.0.0.1';
+const app = express();
 const port = 5000;
 
-const server = http.createServer((req, res) => {
+app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-
-  if(req.url === '/api') {
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify(akcja));
-  } else {
-    res.statusCode = 404;
-    res.end('Not Found');
-  }
+  next();
 });
 
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
+app.get('/api', (req, res) => {
+  res.status(200).json(akcja);
+});
+
+app.use((req, res) => {
+  res.status(404).send('Not Found');
+});
+
+app.listen(port, () => {
+  console.log(`Server running at http://127.0.0.1:${port}/`);
 });
