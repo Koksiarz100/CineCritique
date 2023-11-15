@@ -123,7 +123,6 @@ function Carousel(props: any) {
 }
 
 function Searchbar() {
-  fetchData();
   return (
     <div className='app-searchbar'>
       <div className='app-searchbar-margin'></div>
@@ -140,18 +139,23 @@ function Searchbar() {
   )
 }
 
-async function fetchData() {
-  try {
-    const response = await axios.get('http://127.0.0.1:5000/api');
-    return response.data;
-  } catch (error) {
-    console.error(error);
-    return {};
-  }
-}
-
 export default function App() {
   const [movies, setMovies] = useState<Movies>({});
+  const categories = ['new', 'action', 'adventure', 'horror', 'drama']
+
+  async function fetchData() {
+    try {
+      const response = await axios.get('http://127.0.0.1:5000/api', {
+        params: {
+          categories: categories[1]
+        }
+      });
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      return {};
+    }
+  }
 
   useEffect(() => {
     fetchData().then(data => {

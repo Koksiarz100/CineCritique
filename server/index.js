@@ -1,5 +1,5 @@
 const express = require('express');
-const { akcja } = require('./data');
+const { action } = require('./data');
 const app = express();
 const port = 5000;
 
@@ -10,7 +10,13 @@ app.use((req, res, next) => {
 });
 
 app.get('/api', (req, res) => {
-  res.status(200).json(akcja);
+  const category = req.query.categories;
+  if (category === 'action') {
+    res.status(200).json(action);
+  } 
+  else {
+    res.status(404).send('Not Found');
+  }
 });
 
 app.use((req, res) => {

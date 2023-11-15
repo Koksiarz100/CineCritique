@@ -1,4 +1,4 @@
-const akcja = {
+const action = {
   1: {
     title: 'Akcja 1',
     description: 'Opis akcji 1',
@@ -31,4 +31,4 @@ const akcja = {
   },
 }
 
-exports.akcja = akcja;
+exports.action = action;
