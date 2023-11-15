@@ -79,12 +79,23 @@ main{
         text-align: justify;
     
         .profile-statistics{
-            height: 50%;
+            height: 270px;
             text-align: center;
             margin-top: 0.2rem;
             margin-bottom: 0.5rem;
             .statistics-title{
                 font-size: 1.5rem;
+            }
+            .statistics-charts{
+                display: flex;
+                margin-top: 0.7rem;
+                margin-bottom: 0.5rem;
+                justify-content: space-around;
+            }
+            .statistics-name{
+                display: flex;
+                justify-content: space-around;
+                font-size: 1rem;
             }
         }
 
@@ -99,6 +110,7 @@ main{
             .review-loop{
                 background-color: rgba(0, 94, 16, 0.5);
                 box-shadow: 0 0 1rem globals.$secondary-color;
+                overflow-wrap: break-word;
             }
         }
     }
