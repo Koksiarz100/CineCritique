@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, Suspense, lazy } from 'react'
 import Image from 'next/image';
 import { useSwipeable } from 'react-swipeable';
 import Link from 'next/link';
@@ -96,8 +96,10 @@ function Carousel(props: any) {
     let renderedCards = [];
     for (let i = 0; i < 21; i++) {
       let cardIndex = (index + i) % cards.length;
-      let uniqueKey = `${cardIndex}-${i}`;
-      renderedCards.push(Card(cards[cardIndex].title, cards[cardIndex].description, cards[cardIndex].image,cards[cardIndex].id , animationClass, uniqueKey));
+      if (cards[cardIndex]) { // Dodajemy to sprawdzenie
+        let uniqueKey = `${cardIndex}-${i}`;
+        renderedCards.push(Card(cards[cardIndex].title, cards[cardIndex].description, cards[cardIndex].image,cards[cardIndex].id , animationClass, uniqueKey));
+      }
     }
     return renderedCards;
   }
@@ -149,21 +151,15 @@ async function fetchData() {
 
 export default function App() {
   const [movies, setMovies] = useState<Movies>({});
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchData().then(data => {
       setMovies(data);
-      setLoading(false);
     });
   }, []);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   return (
-    <>
+    <Suspense fallback={<div>Loading...</div>}>
       <Searchbar/>
       <div className='app-window'>
         <div className='app-wrapper'>
@@ -174,6 +170,6 @@ export default function App() {
           <Carousel info={movies} title='Dramat'/>
         </div>
       </div>
-    </>
+    </Suspense>
   )
 }
