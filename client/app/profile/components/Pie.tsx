@@ -3,9 +3,10 @@ import React, { useEffect, useRef, useState } from 'react';
 
 interface PieChartProps {
   data: number[];
+  title?: string;
 }
 
-const PieChart: React.FC<PieChartProps> = ({ data }) => {
+const PieChart: React.FC<PieChartProps> = ({ data, title = ''  }) => {
   const chartRef = useRef<SVGSVGElement | null>(null);
   const [hoveredSlice, setHoveredSlice] = useState<number | null>(null);
 
@@ -86,10 +87,21 @@ const PieChart: React.FC<PieChartProps> = ({ data }) => {
         svg.appendChild(text);
       });
     }
-  }, [data, hoveredSlice]);
+    if (chartRef.current && title) {
+      const titleText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      titleText.setAttribute('x', '50%');
+      titleText.setAttribute('y', '95%');
+      titleText.setAttribute('text-anchor', 'middle');
+      titleText.setAttribute('font-size', '0.5rem');
+      titleText.setAttribute('fill', 'white');
+      titleText.textContent = title;
+
+      chartRef.current.appendChild(titleText);
+    }
+  }, [data, hoveredSlice, title]);
 
   return (
-    <svg ref={chartRef} width="150" height="150" viewBox="0 0 100 100"></svg>
+    <svg ref={chartRef} width="200" height="200" viewBox="0 0 100 125"></svg>
   );
 };
 

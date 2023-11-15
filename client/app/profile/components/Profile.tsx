@@ -64,7 +64,7 @@ function Sidebar(image:string, nickname:string, email:string, information:string
     <div className='profile-content'>
       <div className='profile-statistics'>
         <div className='statistics-title'>Statystyki</div>
-        <PieChart data={data}/><PieChart data={data2}/><PieChart data={data3}/>
+        <div className='statistics-charts'><PieChart data={data} title='Tytuł1'/><PieChart data={data2}title='Tytuł2'/><PieChart data={data3}title='Tytuł3'/></div>
       </div>
       <div className='profile-review-content'>
         <div className='review-title'>Twoje recenzje</div>
