@@ -9,13 +9,13 @@ export default function page({ params }: { params: { id: string } }) {
   return (
     <div className='movie-site-wrapper'>
       <div className='movie-nav'>
-        <Link href='/'>Dane</Link>
-        <Link href='/'>Opis</Link>
-        <Link href='/'>Obsada</Link>
-        <Link href='/'>Recenzje</Link>
+        <Link href='#info'>Dane</Link>
+        <Link href='#description'>Opis</Link>
+        <Link href='#cast'>Obsada</Link>
+        <Link href='#reviews'>Recenzje</Link>
       </div>
       <div className='movie-wrapper'>
-        <div className='movie-main-info'>
+        <div className='movie-main-info' id='info'>
           <div className='movie-image'>
             <Image src='/placeholder.png' quality={100} alt='test' width={200} height={300} className='card-image'/>
           </div>
@@ -28,7 +28,7 @@ export default function page({ params }: { params: { id: string } }) {
             </span>
           </div>
         </div>
-        <div className='movie-info'>
+        <div className='movie-info' id='description'>
           <div className='movie-info-title'>
             Informacje
           </div>
@@ -36,7 +36,7 @@ export default function page({ params }: { params: { id: string } }) {
             <span>Id filmu: {params.id}</span>
           </div>
         </div>
-        <div className='movie-cast'>
+        <div className='movie-cast' id='cast'>
           <div className='movie-cast-title'>
             Obsada
           </div>
@@ -44,7 +44,7 @@ export default function page({ params }: { params: { id: string } }) {
             Test
           </div>
         </div>
-        <div className='movie-reviews'>
+        <div className='movie-reviews' id='reviews'>
           <div className='movie-reviews-title'>
             Recenzje
           </div>
