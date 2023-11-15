@@ -1,90 +1,38 @@
 'use client'
 
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, Suspense, lazy } from 'react'
 import Image from 'next/image';
 import { useSwipeable } from 'react-swipeable';
+import Link from 'next/link';
+import axios from 'axios';
 
 interface Movie {
   title: string,
   description: string,
-  image: string
+  image: string,
+  id: string
 }
 
 type Movies = Record<string, Movie>;
 
-const movies: Movies = {
-  test1: {
-    title: 'Five nights at freddys: Pięć nocy',
-    description: 'Rating:',
-    image: '/fnaf1.jpg'
-  },
-  test2: {
-    title: 'W głowie się nie mieści',
-    description: 'Rating:',
-    image: '/placeholder.png'
-  },
-  test3: {
-    title: 'Zaklinacz koni',
-    description: 'Rating:',
-    image: '/placeholder.png'
-  },
-  test4: {
-    title: 'Matrix',
-    description: 'Rating:',
-    image: '/placeholder.png'
-  },
-  test5: {
-    title: 'Resident Evil',
-    description: 'Rating:',
-    image: '/placeholder.png'
-  },
-  test6: {
-    title: 'Noc oczyszczenia',
-    description: 'Rating:',
-    image: '/placeholder.png'
-  },
-  test7: {
-    title: 'Kung Fu Panda 2',
-    description: 'Rating:',
-    image: '/placeholder.png'
-  },
-  test8: {
-    title: 'test8',
-    description: 'test8',
-    image: '/placeholder.png'
-  },
-  test9: {
-    title: 'test9',
-    description: 'test9',
-    image: '/placeholder.png'
-  },
-  test10: {
-    title: 'test10',
-    description: 'test10',
-    image: '/placeholder.png'
-  },
-  test11: {
-    title: 'test11',
-    description: 'test11',
-    image: '/placeholder.png'
-  },
-}
-
-function Card(title: string, description: string, image: string, animationClass: string = '', key: string) {
+function Card(title: string, description: string, image: string, id: string, animationClass: string = '', key: string) {
+  var ID = `/movie/${id}`;
   return(
-    <div key={key} className={`card-wrapper ${animationClass}`}>
-      <div className='card-image-wrapper'>
-        <Image src={image} quality={100} alt={title} width={200} height={300} className='card-image'/>
-      </div>
-      <div className='card-content'>
-        <div className='card-title'>
-          <h3>{title}</h3>
+    <Link href={ID} key={key}>
+      <div className={`card-wrapper ${animationClass}`}>
+        <div className='card-image-wrapper'>
+          <Image src={image} quality={100} alt={title} width={200} height={300} className='card-image'/>
         </div>
-        <div className='card-description'>
-          <p>{description}</p>
+        <div className='card-content'>
+          <div className='card-title'>
+            <h3>{title}</h3>
+          </div>
+          <div className='card-description'>
+            <p>{description}</p>
+          </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 
@@ -95,7 +43,7 @@ function Carousel(props: any) {
   const { info } = props;
   const category = props.title;
 
-  const cards: any = Object.values(info);
+  const cards: any = info ? Object.values(info) : [];
 
   const handleNext = useCallback(() => {
     if (isAnimating) return;
@@ -148,8 +96,10 @@ function Carousel(props: any) {
     let renderedCards = [];
     for (let i = 0; i < 21; i++) {
       let cardIndex = (index + i) % cards.length;
-      let uniqueKey = `${cardIndex}-${i}`;
-      renderedCards.push(Card(cards[cardIndex].title, cards[cardIndex].description, cards[cardIndex].image, animationClass, uniqueKey));
+      if (cards[cardIndex]) { // Dodajemy to sprawdzenie
+        let uniqueKey = `${cardIndex}-${i}`;
+        renderedCards.push(Card(cards[cardIndex].title, cards[cardIndex].description, cards[cardIndex].image,cards[cardIndex].id , animationClass, uniqueKey));
+      }
     }
     return renderedCards;
   }
@@ -190,8 +140,31 @@ function Searchbar() {
 }
 
 export default function App() {
+  const [movies, setMovies] = useState<Movies>({});
+  const categories = ['new', 'action', 'adventure', 'horror', 'drama']
+
+  async function fetchData() {
+    try {
+      const response = await axios.get('http://127.0.0.1:5000/api', {
+        params: {
+          categories: categories[1]
+        }
+      });
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      return {};
+    }
+  }
+
+  useEffect(() => {
+    fetchData().then(data => {
+      setMovies(data);
+    });
+  }, []);
+
   return (
-    <>
+    <Suspense fallback={<div>Loading...</div>}>
       <Searchbar/>
       <div className='app-window'>
         <div className='app-wrapper'>
@@ -202,6 +175,6 @@ export default function App() {
           <Carousel info={movies} title='Dramat'/>
         </div>
       </div>
-    </>
+    </Suspense>
   )
 }
