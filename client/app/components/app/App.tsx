@@ -43,7 +43,7 @@ function Carousel(props: any) {
   const { info } = props;
   const category = props.title;
 
-  const cards: any = Object.values(info);
+  const cards: any = info ? Object.values(info) : [];
 
   const handleNext = useCallback(() => {
     if (isAnimating) return;
@@ -146,6 +146,7 @@ async function fetchData() {
     return response.data;
   } catch (error) {
     console.error(error);
+    return {};
   }
 }
 
