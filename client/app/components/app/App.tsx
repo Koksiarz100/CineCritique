@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image';
 import { useSwipeable } from 'react-swipeable';
 import Link from 'next/link';
+import axios from 'axios';
 
 interface Movie {
   title: string,
@@ -14,80 +15,11 @@ interface Movie {
 
 type Movies = Record<string, Movie>;
 
-const movies: Movies = {
-  test1: {
-    title: 'Five nights at freddys: Pięć nocy',
-    description: 'Rating:',
-    image: '/fnaf1.jpg',
-    id: 'test1'
-  },
-  test2: {
-    title: 'W głowie się nie mieści',
-    description: 'Rating:',
-    image: '/placeholder.png',
-    id: 'test2'
-  },
-  test3: {
-    title: 'Zaklinacz koni',
-    description: 'Rating:',
-    image: '/placeholder.png',
-    id: 'test3'
-  },
-  test4: {
-    title: 'Matrix',
-    description: 'Rating:',
-    image: '/placeholder.png',
-    id: 'test4'
-  },
-  test5: {
-    title: 'Resident Evil',
-    description: 'Rating:',
-    image: '/placeholder.png',
-    id: 'test5'
-  },
-  test6: {
-    title: 'Noc oczyszczenia',
-    description: 'Rating:',
-    image: '/placeholder.png',
-    id: 'test6'
-  },
-  test7: {
-    title: 'Kung Fu Panda 2',
-    description: 'Rating:',
-    image: '/placeholder.png',
-    id: 'test7'
-  },
-  test8: {
-    title: 'test8',
-    description: 'test8',
-    image: '/placeholder.png',
-    id: 'test8'
-  },
-  test9: {
-    title: 'test9',
-    description: 'test9',
-    image: '/placeholder.png',
-    id: 'test9'
-  },
-  test10: {
-    title: 'test10',
-    description: 'test10',
-    image: '/placeholder.png',
-    id: 'test10'
-  },
-  test11: {
-    title: 'test11',
-    description: 'test11',
-    image: '/placeholder.png',
-    id: 'test11'
-  },
-}
-
 function Card(title: string, description: string, image: string, id: string, animationClass: string = '', key: string) {
   var ID = `/movie/${id}`;
   return(
-    <Link href={ID}>
-      <div key={key} className={`card-wrapper ${animationClass}`}>
+    <Link href={ID} key={key}>
+      <div className={`card-wrapper ${animationClass}`}>
         <div className='card-image-wrapper'>
           <Image src={image} quality={100} alt={title} width={200} height={300} className='card-image'/>
         </div>
@@ -189,6 +121,7 @@ function Carousel(props: any) {
 }
 
 function Searchbar() {
+  fetchData();
   return (
     <div className='app-searchbar'>
       <div className='app-searchbar-margin'></div>
@@ -205,7 +138,30 @@ function Searchbar() {
   )
 }
 
+async function fetchData() {
+  try {
+    const response = await axios.get('http://127.0.0.1:5000/api');
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 export default function App() {
+  const [movies, setMovies] = useState<Movies>({});
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchData().then(data => {
+      setMovies(data);
+      setLoading(false);
+    });
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
       <Searchbar/>
