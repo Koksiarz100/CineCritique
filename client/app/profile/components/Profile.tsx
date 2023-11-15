@@ -1,6 +1,7 @@
 import React from 'react'
 import Image from 'next/image';
 import PieChart from './Pie';
+import '../styles/profile.scss'
 
 interface UserProfile{
   image: string,
@@ -54,15 +55,16 @@ function Sidebar(image:string, nickname:string, email:string, information:string
     )
   }
 
-  const data = [70, 20, 40, 40];
-  const colors = ['#FF6384', '#36A2EB', '#FFCE56','#6772EB'];
+  const data = [13, 800];
+  const data2 = [10, 20, 30, 40, 50, 60, 50, 40, 30, 20, 10];
+  const data3 = [10, 20, 40];
 
   function MainContent(){
     return (
     <div className='profile-content'>
       <div className='profile-statistics'>
         <div className='statistics-title'>Statystyki</div>
-        <PieChart data={data} colors={colors} />
+        <PieChart data={data}/><PieChart data={data2}/><PieChart data={data3}/>
       </div>
       <div className='profile-review-content'>
         <div className='review-title'>Twoje recenzje</div>
