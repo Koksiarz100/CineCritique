@@ -141,13 +141,13 @@ function Searchbar() {
 
 export default function App() {
   const [movies, setMovies] = useState<Movies>({});
-  const categories = ['new', 'action', 'adventure', 'horror', 'drama']
+  const categories = ['news', 'action', 'adventure', 'horror', 'fantasy']
 
-  async function fetchData() {
+  async function fetchData(category: string) {
     try {
       const response = await axios.get('http://127.0.0.1:5000/api', {
         params: {
-          categories: categories[1]
+          categories: category
         }
       });
       return response.data;
@@ -158,8 +158,10 @@ export default function App() {
   }
 
   useEffect(() => {
-    fetchData().then(data => {
-      setMovies(data);
+    categories.forEach(category => {
+      fetchData(category).then(data => {
+        setMovies(prevMovies => ({...prevMovies, [category]: data}));
+      });
     });
   }, []);
 
@@ -168,11 +170,9 @@ export default function App() {
       <Searchbar/>
       <div className='app-window'>
         <div className='app-wrapper'>
-          <Carousel info={movies} title='Nowości'/>
-          <Carousel info={movies} title='Akcja'/>
-          <Carousel info={movies} title='Przygodowe'/>
-          <Carousel info={movies} title='Horror'/>
-          <Carousel info={movies} title='Dramat'/>
+          {categories.map(category => (
+            <Carousel key={category} info={movies[category]} title={category.charAt(0).toUpperCase() + category.slice(1)}/>
+          ))}
         </div>
       </div>
     </Suspense>
