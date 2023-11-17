@@ -1,7 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const jwt = require('jsonwebtoken');
 
+const secretKey = 'SKwlV6Z55ODDFFxADHDQs7qf7UWivSmEXPpZGiGFsjLfTKUU8rq8Wbh6ntYQS4s'; // Trzeba zmienić w przyszłości
 const { action, adventure, news, horror, fantasy } = require('./data');
 const app = express();
 const port = 5000;
@@ -19,7 +21,8 @@ app.post('/api/login', (req, res) => {
   const { username, password } = req.body;
 
   if (username === 'admin' && password === 'password') {
-    res.status(200).json({ token: 'token' });
+    const token = jwt.sign({ username }, secretKey, { expiresIn: '1h' });
+    res.status(200).json({ token });
   } else {
     res.status(401).send('Unauthorized');
   }

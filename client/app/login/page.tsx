@@ -15,7 +15,9 @@ function Login() {
 
     try {
       const response = await axios.post('http://127.0.0.1:5000/api/login', { username, password })
-      console.log(response)
+      const token = response.data.token
+      localStorage.setItem('token', token)
+
     } catch (error) {
       console.error(error)
     }
