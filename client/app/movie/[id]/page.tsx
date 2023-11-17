@@ -5,7 +5,6 @@ import Image from 'next/image'
 import './styles/move.scss'
 
 export default function page({ params }: { params: { id: string } }) {
-  console.log(params)
   return (
     <div className='movie-site-wrapper'>
       <div className='movie-nav'>
