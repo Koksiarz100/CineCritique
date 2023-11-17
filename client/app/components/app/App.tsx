@@ -96,7 +96,7 @@ function Carousel(props: any) {
     let renderedCards = [];
     for (let i = 0; i < 21; i++) {
       let cardIndex = (index + i) % cards.length;
-      if (cards[cardIndex]) { // Dodajemy to sprawdzenie
+      if (cards[cardIndex]) {
         let uniqueKey = `${cardIndex}-${i}`;
         renderedCards.push(Card(cards[cardIndex].title, cards[cardIndex].description, cards[cardIndex].image,cards[cardIndex].id , animationClass, uniqueKey));
       }
