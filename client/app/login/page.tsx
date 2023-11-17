@@ -32,7 +32,7 @@ function Register() {
   )
 }
 
-export default function page() {
+export default function Page() {
   const [formstate, setFormstate] = useState<'login' | 'register'>('login')
 
   return (
