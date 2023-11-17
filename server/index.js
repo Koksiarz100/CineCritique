@@ -1,5 +1,5 @@
 const express = require('express');
-const { action } = require('./data');
+const { action, adventure, news, horror, fantasy } = require('./data');
 const app = express();
 const port = 5000;
 
@@ -11,8 +11,10 @@ app.use((req, res, next) => {
 
 app.get('/api', (req, res) => {
   const category = req.query.categories;
-  if (category === 'action') {
-    res.status(200).json(action);
+  const categories = { action, adventure, news, horror, fantasy };
+  
+  if (categories[category]) {
+    res.status(200).json(categories[category]);
   } 
   else {
     res.status(404).send('Not Found');
