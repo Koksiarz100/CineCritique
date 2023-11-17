@@ -17,7 +17,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ formType }) => {
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault()
-
+  
     try {
       let response
       if (formType === 'login') {
@@ -30,9 +30,11 @@ const AuthForm: React.FC<AuthFormProps> = ({ formType }) => {
         }
         response = await axios.post('http://127.0.0.1:5000/api/register', { username, password })
       }
-      const token = response.data.token
-      localStorage.setItem('token', token)
-
+      if (response) {
+        const token = response.data.token
+        localStorage.setItem('token', token)
+      }
+  
     } catch (error) {
       console.error(error)
     }
