@@ -40,6 +40,17 @@ nav {
     text-decoration: none;
     font-size: 1.1rem;
 
+    .nav-user-data {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .nav-user-data-username {
+        font-size: 1.1rem;
+        margin-right: 5px;
+      }
+    }
+
     a {
       color: white;
       margin-left: 20px;
