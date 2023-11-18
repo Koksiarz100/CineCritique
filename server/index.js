@@ -25,6 +25,9 @@ app.get('/api/user', (req, res) => {
 
     jwt.verify(token, secretKey, (err, user) => {
       if (err) {
+        if (err.message === 'jwt expired') {
+          return res.status(401).send('Token expired');
+        }
         return res.sendStatus(403);
       }
 
