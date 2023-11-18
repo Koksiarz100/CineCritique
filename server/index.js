@@ -17,6 +17,33 @@ app.use((req, res, next) => {
   next();
 });
 
+app.get('/api/user', (req, res) => {
+  const authHeader = req.headers.authorization;
+
+  if (authHeader) {
+    const token = authHeader.split(' ')[1];
+
+    jwt.verify(token, secretKey, (err, user) => {
+      if (err) {
+        if (err.message === 'jwt expired') {
+          return res.status(401).send('Token expired');
+        }
+        return res.sendStatus(403);
+      }
+
+      const userData = getUserFromDatabase(user.id);
+
+      res.json(userData);
+    });
+  } else {
+    res.sendStatus(401);
+  }
+});
+
+function getUserFromDatabase(userId) {
+  return { id: userId, username: 'John Doe' };
+}
+
 app.post('/api/login', (req, res) => {
   const { username, password } = req.body;
 

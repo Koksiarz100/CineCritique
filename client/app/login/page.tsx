@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, FormEvent } from 'react'
+import React, { useState, FormEvent, useEffect } from 'react'
 import Link from 'next/link'
 import axios from 'axios'
 
@@ -22,7 +22,6 @@ const AuthForm: React.FC<AuthFormProps> = ({ formType }) => {
       let response
       if (formType === 'login') {
         response = await axios.post('http://127.0.0.1:5000/api/login', { username, password })
-        console.log('Sending request');
       } else if (formType === 'register') {
         if (password !== repeatPassword) {
           console.error('Passwords do not match')
@@ -33,6 +32,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ formType }) => {
       if (response) {
         const token = response.data.token
         localStorage.setItem('token', token)
+        window.location.href = '/profile'
       }
   
     } catch (error) {
@@ -75,6 +75,13 @@ const AuthForm: React.FC<AuthFormProps> = ({ formType }) => {
 
 export default function Page() {
   const [formState, setFormstate] = useState<'login' | 'register'>('login')
+
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+    if (token) {
+      window.location.href = '/profile'
+    }
+  }, [])
 
   return (
     <div className='login-wrapper' id='login'>
