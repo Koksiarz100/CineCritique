@@ -42,6 +42,8 @@ main{
             padding-bottom: 0.5rem;
 
             .profile-photo{
+                width:250px; 
+                height:250px;
                 border: 0.5rem solid globals.$secondary-color;
                 border-radius: 50%;
             }
