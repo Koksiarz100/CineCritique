@@ -145,7 +145,7 @@ export default function App() {
 
   async function fetchData(category: string) {
     try {
-      const response = await axios.get('https://real-cyan-bunny-tam.cyclic.app:3000/api', {
+      const response = await axios.get('https://real-cyan-bunny-tam.cyclic.app/api', {
         params: {
           categories: category
         }
