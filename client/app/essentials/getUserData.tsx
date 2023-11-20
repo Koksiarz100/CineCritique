@@ -10,7 +10,7 @@ export interface UserData {
 
 async function getUserData(token: string) {
   try {
-    const response = await axios.get('http://127.0.0.1:5000/api/user', {
+    const response = await axios.get('https://real-cyan-bunny-tam.cyclic.app:3000/api/user', {
       headers: {
         Authorization: `Bearer ${token}`,
       },

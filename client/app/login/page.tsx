@@ -21,13 +21,13 @@ const AuthForm: React.FC<AuthFormProps> = ({ formType }) => {
     try {
       let response
       if (formType === 'login') {
-        response = await axios.post('http://127.0.0.1:5000/api/login', { username, password })
+        response = await axios.post('https://real-cyan-bunny-tam.cyclic.app:3000/api/login', { username, password })
       } else if (formType === 'register') {
         if (password !== repeatPassword) {
           console.error('Passwords do not match')
           return
         }
-        response = await axios.post('http://127.0.0.1:5000/api/register', { username, password })
+        response = await axios.post('https://real-cyan-bunny-tam.cyclic.app:3000/api/register', { username, password })
       }
       if (response) {
         const token = response.data.token
