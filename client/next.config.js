@@ -6,6 +6,6 @@ module.exports = {
     includePaths: [path.join(__dirname, 'styles')],
   },
   images: {
-    domains: ['localhost'],
+    domains: ['cine-critique-site.cyclic.app'],
   },
 }
