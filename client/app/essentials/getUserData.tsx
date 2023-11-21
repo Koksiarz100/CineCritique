@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { checkToken } from './checkToken';
 
+import { api } from '../API';
 export interface UserData {
   id: string;
   username: string;
@@ -10,7 +11,7 @@ export interface UserData {
 
 async function getUserData(token: string) {
   try {
-    const response = await axios.get('https://real-cyan-bunny-tam.cyclic.app/api/user', {
+    const response = await axios.get(`${api}/api/user`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

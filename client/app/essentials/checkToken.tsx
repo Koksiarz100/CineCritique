@@ -1,5 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 
+import { api } from '../API';
+
 export interface UserData {
   id: string;
   username: string;
@@ -7,7 +9,7 @@ export interface UserData {
 
 export async function checkToken(token: string): Promise<boolean> {
   try {
-    const response: AxiosResponse<UserData> = await axios.get('https://real-cyan-bunny-tam.cyclic.app/api/user', {
+    const response: AxiosResponse<UserData> = await axios.get(`${api}/api/user`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

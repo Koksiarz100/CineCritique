@@ -4,7 +4,7 @@ const cors = require('cors');
 const jwt = require('jsonwebtoken');
 
 const secretKey = 'SKwlV6Z55ODDFFxADHDQs7qf7UWivSmEXPpZGiGFsjLfTKUU8rq8Wbh6ntYQS4s'; // Trzeba zmienić w przyszłości
-const { action, adventure, news, horror, fantasy } = require('./data');
+const { action, adventure, new_films, horror, fantasy } = require('./data');
 const app = express();
 const port = 5000;
 
@@ -57,7 +57,7 @@ app.post('/api/login', (req, res) => {
 
 app.get('/api', (req, res) => {
   const category = req.query.categories;
-  const categories = { action, adventure, news, horror, fantasy };
+  const categories = { action, adventure, new_films, horror, fantasy };
   
   if (categories[category]) {
     res.status(200).json(categories[category]);
@@ -66,6 +66,8 @@ app.get('/api', (req, res) => {
     res.status(404).send('Not Found');
   }
 });
+
+app.use('/images', express.static('server/images'));
 
 app.use((req, res) => {
   res.status(404).send('Not Found');

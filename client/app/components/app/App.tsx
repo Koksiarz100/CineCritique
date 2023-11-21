@@ -6,6 +6,8 @@ import { useSwipeable } from 'react-swipeable';
 import Link from 'next/link';
 import axios from 'axios';
 
+import { api, images } from '../../API';
+
 interface Movie {
   title: string,
   description: string,
@@ -98,7 +100,7 @@ function Carousel(props: any) {
       let cardIndex = (index + i) % cards.length;
       if (cards[cardIndex]) {
         let uniqueKey = `${cardIndex}-${i}`;
-        renderedCards.push(Card(cards[cardIndex].title, cards[cardIndex].description, cards[cardIndex].image,cards[cardIndex].id , animationClass, uniqueKey));
+        renderedCards.push(Card(cards[cardIndex].title, cards[cardIndex].description, images + cards[cardIndex].image,cards[cardIndex].id , animationClass, uniqueKey));
       }
     }
     return renderedCards;
@@ -141,11 +143,12 @@ function Searchbar() {
 
 export default function App() {
   const [movies, setMovies] = useState<Movies>({});
-  const categories = ['news', 'action', 'adventure', 'horror', 'fantasy']
+  const categories = ['new_films', 'action', 'adventure', 'horror', 'fantasy']
+  const categoriesTitles = ['Nowości', 'Akcja', 'Przygodowe', 'Horror', 'Fantasy']
 
   async function fetchData(category: string) {
     try {
-      const response = await axios.get('https://real-cyan-bunny-tam.cyclic.app/api', {
+      const response = await axios.get(`${api}/api`, {
         params: {
           categories: category
         }
@@ -171,7 +174,7 @@ export default function App() {
       <div className='app-window'>
         <div className='app-wrapper'>
           {categories.map(category => (
-            <Carousel key={category} info={movies[category]} title={category.charAt(0).toUpperCase() + category.slice(1)}/>
+            <Carousel key={category} info={movies[category]} title={categoriesTitles[categories.indexOf(category)]}/>
           ))}
         </div>
       </div>
