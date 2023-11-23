@@ -1,4 +1,5 @@
 // Change for production
+// Take links from vercel
 
 export const api = 'https://cine-critique-site.cyclic.app'
 
