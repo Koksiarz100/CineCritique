@@ -76,7 +76,7 @@ const PieChart: React.FC<PieChartProps> = ({ data, title = '' }) => {
 
           const black = document.createElementNS('http://www.w3.org/2000/svg', 'path');
           black.setAttribute('d', d);
-          black.setAttribute('fill', 'black');
+          black.setAttribute('fill', '#171717');
           black.style.animation = `disappearAnimation ${i/65}s linear ${i/50}s both`;
           blacks.push(black);
 
