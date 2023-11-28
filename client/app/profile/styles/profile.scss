@@ -1,9 +1,9 @@
 @use '../../styles/globals.scss';
-main{
+
+.main-wrapper {
     color: white;
 
-
-    .profile-nav{
+    .profile-nav {
         display: grid;
         justify-content:center;
         align-items: center;

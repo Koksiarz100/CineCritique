@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react';
 import { checkToken } from './checkToken';
 
 import { api } from '../API';
-export interface UserData {
+
+interface UserData {
   id: string;
   username: string;
 }
