@@ -152,6 +152,16 @@ main {
         align-items: center;
         width: 100%;
         height: auto;
+        margin: 5px 0 5px 0;
+
+        .carousel-title {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          font-size: 1.1rem;
+          margin-bottom: 5px;
+        }
 
         .carousel-content {
           display: flex;
@@ -201,110 +211,110 @@ main {
             text-decoration: none;
 
             .card-wrapper {
-            display: flex;
-            flex-direction: column;
-            flex-shrink: 0;
-            width: 200px;
-            height: 300px;
-            color: white;
-            margin: 0 20px;
-            transition: transform 0.3s ease;
-
-            &:hover {
-              transform: scale(1.05);
-              transition: transform 0.3s ease;
-            }
-
-            &.none{
-              animation: none;
-            }
-            
-            &.slide-out-left {
-              animation: slide-out-left 0.2s forwards;
-            }
-          
-            &.slide-in-right {
-              animation: slide-in-right 0.2s forwards;
-            }
-          
-            &.slide-out-right {
-              animation: slide-out-right 0.2s forwards;
-            }
-          
-            &.slide-in-left {
-              animation: slide-in-left 0.2s forwards;
-            }
-
-            @keyframes slide-out-left {
-              0% { transform: translateX(0); }
-              100% { transform: translateX(calc(-100% - 40px)); } // dodano margines
-            }
-            
-            @keyframes slide-in-right {
-              0% { transform: translateX(calc(100% + 40px)); } // dodano margines
-              100% { transform: translateX(0); }
-            }
-            
-            @keyframes slide-out-right {
-              0% { transform: translateX(0); }
-              100% { transform: translateX(calc(100% + 40px)); } // dodano margines
-            }
-            
-            @keyframes slide-in-left {
-              0% { transform: translateX(calc(-100% - 40px)); } // dodano margines
-              100% { transform: translateX(0); }
-            }
-
-            .card-image-wrapper {
-              position: absolute;
-            }
-
-            .card-content {
               display: flex;
               flex-direction: column;
-              justify-content: center;
-              align-items: center;
-              position: relative;
-              z-index: 2;
+              flex-shrink: 0;
               width: 200px;
               height: 300px;
-              background-color: rgb(0, 0, 0, 0.5);
-              opacity: 0;
-              transition: opacity 0.3s ease;
+              color: white;
+              margin: 0 20px;
+              transition: transform 0.3s ease;
 
               &:hover {
-                transition: opacity 0.3s ease;
-                background-color: rgb(0, 0, 0, 0.5);
-                opacity: 1;
+                transform: scale(1.05);
+                transition: transform 0.3s ease;
               }
 
-              .card-title {
-                display: flex;
-                justify-content: center;
-                align-items: flex-end;
-                width: 200px;
-                height: 150px;
-                text-align: center;
-                color: white;
-                font-size: 1.5rem;
-                font-weight: 700;
-                margin-bottom: 10px;
+              &.none{
+                animation: none;
               }
-  
-              .card-description {
+              
+              &.slide-out-left {
+                animation: slide-out-left 0.2s forwards;
+              }
+            
+              &.slide-in-right {
+                animation: slide-in-right 0.2s forwards;
+              }
+            
+              &.slide-out-right {
+                animation: slide-out-right 0.2s forwards;
+              }
+            
+              &.slide-in-left {
+                animation: slide-in-left 0.2s forwards;
+              }
+
+              @keyframes slide-out-left {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(calc(-100% - 40px)); } // dodano margines
+              }
+              
+              @keyframes slide-in-right {
+                0% { transform: translateX(calc(100% + 40px)); } // dodano margines
+                100% { transform: translateX(0); }
+              }
+              
+              @keyframes slide-out-right {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(calc(100% + 40px)); } // dodano margines
+              }
+              
+              @keyframes slide-in-left {
+                0% { transform: translateX(calc(-100% - 40px)); } // dodano margines
+                100% { transform: translateX(0); }
+              }
+
+              .card-image-wrapper {
+                position: absolute;
+              }
+
+              .card-content {
                 display: flex;
+                flex-direction: column;
                 justify-content: center;
-                align-items: top;
+                align-items: center;
+                position: relative;
+                z-index: 2;
                 width: 200px;
-                height: 150px;
-                text-align: center;
-                font-size: 1.0rem;
-                font-weight: 500;
+                height: 300px;
+                background-color: rgb(0, 0, 0, 0.5);
+                opacity: 0;
+                transition: opacity 0.3s ease;
+
+                &:hover {
+                  transition: opacity 0.3s ease;
+                  background-color: rgb(0, 0, 0, 0.5);
+                  opacity: 1;
+                }
+
+                .card-title {
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  width: 200px;
+                  height: 150px;
+                  text-align: center;
+                  color: white;
+                  font-size: 1.5rem;
+                  font-weight: 700;
+                  margin-bottom: 10px;
+                }
+  
+                .card-description {
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  width: 200px;
+                  height: 150px;
+                  text-align: center;
+                  font-size: 1.0rem;
+                  font-weight: 500;
+                }
               }
             }
           }
-          }
-        }
+        } 
       }
     }
   }
