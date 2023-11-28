@@ -1,13 +1,19 @@
 'use client'
 
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 
 import { UserData } from '../../../essentials/getUserData'
 
 function Nav() {
-  const token = localStorage.getItem('token')
+  const [token, setToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setToken(localStorage.getItem('token'));
+    }
+  }, []);
 
   return (
     <nav>
