@@ -152,6 +152,16 @@ main {
         align-items: center;
         width: 100%;
         height: auto;
+        margin: 5px 0 5px 0;
+
+        .carousel-title {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          font-size: 1.1rem;
+          margin-bottom: 5px;
+        }
 
         .carousel-content {
           display: flex;
@@ -303,9 +313,9 @@ main {
               }
             }
           }
-          }
         }
       }
     }
   }
+ }
 }

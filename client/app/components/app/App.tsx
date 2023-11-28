@@ -6,6 +6,8 @@ import { useSwipeable } from 'react-swipeable';
 import Link from 'next/link';
 import axios from 'axios';
 
+import { api, images } from '../../API';
+
 interface Movie {
   title: string,
   description: string,
@@ -96,9 +98,9 @@ function Carousel(props: any) {
     let renderedCards = [];
     for (let i = 0; i < 21; i++) {
       let cardIndex = (index + i) % cards.length;
-      if (cards[cardIndex]) { // Dodajemy to sprawdzenie
+      if (cards[cardIndex]) {
         let uniqueKey = `${cardIndex}-${i}`;
-        renderedCards.push(Card(cards[cardIndex].title, cards[cardIndex].description, cards[cardIndex].image,cards[cardIndex].id , animationClass, uniqueKey));
+        renderedCards.push(Card(cards[cardIndex].title, cards[cardIndex].description, images + cards[cardIndex].image,cards[cardIndex].id , animationClass, uniqueKey));
       }
     }
     return renderedCards;
@@ -141,13 +143,14 @@ function Searchbar() {
 
 export default function App() {
   const [movies, setMovies] = useState<Movies>({});
-  const categories = ['new', 'action', 'adventure', 'horror', 'drama']
+  const categories = ['new_films', 'action', 'adventure', 'horror', 'fantasy']
+  const categoriesTitles = ['Nowości', 'Akcja', 'Przygodowe', 'Horror', 'Fantasy']
 
-  async function fetchData() {
+  async function fetchData(category: string) {
     try {
-      const response = await axios.get('http://127.0.0.1:5000/api', {
+      const response = await axios.get(`${api}/api`, {
         params: {
-          categories: categories[1]
+          categories: category
         }
       });
       return response.data;
@@ -158,8 +161,10 @@ export default function App() {
   }
 
   useEffect(() => {
-    fetchData().then(data => {
-      setMovies(data);
+    categories.forEach(category => {
+      fetchData(category).then(data => {
+        setMovies(prevMovies => ({...prevMovies, [category]: data}));
+      });
     });
   }, []);
 
@@ -168,11 +173,9 @@ export default function App() {
       <Searchbar/>
       <div className='app-window'>
         <div className='app-wrapper'>
-          <Carousel info={movies} title='Nowości'/>
-          <Carousel info={movies} title='Akcja'/>
-          <Carousel info={movies} title='Przygodowe'/>
-          <Carousel info={movies} title='Horror'/>
-          <Carousel info={movies} title='Dramat'/>
+          {categories.map(category => (
+            <Carousel key={category} info={movies[category]} title={categoriesTitles[categories.indexOf(category)]}/>
+          ))}
         </div>
       </div>
     </Suspense>
