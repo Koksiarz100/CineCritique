@@ -39,6 +39,8 @@ function Card(title: string, description: string, image: string, id: string, ani
 }
 
 function Carousel(props: any) {
+  //throw Promise.resolve('test'); // test suspense
+
   const [animationClass, setAnimationClass] = useState('');
   const [index, setIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -169,15 +171,17 @@ export default function App() {
   }, []);
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <>
       <Searchbar/>
       <div className='app-window'>
         <div className='app-wrapper'>
+        <Suspense fallback={<div>Loading...</div>}>
           {categories.map(category => (
             <Carousel key={category} info={movies[category]} title={categoriesTitles[categories.indexOf(category)]}/>
           ))}
+        </Suspense>
         </div>
       </div>
-    </Suspense>
+    </>
   )
 }

@@ -1,7 +1,9 @@
 @use '../../styles/globals.scss';
+
 .main-wrapper{
     color: white;
     background: globals.$background-gradient;
+  
     .profile-nav{
         display: grid;
         justify-content:center;

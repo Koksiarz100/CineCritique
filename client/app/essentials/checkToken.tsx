@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 
 import { api } from '../API';
 
-export interface UserData {
+interface UserData {
   id: string;
   username: string;
 }
