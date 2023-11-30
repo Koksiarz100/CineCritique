@@ -165,7 +165,6 @@ export default function App() {
   const [movies, setMovies] = useState<Movies>({});
   const [isSearching, setIsSearching] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-  const [isDisplayNone, setIsDisplayNone] = useState(false);
   const categories = ['new_films', 'action', 'adventure', 'horror', 'fantasy']
   const categoriesTitles = ['Nowości', 'Akcja', 'Przygodowe', 'Horror', 'Fantasy']
 
@@ -196,17 +195,6 @@ export default function App() {
   }
 
   useEffect(() => {
-    if (!isSearching) {
-      const timer = setTimeout(() => {
-        setIsDisplayNone(true);
-      }, 100);
-      return () => clearTimeout(timer);
-    } else {
-      setIsDisplayNone(false);
-    }
-  }, [isSearching]);
-
-  useEffect(() => {
     categories.forEach(category => {
       fetchData(category).then(data => {
         setMovies(prevMovies => ({...prevMovies, [category]: data}));
@@ -214,26 +202,32 @@ export default function App() {
     });
   }, []);
 
-  return (
-    <div>
-      <Searchbar onSearch={handleSearch} />
-      <div className='app-window'>
-        <div className={`app-wrapper searching ${!isSearching ? 'hidden' : ''} ${isDisplayNone ? 'no-display' : ''}`}>
-          <span className='search-title'>{searchTerm}</span>
+/*
+  <span className='search-title'>{searchTerm}</span>
           <div className='app-wrapper-content'>
             {movieCard('test', 'test', '/placeholder.png', 'test')}
             {movieCard('test', 'test', '/placeholder.png', 'test')}
             {movieCard('test', 'test', '/placeholder.png', 'test')}
             {movieCard('test', 'test', '/placeholder.png', 'test')}
             {movieCard('test', 'test', '/placeholder.png', 'test')}
-          </div>
-        </div>
-        <div className={`app-wrapper ${isSearching ? 'hidden' : ''}`}>
-          <Suspense fallback={<div>Loading...</div>}>
-            {categories.map(category => (
-              <Carousel key={category} info={movies[category]} title={categoriesTitles[categories.indexOf(category)]}/>
-            ))}
-          </Suspense>
+          </div>*/
+
+  return (
+    <div>
+      <Searchbar onSearch={handleSearch} />
+      <div className='app-window'>
+        <div className='app-wrapper'>
+          {isSearching ? (
+            <div>
+              <h1>{searchTerm}</h1>
+            </div>
+          ) : (
+            <Suspense fallback={<div>Loading...</div>}>
+              {categories.map(category => (
+                <Carousel key={category} info={movies[category]} title={categoriesTitles[categories.indexOf(category)]}/>
+              ))}
+            </Suspense>
+          )}
         </div>
       </div>
     </div>
