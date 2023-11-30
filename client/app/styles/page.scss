@@ -135,7 +135,28 @@ main {
     }
 
     .searching {
-      align-items: center;
+      height: auto;
+      opacity: 1;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      transform: translateX(0);
+      
+      &.hidden {
+        opacity: 0;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        transform: translateX(-100%);
+      }
+
+      &.no-display {
+        display: none;
+      }
+
+      &.app-wrapper-content {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: auto;
+        padding-bottom: 40px;
+      }
     };
 
     .app-wrapper {
@@ -144,6 +165,13 @@ main {
       width: 100%;
       height: auto;
       padding-bottom: 40px;
+      transform: translateX(0);
+
+      &.hidden {
+        opacity: 0;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        transform: translateX(-100%);
+      }
 
       @media only screen and (max-width: 768px) {
         width: 100%;

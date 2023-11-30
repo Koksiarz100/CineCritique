@@ -143,10 +143,29 @@ function Searchbar({ onSearch }: { onSearch: (e: React.ChangeEvent<HTMLInputElem
   )
 }
 
+function movieCard(title: string, description: string, image: string, id: string) {
+  return (
+    <div className='movie-card-wrapper'>
+      <div className='movie-card-image-wrapper'>
+        <Image src={image} quality={100} alt={title} width={200} height={300} className='movie-card-image'/>
+      </div>
+      <div className='movie-card-content'>
+        <div className='movie-card-title'>
+          <h3>{title}</h3>
+        </div>
+        <div className='movie-card-description'>
+          <p>{description}</p>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export default function App() {
   const [movies, setMovies] = useState<Movies>({});
   const [isSearching, setIsSearching] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [isDisplayNone, setIsDisplayNone] = useState(false);
   const categories = ['new_films', 'action', 'adventure', 'horror', 'fantasy']
   const categoriesTitles = ['Nowości', 'Akcja', 'Przygodowe', 'Horror', 'Fantasy']
 
@@ -177,6 +196,17 @@ export default function App() {
   }
 
   useEffect(() => {
+    if (!isSearching) {
+      const timer = setTimeout(() => {
+        setIsDisplayNone(true);
+      }, 100);
+      return () => clearTimeout(timer);
+    } else {
+      setIsDisplayNone(false);
+    }
+  }, [isSearching]);
+
+  useEffect(() => {
     categories.forEach(category => {
       fetchData(category).then(data => {
         setMovies(prevMovies => ({...prevMovies, [category]: data}));
@@ -187,23 +217,25 @@ export default function App() {
   return (
     <div>
       <Searchbar onSearch={handleSearch} />
-      {isSearching ? (
-        <div className='app-window'>
-          <div className='app-wrapper searching'>
-            <h1>{searchTerm}</h1>
+      <div className='app-window'>
+        <div className={`app-wrapper searching ${!isSearching ? 'hidden' : ''} ${isDisplayNone ? 'no-display' : ''}`}>
+          <span className='search-title'>{searchTerm}</span>
+          <div className='app-wrapper-content'>
+            {movieCard('test', 'test', '/placeholder.png', 'test')}
+            {movieCard('test', 'test', '/placeholder.png', 'test')}
+            {movieCard('test', 'test', '/placeholder.png', 'test')}
+            {movieCard('test', 'test', '/placeholder.png', 'test')}
+            {movieCard('test', 'test', '/placeholder.png', 'test')}
           </div>
         </div>
-      ) : (
-        <div className='app-window'>
-          <div className='app-wrapper'>
+        <div className={`app-wrapper ${isSearching ? 'hidden' : ''}`}>
           <Suspense fallback={<div>Loading...</div>}>
             {categories.map(category => (
               <Carousel key={category} info={movies[category]} title={categoriesTitles[categories.indexOf(category)]}/>
             ))}
           </Suspense>
-          </div>
         </div>
-      )}
+      </div>
     </div>
   )
 }
