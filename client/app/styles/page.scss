@@ -134,6 +134,10 @@ main {
       flex-direction: column-reverse;
     }
 
+    .searching {
+      align-items: center;
+    };
+
     .app-wrapper {
       display: flex;
       flex-direction: column;

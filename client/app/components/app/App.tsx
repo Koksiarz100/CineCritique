@@ -126,7 +126,7 @@ function Carousel(props: any) {
   )
 }
 
-function Searchbar() {
+function Searchbar({ onSearch }: { onSearch: (e: React.ChangeEvent<HTMLInputElement>) => void }) {
   return (
     <div className='app-searchbar'>
       <div className='app-searchbar-margin'></div>
@@ -137,7 +137,7 @@ function Searchbar() {
         <button>Wszystko</button>
       </div>
       <div className='app-searchbar-input'>
-        <input type='text' placeholder='Szukaj' />
+        <input type='text' placeholder='Szukaj' onChange={onSearch}/>
       </div>
     </div>
   )
@@ -145,6 +145,8 @@ function Searchbar() {
 
 export default function App() {
   const [movies, setMovies] = useState<Movies>({});
+  const [isSearching, setIsSearching] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
   const categories = ['new_films', 'action', 'adventure', 'horror', 'fantasy']
   const categoriesTitles = ['Nowości', 'Akcja', 'Przygodowe', 'Horror', 'Fantasy']
 
@@ -162,6 +164,18 @@ export default function App() {
     }
   }
 
+  function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
+    if(e.target.value === '') {
+      setIsSearching(false);
+      return;
+    }
+    else {
+      setSearchTerm(e.target.value);
+      setIsSearching(true);
+      return;
+    }
+  }
+
   useEffect(() => {
     categories.forEach(category => {
       fetchData(category).then(data => {
@@ -171,17 +185,25 @@ export default function App() {
   }, []);
 
   return (
-    <>
-      <Searchbar/>
-      <div className='app-window'>
-        <div className='app-wrapper'>
-        <Suspense fallback={<div>Loading...</div>}>
-          {categories.map(category => (
-            <Carousel key={category} info={movies[category]} title={categoriesTitles[categories.indexOf(category)]}/>
-          ))}
-        </Suspense>
+    <div>
+      <Searchbar onSearch={handleSearch} />
+      {isSearching ? (
+        <div className='app-window'>
+          <div className='app-wrapper searching'>
+            <h1>{searchTerm}</h1>
+          </div>
         </div>
-      </div>
-    </>
+      ) : (
+        <div className='app-window'>
+          <div className='app-wrapper'>
+          <Suspense fallback={<div>Loading...</div>}>
+            {categories.map(category => (
+              <Carousel key={category} info={movies[category]} title={categoriesTitles[categories.indexOf(category)]}/>
+            ))}
+          </Suspense>
+          </div>
+        </div>
+      )}
+    </div>
   )
 }
