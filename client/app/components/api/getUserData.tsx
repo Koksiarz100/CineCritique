@@ -4,11 +4,11 @@ import { useEffect, useState } from 'react';
 import { checkToken } from './checkToken';
 
 import { UserData } from './types';
-import { api } from '../../API';
+import { API } from '../../config/API';
 
 async function getUserData(token: string) {
   try {
-    const response = await axios.get(`${api}/api/user`, {
+    const response = await axios.get(`${API}/api/user`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

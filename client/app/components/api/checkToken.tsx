@@ -1,11 +1,11 @@
 import axios, { AxiosResponse } from 'axios';
 
 import { UserData } from './types';
-import { api } from '../../API';
+import { API } from '../../config/API';
 
 export async function checkToken(token: string): Promise<boolean> {
   try {
-    const response: AxiosResponse<UserData> = await axios.get(`${api}/api/user`, {
+    const response: AxiosResponse<UserData> = await axios.get(`${API}/api/user`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
