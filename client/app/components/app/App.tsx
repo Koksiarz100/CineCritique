@@ -126,7 +126,7 @@ function Carousel(props: any) {
   )
 }
 
-function Searchbar() {
+function Searchbar({ onSearch }: { onSearch: (e: React.ChangeEvent<HTMLInputElement>) => void }) {
   return (
     <div className='app-searchbar'>
       <div className='app-searchbar-margin'></div>
@@ -137,7 +137,25 @@ function Searchbar() {
         <button>Wszystko</button>
       </div>
       <div className='app-searchbar-input'>
-        <input type='text' placeholder='Szukaj' />
+        <input type='text' placeholder='Szukaj' onChange={onSearch}/>
+      </div>
+    </div>
+  )
+}
+
+function movieCard(title: string, description: string, image: string, id: string) {
+  return (
+    <div className='movie-card-wrapper'>
+      <div className='movie-card-image-wrapper'>
+        <Image src={image} quality={100} alt={title} width={200} height={300} className='movie-card-image'/>
+      </div>
+      <div className='movie-card-content'>
+        <div className='movie-card-title'>
+          <h3>{title}</h3>
+        </div>
+        <div className='movie-card-description'>
+          <p>{description}</p>
+        </div>
       </div>
     </div>
   )
@@ -145,6 +163,8 @@ function Searchbar() {
 
 export default function App() {
   const [movies, setMovies] = useState<Movies>({});
+  const [isSearching, setIsSearching] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
   const categories = ['new_films', 'action', 'adventure', 'horror', 'fantasy']
   const categoriesTitles = ['Nowości', 'Akcja', 'Przygodowe', 'Horror', 'Fantasy']
 
@@ -162,6 +182,18 @@ export default function App() {
     }
   }
 
+  function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
+    if(e.target.value === '') {
+      setIsSearching(false);
+      return;
+    }
+    else {
+      setSearchTerm(e.target.value);
+      setIsSearching(true);
+      return;
+    }
+  }
+
   useEffect(() => {
     categories.forEach(category => {
       fetchData(category).then(data => {
@@ -170,18 +202,34 @@ export default function App() {
     });
   }, []);
 
+/*
+  <span className='search-title'>{searchTerm}</span>
+          <div className='app-wrapper-content'>
+            {movieCard('test', 'test', '/placeholder.png', 'test')}
+            {movieCard('test', 'test', '/placeholder.png', 'test')}
+            {movieCard('test', 'test', '/placeholder.png', 'test')}
+            {movieCard('test', 'test', '/placeholder.png', 'test')}
+            {movieCard('test', 'test', '/placeholder.png', 'test')}
+          </div>*/
+
   return (
-    <>
-      <Searchbar/>
+    <div>
+      <Searchbar onSearch={handleSearch} />
       <div className='app-window'>
         <div className='app-wrapper'>
-        <Suspense fallback={<div>Loading...</div>}>
-          {categories.map(category => (
-            <Carousel key={category} info={movies[category]} title={categoriesTitles[categories.indexOf(category)]}/>
-          ))}
-        </Suspense>
+          {isSearching ? (
+            <div>
+              <h1>{searchTerm}</h1>
+            </div>
+          ) : (
+            <Suspense fallback={<div>Loading...</div>}>
+              {categories.map(category => (
+                <Carousel key={category} info={movies[category]} title={categoriesTitles[categories.indexOf(category)]}/>
+              ))}
+            </Suspense>
+          )}
         </div>
       </div>
-    </>
+    </div>
   )
 }
