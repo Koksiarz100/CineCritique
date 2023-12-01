@@ -3,12 +3,8 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { checkToken } from './checkToken';
 
-import { api } from '../API';
-
-interface UserData {
-  id: string;
-  username: string;
-}
+import { UserData } from './types';
+import { api } from '../../API';
 
 async function getUserData(token: string) {
   try {
@@ -25,7 +21,7 @@ async function getUserData(token: string) {
   }
 }
 
-export const UserData: React.FC = () => {
+export const UserDataComponent: React.FC = () => {
   const [userData, setUserData] = useState<UserData | null>(null);
 
   useEffect(() => {

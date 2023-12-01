@@ -1,11 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 
-import { api } from '../API';
-
-interface UserData {
-  id: string;
-  username: string;
-}
+import { UserData } from './types';
+import { api } from '../../API';
 
 export async function checkToken(token: string): Promise<boolean> {
   try {

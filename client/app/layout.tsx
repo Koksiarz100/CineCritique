@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
-import Nav from './components/layout/nav/Nav'
-import Banner from './components/layout/banner/Banner'
-import Footer from './components/layout/footer/Footer'
+import Nav from './components/layout/Nav'
+import Banner from './components/layout/Banner'
+import Footer from './components/layout/Footer'
 
 import './styles/globals.scss'
 import './styles/layout.scss'
