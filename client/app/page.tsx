@@ -1,4 +1,4 @@
-import App from "./components/app/App"
+import App from "./components/core/App"
 
 import './styles/page.scss'
 

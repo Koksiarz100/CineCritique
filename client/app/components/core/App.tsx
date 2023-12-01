@@ -6,7 +6,7 @@ import { useSwipeable } from 'react-swipeable';
 import Link from 'next/link';
 import axios from 'axios';
 
-import { api, images } from '../../API';
+import { API, IMAGES_DIR } from '../../config/API';
 
 interface Movie {
   title: string,
@@ -102,7 +102,7 @@ function Carousel(props: any) {
       let cardIndex = (index + i) % cards.length;
       if (cards[cardIndex]) {
         let uniqueKey = `${cardIndex}-${i}`;
-        renderedCards.push(Card(cards[cardIndex].title, cards[cardIndex].description, images + cards[cardIndex].image,cards[cardIndex].id , animationClass, uniqueKey));
+        renderedCards.push(Card(cards[cardIndex].title, cards[cardIndex].description, IMAGES_DIR + cards[cardIndex].image,cards[cardIndex].id , animationClass, uniqueKey));
       }
     }
     return renderedCards;
@@ -170,7 +170,7 @@ export default function App() {
 
   async function fetchData(category: string) {
     try {
-      const response = await axios.get(`${api}/api`, {
+      const response = await axios.get(`${API}/api`, {
         params: {
           categories: category
         }
@@ -204,13 +204,13 @@ export default function App() {
 
 /*
   <span className='search-title'>{searchTerm}</span>
-          <div className='app-wrapper-content'>
-            {movieCard('test', 'test', '/placeholder.png', 'test')}
-            {movieCard('test', 'test', '/placeholder.png', 'test')}
-            {movieCard('test', 'test', '/placeholder.png', 'test')}
-            {movieCard('test', 'test', '/placeholder.png', 'test')}
-            {movieCard('test', 'test', '/placeholder.png', 'test')}
-          </div>*/
+    <div className='app-wrapper-content'>
+      {movieCard('test', 'test', '/placeholder.png', 'test')}
+      {movieCard('test', 'test', '/placeholder.png', 'test')}
+      {movieCard('test', 'test', '/placeholder.png', 'test')}
+      {movieCard('test', 'test', '/placeholder.png', 'test')}
+      {movieCard('test', 'test', '/placeholder.png', 'test')}
+    </div>*/
 
   return (
     <div>

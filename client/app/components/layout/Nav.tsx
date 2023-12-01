@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 
-import { UserData } from '../../../essentials/getUserData'
+import { UserDataComponent } from '../api/getUserData'
 
 function Nav() {
   const [token, setToken] = useState<string | null>(null);
@@ -21,7 +21,7 @@ function Nav() {
         <Link href="/#body"><span className='logo-green'>Cine</span>Critique</Link>
       </div>
       <div className='nav-links-container'>
-        <UserData/>
+        <UserDataComponent/>
         <Link href={token ? '/profile' : '/login#login'}>
           <Image src='/layout/nav/user_light.png' className='profile-button' alt='login' width={32} height={32}/>
         </Link>
