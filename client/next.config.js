@@ -2,7 +2,6 @@
 const path = require('path')
 
 // Testing
-/*
 module.exports = {
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')],
@@ -11,9 +10,9 @@ module.exports = {
     domains: ['localhost'],
   },
 }
-*/
 
 // Production
+/*
 module.exports = {
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')],
@@ -22,3 +21,4 @@ module.exports = {
     domains: ['cine-critique-site.cyclic.app'],
   },
 }
+*/
