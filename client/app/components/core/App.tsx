@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useSwipeable } from 'react-swipeable';
 import Link from 'next/link';
 import axios from 'axios';
+import { useFetchData } from '../api/carouselData';
 
 import { API, IMAGES_DIR } from '../../config/API';
 
@@ -39,14 +40,11 @@ function Card(title: string, description: string, image: string, id: string, ani
 }
 
 function Carousel(props: any) {
-  //throw Promise.resolve('test'); // test suspense
-
   const [animationClass, setAnimationClass] = useState('');
   const [index, setIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const { info } = props;
   const category = props.title;
-
   const cards: any = info ? Object.values(info) : [];
 
   const handleNext = useCallback(() => {
@@ -102,7 +100,8 @@ function Carousel(props: any) {
       let cardIndex = (index + i) % cards.length;
       if (cards[cardIndex]) {
         let uniqueKey = `${cardIndex}-${i}`;
-        renderedCards.push(Card(cards[cardIndex].title, cards[cardIndex].description, IMAGES_DIR + cards[cardIndex].image,cards[cardIndex].id , animationClass, uniqueKey));
+        let imageSrc = cards[cardIndex].image === 'loading' ? '/carousel/loading.png' : IMAGES_DIR + cards[cardIndex].image;
+        renderedCards.push(Card(cards[cardIndex].title, cards[cardIndex].description, imageSrc, cards[cardIndex].id , animationClass, uniqueKey));
       }
     }
     return renderedCards;
@@ -162,25 +161,11 @@ function movieCard(title: string, description: string, image: string, id: string
 }
 
 export default function App() {
-  const [movies, setMovies] = useState<Movies>({});
-  const [isSearching, setIsSearching] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
   const categories = ['new_films', 'action', 'adventure', 'horror', 'fantasy']
   const categoriesTitles = ['Nowości', 'Akcja', 'Przygodowe', 'Horror', 'Fantasy']
-
-  async function fetchData(category: string) {
-    try {
-      const response = await axios.get(`${API}/api`, {
-        params: {
-          categories: category
-        }
-      });
-      return response.data;
-    } catch (error) {
-      console.error(error);
-      return {};
-    }
-  }
+  const { data: movies, loading } = useFetchData(categories);
+  const [isSearching, setIsSearching] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
 
   function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
     if(e.target.value === '') {
@@ -194,23 +179,29 @@ export default function App() {
     }
   }
 
-  useEffect(() => {
-    categories.forEach(category => {
-      fetchData(category).then(data => {
-        setMovies(prevMovies => ({...prevMovies, [category]: data}));
-      });
-    });
-  }, []);
+  const loadingData = {
+    1: {
+      title: 'Loading',
+      description: '',
+      image: 'loading',
+      id: 'loading',
+    }
+  }
 
-/*
-  <span className='search-title'>{searchTerm}</span>
-    <div className='app-wrapper-content'>
-      {movieCard('test', 'test', '/placeholder.png', 'test')}
-      {movieCard('test', 'test', '/placeholder.png', 'test')}
-      {movieCard('test', 'test', '/placeholder.png', 'test')}
-      {movieCard('test', 'test', '/placeholder.png', 'test')}
-      {movieCard('test', 'test', '/placeholder.png', 'test')}
-    </div>*/
+  if (loading) {
+    return (
+      <div>
+        <Searchbar onSearch={handleSearch} />
+        <div className='app-window'>
+          <div className='app-wrapper'>
+            {categories.map(category => (
+              <Carousel key={category} info={loadingData} title={categoriesTitles[categories.indexOf(category)]}/>
+            ))}
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div>
@@ -222,14 +213,14 @@ export default function App() {
               <h1>{searchTerm}</h1>
             </div>
           ) : (
-            <Suspense fallback={<div>Loading...</div>}>
+            <>
               {categories.map(category => (
                 <Carousel key={category} info={movies[category]} title={categoriesTitles[categories.indexOf(category)]}/>
               ))}
-            </Suspense>
+            </>
           )}
         </div>
       </div>
     </div>
-  )
+  );
 }
