@@ -100,7 +100,7 @@ function Carousel(props: any) {
       let cardIndex = (index + i) % cards.length;
       if (cards[cardIndex]) {
         let uniqueKey = `${cardIndex}-${i}`;
-        let imageSrc = cards[cardIndex].image === 'loading' ? '/placeholder.png' : IMAGES_DIR + cards[cardIndex].image;
+        let imageSrc = cards[cardIndex].image === 'loading' ? '/carousel/loading.png' : IMAGES_DIR + cards[cardIndex].image;
         renderedCards.push(Card(cards[cardIndex].title, cards[cardIndex].description, imageSrc, cards[cardIndex].id , animationClass, uniqueKey));
       }
     }
@@ -179,9 +179,9 @@ export default function App() {
     }
   }
 
-  const fake = {
+  const loadingData = {
     1: {
-      title: 'Loading...',
+      title: 'Loading',
       description: '',
       image: 'loading',
       id: 'loading',
@@ -195,7 +195,7 @@ export default function App() {
         <div className='app-window'>
           <div className='app-wrapper'>
             {categories.map(category => (
-              <Carousel key={category} info={fake} title={categoriesTitles[categories.indexOf(category)]}/>
+              <Carousel key={category} info={loadingData} title={categoriesTitles[categories.indexOf(category)]}/>
             ))}
           </div>
         </div>
