@@ -1,22 +1,12 @@
 'use client'
 
-import React, { useState, useEffect, useCallback, Suspense, lazy } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image';
 import { useSwipeable } from 'react-swipeable';
 import Link from 'next/link';
-import axios from 'axios';
+
 import { useFetchData } from '../api/carouselData';
-
-import { API, IMAGES_DIR } from '../../config/API';
-
-interface Movie {
-  title: string,
-  description: string,
-  image: string,
-  id: string
-}
-
-type Movies = Record<string, Movie>;
+import { IMAGES_DIR } from '../../config/API';
 
 function Card(title: string, description: string, image: string, id: string, animationClass: string = '', key: string) {
   var ID = `/movie/${id}`;
@@ -190,7 +180,7 @@ export default function App() {
 
   if (loading) {
     return (
-      <div>
+      <>
         <Searchbar onSearch={handleSearch} />
         <div className='app-window'>
           <div className='app-wrapper'>
@@ -199,12 +189,12 @@ export default function App() {
             ))}
           </div>
         </div>
-      </div>
+      </>
     )
   }
 
   return (
-    <div>
+    <>
       <Searchbar onSearch={handleSearch} />
       <div className='app-window'>
         <div className='app-wrapper'>
@@ -221,6 +211,6 @@ export default function App() {
           )}
         </div>
       </div>
-    </div>
+    </>
   );
 }
