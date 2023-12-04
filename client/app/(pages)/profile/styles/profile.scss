@@ -32,17 +32,25 @@
         text-align: justify;
         background-color: globals.$primary-color;
         font-size: 0.9rem;
-
-        @media only screen and (max-width: 768px){
-            display: grid;
-            z-index: 1000;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+        @media only screen and (min-width: 769px) {
+            transform: translateX(0%);
+        }
+        
+        @media only screen and (max-width: 768px) {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+            position: fixed;
             width: 100%;
+            z-index: 1000;
             height: 100%;
             top:0px;
             bottom: 0px;
-            position: fixed;
-            padding: 0%;
-          }
+            top: 50px;
+            padding: 0px;
+            height: calc(100vh - 50px);
+        }
 
         .profile-info{
             text-align: center;
@@ -85,6 +93,21 @@
   
     .mainside {
         display: flex;
+        &.sidebar-open {
+            .sidebar-wrapper {
+              transform: translateX(0%);
+            }
+          }
+        .toggle-button {
+            display: none; // Initially hide the button on larger screens
+            @media only screen and (max-width: 768px) {
+              display: block;
+              position: fixed;
+              top: 10px;
+              left: 10px;
+              z-index: 1001;
+            }
+        }
     }
 
     .profile-content{

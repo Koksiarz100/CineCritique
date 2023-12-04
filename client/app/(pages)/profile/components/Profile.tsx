@@ -75,15 +75,28 @@ function Sidebar(image:string, nickname:string, email:string, information:string
     </div>
     )
   }
-
-export default function Profiles() {
+  export default function Profiles() {
+    const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
+  
+    const toggleSidebar = () => {
+      setIsSidebarOpen(!isSidebarOpen);
+    };
+  
     return (
       <>
         <div className='profile-nav'>Profil</div>
-        <div className='mainside'>
-        {Sidebar(userprofiles.profile1.image, userprofiles.profile1.nickname, userprofiles.profile1.email, userprofiles.profile1.information)}
-        <MainContent/>
+        <div className={`mainside ${isSidebarOpen ? 'sidebar-open' : ''}`}>
+          <button className='toggle-button' onClick={toggleSidebar}>
+            Profil
+          </button>
+          {Sidebar(
+            userprofiles.profile1.image,
+            userprofiles.profile1.nickname,
+            userprofiles.profile1.email,
+            userprofiles.profile1.information
+          )}
+          <MainContent />
         </div>
       </>
-    )
+    );
   }
