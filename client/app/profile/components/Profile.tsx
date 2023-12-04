@@ -1,7 +1,9 @@
+'use client'
 import React from 'react'
 import Image from 'next/image';
 import PieChart from './Pie';
 import '../styles/profile.scss'
+import { UserData } from '../../essentials/getUserData';
 
 interface UserProfile{
   image: string,
@@ -13,13 +15,13 @@ interface UserProfile{
 type UserProfiles = Record<string, UserProfile>;
 
 const userprofiles:UserProfiles = {
-  profile1:{
+  profile2:{
     image:'/Default-Profile-Female.jpg', //placeholder image
     nickname: 'Lady Gaga',
     email: 'ladygaga@gmail.com',
     information: 'Amerykańska piosenkarka, kompozytorka, pianistka, autorka tekstów, aktorka, producentka muzyczna, filantropka oraz działaczka LGBT pochodzenia włoskiego. Urodziła się i dorastała w Nowym Jorku.'
   },
-  profile2:{
+  profile1:{
     image:'/Default-Profile-Male.jpg', //placeholder image
     nickname: 'Lady Punk',
     email: 'ladypunk@gmail.com',
@@ -42,7 +44,7 @@ function Sidebar(image:string, nickname:string, email:string, information:string
               <Image src={image} quality={100} alt={'Profile Picture'} width={250} height={250} className='profile-photo'/>
             </div>
             <div className='profile-nickname'>
-              {nickname}
+            <UserData/>
             </div>
             <div className='profile-email'>
               {email}
