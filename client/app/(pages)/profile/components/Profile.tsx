@@ -3,7 +3,7 @@ import React from 'react'
 import Image from 'next/image';
 import PieChart from './Pie';
 import '../styles/profile.scss'
-import { UserData } from '../../essentials/getUserData';
+import { UserDataComponent } from '../../../components/api/getUserData';
 
 interface UserProfile{
   image: string,
@@ -44,7 +44,7 @@ function Sidebar(image:string, nickname:string, email:string, information:string
               <Image src={image} quality={100} alt={'Profile Picture'} width={250} height={250} className='profile-photo'/>
             </div>
             <div className='profile-nickname'>
-            <UserData/>
+            <UserDataComponent/>
             </div>
             <div className='profile-email'>
               {email}
