@@ -93,7 +93,7 @@ function Sidebar(image:string, nickname:string, email:string, information:string
         <div className={`mainside ${isSidebarOpen ? 'sidebar-open' : ''}`}>
         <div className='sidebar-wrapper'>
         <button className='toggle-button' onClick={closeSidebar}>
-        Wróć do statystyk
+        ⇚ Wróć do statystyk
         </button>
           {Sidebar(
             userprofiles.profile1.image,
