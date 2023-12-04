@@ -1,10 +1,12 @@
+'use client'
+
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 
 export default function Footer() {
   return (
-    <div className='footer-wrapper'>
+    <footer>
       <div className='footer-up-button-wrapper'>
         <Link className='footer-up-button' href='#body'>Do góry</Link>
       </div>
@@ -28,6 +30,6 @@ export default function Footer() {
           <Link href='/'>Kontakt</Link>
         </div>
       </div>
-    </div>
+    </footer>
   )
 }
