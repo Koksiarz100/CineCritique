@@ -5,8 +5,9 @@ import Image from 'next/image';
 import { useSwipeable } from 'react-swipeable';
 import Link from 'next/link';
 import axios from 'axios';
+import { useFetchData } from '../api/carouselData';
 
-import { api, images } from '../../API';
+import { API, IMAGES_DIR } from '../../config/API';
 
 interface Movie {
   title: string,
@@ -44,7 +45,6 @@ function Carousel(props: any) {
   const [isAnimating, setIsAnimating] = useState(false);
   const { info } = props;
   const category = props.title;
-
   const cards: any = info ? Object.values(info) : [];
 
   const handleNext = useCallback(() => {
@@ -100,7 +100,8 @@ function Carousel(props: any) {
       let cardIndex = (index + i) % cards.length;
       if (cards[cardIndex]) {
         let uniqueKey = `${cardIndex}-${i}`;
-        renderedCards.push(Card(cards[cardIndex].title, cards[cardIndex].description, images + cards[cardIndex].image,cards[cardIndex].id , animationClass, uniqueKey));
+        let imageSrc = cards[cardIndex].image === 'loading' ? '/carousel/loading.png' : IMAGES_DIR + cards[cardIndex].image;
+        renderedCards.push(Card(cards[cardIndex].title, cards[cardIndex].description, imageSrc, cards[cardIndex].id , animationClass, uniqueKey));
       }
     }
     return renderedCards;
@@ -124,7 +125,7 @@ function Carousel(props: any) {
   )
 }
 
-function Searchbar() {
+function Searchbar({ onSearch }: { onSearch: (e: React.ChangeEvent<HTMLInputElement>) => void }) {
   return (
     <div className='app-searchbar'>
       <div className='app-searchbar-margin'></div>
@@ -135,49 +136,91 @@ function Searchbar() {
         <button>Wszystko</button>
       </div>
       <div className='app-searchbar-input'>
-        <input type='text' placeholder='Szukaj' />
+        <input type='text' placeholder='Szukaj' onChange={onSearch}/>
+      </div>
+    </div>
+  )
+}
+
+function movieCard(title: string, description: string, image: string, id: string) {
+  return (
+    <div className='movie-card-wrapper'>
+      <div className='movie-card-image-wrapper'>
+        <Image src={image} quality={100} alt={title} width={200} height={300} className='movie-card-image'/>
+      </div>
+      <div className='movie-card-content'>
+        <div className='movie-card-title'>
+          <h3>{title}</h3>
+        </div>
+        <div className='movie-card-description'>
+          <p>{description}</p>
+        </div>
       </div>
     </div>
   )
 }
 
 export default function App() {
-  const [movies, setMovies] = useState<Movies>({});
   const categories = ['new_films', 'action', 'adventure', 'horror', 'fantasy']
   const categoriesTitles = ['Nowości', 'Akcja', 'Przygodowe', 'Horror', 'Fantasy']
+  const { data: movies, loading } = useFetchData(categories);
+  const [isSearching, setIsSearching] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
 
-  async function fetchData(category: string) {
-    try {
-      const response = await axios.get(`${api}/api`, {
-        params: {
-          categories: category
-        }
-      });
-      return response.data;
-    } catch (error) {
-      console.error(error);
-      return {};
+  function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
+    if(e.target.value === '') {
+      setIsSearching(false);
+      return;
+    }
+    else {
+      setSearchTerm(e.target.value);
+      setIsSearching(true);
+      return;
     }
   }
 
-  useEffect(() => {
-    categories.forEach(category => {
-      fetchData(category).then(data => {
-        setMovies(prevMovies => ({...prevMovies, [category]: data}));
-      });
-    });
-  }, []);
+  const loadingData = {
+    1: {
+      title: 'Loading',
+      description: '',
+      image: 'loading',
+      id: 'loading',
+    }
+  }
 
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <Searchbar/>
-      <div className='app-window'>
-        <div className='app-wrapper'>
-          {categories.map(category => (
-            <Carousel key={category} info={movies[category]} title={categoriesTitles[categories.indexOf(category)]}/>
-          ))}
+  if (loading) {
+    return (
+      <div>
+        <Searchbar onSearch={handleSearch} />
+        <div className='app-window'>
+          <div className='app-wrapper'>
+            {categories.map(category => (
+              <Carousel key={category} info={loadingData} title={categoriesTitles[categories.indexOf(category)]}/>
+            ))}
+          </div>
         </div>
       </div>
-    </Suspense>
-  )
+    )
+  }
+
+  return (
+    <div>
+      <Searchbar onSearch={handleSearch} />
+      <div className='app-window'>
+        <div className='app-wrapper'>
+          {isSearching ? (
+            <div>
+              <h1>{searchTerm}</h1>
+            </div>
+          ) : (
+            <>
+              {categories.map(category => (
+                <Carousel key={category} info={movies[category]} title={categoriesTitles[categories.indexOf(category)]}/>
+              ))}
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  );
 }
