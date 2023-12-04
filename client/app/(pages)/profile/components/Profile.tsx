@@ -38,7 +38,6 @@ const userprofiles:UserProfiles = {
 function Sidebar(image:string, nickname:string, email:string, information:string) {
     return (
         <>
-          <div className='sidebar-wrapper'>
             <div className='profile-info'>Informacje</div>
             <div className='profile-photo-wrapper'>
               <Image src={image} quality={100} alt={'Profile Picture'} width={250} height={250} className='profile-photo'/>
@@ -52,7 +51,6 @@ function Sidebar(image:string, nickname:string, email:string, information:string
             <div className='profile-information'>
               {information}
             </div>
-          </div>
         </>
     )
   }
@@ -82,19 +80,28 @@ function Sidebar(image:string, nickname:string, email:string, information:string
       setIsSidebarOpen(!isSidebarOpen);
     };
   
+    const closeSidebar = () => {
+      setIsSidebarOpen(false);
+    };
     return (
       <>
-        <div className='profile-nav'>Profil</div>
-        <div className={`mainside ${isSidebarOpen ? 'sidebar-open' : ''}`}>
+        <div className='profile-nav'>
           <button className='toggle-button' onClick={toggleSidebar}>
-            Profil
+          Profil
           </button>
+        </div>
+        <div className={`mainside ${isSidebarOpen ? 'sidebar-open' : ''}`}>
+        <div className='sidebar-wrapper'>
+        <button className='toggle-button' onClick={closeSidebar}>
+        Wróć do statystyk
+        </button>
           {Sidebar(
             userprofiles.profile1.image,
             userprofiles.profile1.nickname,
             userprofiles.profile1.email,
             userprofiles.profile1.information
           )}
+                  </div>
           <MainContent />
         </div>
       </>
