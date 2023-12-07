@@ -23,12 +23,19 @@ export function useFetchData(categories: string[]) {
   useEffect(() => {
     const fetchData = async () => {
       let result: Record<string, any> = {};
+      let errorOccurred = false;
       for (const category of categories) {
         const response = await fetchCategoryData(category);
-        result[category] = response;
+        if (response && Object.keys(response).length > 0) {
+          result[category] = response;
+        } else {
+          errorOccurred = true;
+        }
       }
       setData(result);
-      setLoading(false);
+      if (!errorOccurred) {
+        setLoading(false);
+      }
     };
     fetchData();
   }, [categories]);
