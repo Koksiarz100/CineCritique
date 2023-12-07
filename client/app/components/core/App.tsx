@@ -4,6 +4,10 @@ import React, { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image';
 import { useSwipeable } from 'react-swipeable';
 import Link from 'next/link';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
+
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 import { useFetchData } from '../api/carouselData';
 import { IMAGES_DIR } from '../../config/API';
@@ -167,6 +171,10 @@ export default function App() {
   const [isSearching, setIsSearching] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
+  useEffect(() => {
+    AOS.init();
+  }, []);
+
   function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
     if(e.target.value === '') {
       setIsSearching(false);
@@ -208,22 +216,32 @@ export default function App() {
       <Searchbar onSearch={handleSearch} />
       <div className='app-window'>
         <div className='app-wrapper'>
-          {isSearching ? (
-            <div className='app-search'>
-              <span className='app-search-term'>{searchTerm}</span>
-              <MovieCard title='test' description='test' image='/carousel/loading.png' id='test'/>
-              <MovieCard title='test' description='test' image='/carousel/loading.png' id='test'/>
-              <MovieCard title='test' description='test' image='/carousel/loading.png' id='test'/>
-              <MovieCard title='test' description='test' image='/carousel/loading.png' id='test'/>
-              <MovieCard title='test' description='test' image='/carousel/loading.png' id='test'/>
-            </div>
-          ) : (
-            <>
-              {categories.map(category => (
-                <Carousel key={category} info={movies[category]} title={categoriesTitles[categories.indexOf(category)]}/>
-              ))}
-            </>
-          )}
+          <TransitionGroup>
+            <CSSTransition
+              key={isSearching ? 'search' : 'carousel'}
+              timeout={500}
+              classNames="fade"
+            >
+              {isSearching ? (
+                <div className='app-search'>
+                  <span className='app-search-term'>{searchTerm}</span>
+                  <MovieCard title='test' description='test' image='/carousel/loading.png' id='test'/>
+                  <MovieCard title='test' description='test' image='/carousel/loading.png' id='test'/>
+                  <MovieCard title='test' description='test' image='/carousel/loading.png' id='test'/>
+                  <MovieCard title='test' description='test' image='/carousel/loading.png' id='test'/>
+                  <MovieCard title='test' description='test' image='/carousel/loading.png' id='test'/>
+                </div>
+              ) : (
+                <>
+                  {categories.map(category => (
+                    <div data-aos="fade-left">
+                      <Carousel key={category} info={movies[category]} title={categoriesTitles[categories.indexOf(category)]}/>
+                    </div>
+                  ))}
+                </>
+              )}
+            </CSSTransition>
+          </TransitionGroup>
         </div>
       </div>
     </>

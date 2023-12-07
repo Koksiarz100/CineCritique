@@ -18,4 +18,7 @@ body {
   margin: 0;
   background-color: #000000;
   font-family: 'Roboto Condensed', sans-serif;
+  overflow-x: hidden;
 }
+
+.aos-init:not(.aos-animate):after {position: fixed;}
