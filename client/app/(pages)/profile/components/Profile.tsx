@@ -1,7 +1,9 @@
+'use client'
 import React from 'react'
 import Image from 'next/image';
 import PieChart from './Pie';
 import '../styles/profile.scss'
+import { UserDataComponent } from '../../../components/api/getUserData';
 
 interface UserProfile{
   image: string,
@@ -13,13 +15,13 @@ interface UserProfile{
 type UserProfiles = Record<string, UserProfile>;
 
 const userprofiles:UserProfiles = {
-  profile1:{
+  profile2:{
     image:'/Default-Profile-Female.jpg', //placeholder image
     nickname: 'Lady Gaga',
     email: 'ladygaga@gmail.com',
     information: 'Amerykańska piosenkarka, kompozytorka, pianistka, autorka tekstów, aktorka, producentka muzyczna, filantropka oraz działaczka LGBT pochodzenia włoskiego. Urodziła się i dorastała w Nowym Jorku.'
   },
-  profile2:{
+  profile1:{
     image:'/Default-Profile-Male.jpg', //placeholder image
     nickname: 'Lady Punk',
     email: 'ladypunk@gmail.com',
@@ -36,13 +38,12 @@ const userprofiles:UserProfiles = {
 function Sidebar(image:string, nickname:string, email:string, information:string) {
     return (
         <>
-          <div className='sidebar-wrapper'>
             <div className='profile-info'>Informacje</div>
             <div className='profile-photo-wrapper'>
               <Image src={image} quality={100} alt={'Profile Picture'} width={250} height={250} className='profile-photo'/>
             </div>
             <div className='profile-nickname'>
-              {nickname}
+            <UserDataComponent/>
             </div>
             <div className='profile-email'>
               {email}
@@ -50,7 +51,6 @@ function Sidebar(image:string, nickname:string, email:string, information:string
             <div className='profile-information'>
               {information}
             </div>
-          </div>
         </>
     )
   }
@@ -73,15 +73,37 @@ function Sidebar(image:string, nickname:string, email:string, information:string
     </div>
     )
   }
-
-export default function Profiles() {
+  export default function Profiles() {
+    const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
+  
+    const toggleSidebar = () => {
+      setIsSidebarOpen(!isSidebarOpen);
+    };
+  
+    const closeSidebar = () => {
+      setIsSidebarOpen(false);
+    };
     return (
       <>
-        <div className='profile-nav'>Profil</div>
-        <div className='mainside'>
-        {Sidebar(userprofiles.profile1.image, userprofiles.profile1.nickname, userprofiles.profile1.email, userprofiles.profile1.information)}
-        <MainContent/>
+        <div className='profile-nav'>
+          <button className='toggle-button' onClick={toggleSidebar}>
+          Profil
+          </button>
+        </div>
+        <div className={`mainside ${isSidebarOpen ? 'sidebar-open' : ''}`}>
+        <div className='sidebar-wrapper'>
+        <button className='toggle-button' onClick={closeSidebar}>
+        ⇚ Wróć do statystyk
+        </button>
+          {Sidebar(
+            userprofiles.profile1.image,
+            userprofiles.profile1.nickname,
+            userprofiles.profile1.email,
+            userprofiles.profile1.information
+          )}
+                  </div>
+          <MainContent />
         </div>
       </>
-    )
+    );
   }
