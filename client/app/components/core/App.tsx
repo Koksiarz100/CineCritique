@@ -234,8 +234,10 @@ export default function App() {
               ) : (
                 <>
                   {categories.map(category => (
-                    <div data-aos="fade-left">
-                      <Carousel key={category} info={movies[category]} title={categoriesTitles[categories.indexOf(category)]}/>
+                    <div className="overflow">
+                      <div data-aos="fade-left">
+                        <Carousel key={category} info={movies[category]} title={categoriesTitles[categories.indexOf(category)]}/>
+                      </div>
                     </div>
                   ))}
                 </>

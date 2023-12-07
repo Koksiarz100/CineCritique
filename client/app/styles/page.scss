@@ -280,6 +280,10 @@ main {
         width: 100%;
       }
 
+      .overflow {
+        overflow: hidden;
+      }
+
       .carousel-wrapper {
         display: flex;
         flex-direction: column;
