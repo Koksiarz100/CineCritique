@@ -290,7 +290,7 @@ main {
         justify-content: center;
         align-items: center;
         width: 100%;
-        height: auto;
+        height: 400px;
         margin: 5px 0 5px 0;
 
         .carousel-title {
@@ -304,7 +304,6 @@ main {
 
         .carousel-content {
           display: flex;
-          position: relative;
           flex-direction: row;
           justify-content: center;
           align-items: center;
@@ -350,17 +349,23 @@ main {
 
             .card-wrapper {
               display: flex;
-              flex-direction: column;
+              flex-direction: row;
               flex-shrink: 0;
               width: 200px;
               height: 300px;
               color: white;
               margin: 0 20px;
-              transition: transform 0.3s ease;
+              transition: height 0.3s ease, width 0.3s;
 
               &:hover {
-                transform: scale(1.05);
-                transition: transform 0.3s ease;
+                height: 310px;
+                width: 400px;
+                transition: height 0.3s ease, width 0.3s;
+
+                .card-content {
+                  visibility: visible;
+                  opacity: 1;
+                }
               }
 
               &.none{
@@ -404,7 +409,8 @@ main {
               }
 
               .card-image-wrapper {
-                position: absolute;
+                width: 200px;
+                height: 300px;
               }
 
               .card-content {
@@ -412,19 +418,13 @@ main {
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
-                position: relative;
                 z-index: 2;
                 width: 200px;
                 height: 300px;
                 background-color: rgb(0, 0, 0, 0.5);
+                visibility: hidden;
                 opacity: 0;
-                transition: opacity 0.3s ease;
-
-                &:hover {
-                  transition: opacity 0.3s ease;
-                  background-color: rgb(0, 0, 0, 0.5);
-                  opacity: 1;
-                }
+                transition: visibility 0s, opacity 0.5s linear;
 
                 .card-title {
                   display: flex;
