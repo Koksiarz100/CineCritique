@@ -1,7 +1,10 @@
 .legend-wrapper{
+    font-size: 0.9rem;
     display: block;
     .legend-info{
-        display: flex;
-        flex-direction: row;
+        display:inline-flex;
+
+        //.legend-position{
+        //}
     }
 }

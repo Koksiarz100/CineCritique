@@ -10,9 +10,9 @@ const Legend: React.FC<LegendProps> = ({ data, legend }) => {
   return (
     <div className="legend-wrapper">
         {data.map((value, index) => (
-          <div className='legend-info'>
-            <div className="legend-color" style={{ color: getSliceColor(index, data.length) }}>◼</div>
-            <div>{`${legend[index]}: ${value}`}</div>
+          <div className='legend-info' key={index}>
+            <div className='legend-color' style={{ color: getSliceColor(index, data.length) }}>&nbsp;◼</div>
+            <div className='legend-position'>{`${legend[index]}`}</div> 
           </div>
         ))}
     </div>

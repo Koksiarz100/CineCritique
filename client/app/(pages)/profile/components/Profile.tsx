@@ -66,10 +66,12 @@ function Sidebar(image:string, nickname:string, email:string, information:string
   function MainContent(){
     return (
     <div className='profile-content'>
+      <div className='statistics-title'>Statystyki</div>
       <div className='profile-statistics'>
-        <div className='statistics-title'>Statystyki</div>
-        <div className='statistics-charts'><PieChart data={data} title='Tytuł1'/><PieChart data={data2}title='Tytuł2'/><PieChart data={data3}title='Tytuł3'/></div>
-        <div className='statistics-legend'><Legend data={data} legend={legend}/><Legend data={data2} legend={legend2}/><Legend data={data3} legend={legend3}/></div>
+        <div className='statistics-charts'><PieChart data={data} title='Tytuł1'/><Legend data={data} legend={legend}/></div>
+        <div className='statistics-charts'><PieChart data={data2}title='Tytuł2'/><Legend data={data2} legend={legend2}/></div>
+        <div className='statistics-charts'><PieChart data={data3}title='Tytuł3'/><Legend data={data3} legend={legend3}/></div>
+        <div className='statistics-legend'></div>
       </div>
       <div className='profile-review-content'>
         <div className='review-title'>Twoje recenzje</div>
