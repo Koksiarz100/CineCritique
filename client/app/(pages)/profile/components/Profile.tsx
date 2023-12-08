@@ -5,6 +5,7 @@ import PieChart from './Pie';
 import '../styles/profile.scss'
 import { UserDataComponent } from '../../../components/api/getUserData';
 import Legend from './PieLegend';
+import Statistics from './PieStatistics';
 
 interface UserProfile{
   image: string,
@@ -68,9 +69,9 @@ function Sidebar(image:string, nickname:string, email:string, information:string
     <div className='profile-content'>
       <div className='statistics-title'>Statystyki</div>
       <div className='profile-statistics'>
-        <div className='statistics-charts'><PieChart data={data} title='Tytuł1'/><Legend data={data} legend={legend}/></div>
-        <div className='statistics-charts'><PieChart data={data2}title='Tytuł2'/><Legend data={data2} legend={legend2}/></div>
-        <div className='statistics-charts'><PieChart data={data3}title='Tytuł3'/><Legend data={data3} legend={legend3}/></div>
+        <div className='statistics-charts'><PieChart data={data} title='Tytuł1'/><Legend data={data} legend={legend}/><Statistics data={data} statistics={legend}/></div>
+        <div className='statistics-charts'><PieChart data={data2}title='Tytuł2'/><Legend data={data2} legend={legend2}/><Statistics data={data2} statistics={legend2}/></div>
+        <div className='statistics-charts'><PieChart data={data3}title='Tytuł3'/><Legend data={data3} legend={legend3}/><Statistics data={data3} statistics={legend3}/></div>
         <div className='statistics-legend'></div>
       </div>
       <div className='profile-review-content'>

@@ -1,0 +1,17 @@
+@use '../../../styles/globals.scss';
+
+.statistics-wrapper{
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+table{
+    border: 1px solid globals.$secondary-color;
+    width: 200px;
+}
+th
+{
+    border: 1px solid white;
+    color: globals.$primary-color;
+} td {
+    border: 1px solid ;
+  }
