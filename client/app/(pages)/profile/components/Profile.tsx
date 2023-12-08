@@ -4,6 +4,7 @@ import Image from 'next/image';
 import PieChart from './Pie';
 import '../styles/profile.scss'
 import { UserDataComponent } from '../../../components/api/getUserData';
+import Legend from './PieLegend';
 
 interface UserProfile{
   image: string,
@@ -56,8 +57,11 @@ function Sidebar(image:string, nickname:string, email:string, information:string
   }
 
   const data = [13, 800];
-  const data2 = [10, 20, 30, 40, 50, 60, 50, 40, 30, 20, 10];
+  const data2 = [10, 20, 30, 40, 50, 60, 50, 40, 30];
   const data3 = [10, 20, 40];
+  const legend = ['Ty', 'Użytkownicy'];
+  const legend2 = ['1✯','1.5✯','2✯','2.5✯','3✯','3.5✯','4✯','4.5✯','5✯'];
+  const legend3 = ['Docenienia', 'Recenzje', 'Opinie'];
 
   function MainContent(){
     return (
@@ -65,6 +69,7 @@ function Sidebar(image:string, nickname:string, email:string, information:string
       <div className='profile-statistics'>
         <div className='statistics-title'>Statystyki</div>
         <div className='statistics-charts'><PieChart data={data} title='Tytuł1'/><PieChart data={data2}title='Tytuł2'/><PieChart data={data3}title='Tytuł3'/></div>
+        <div className='statistics-legend'><Legend data={data} legend={legend}/><Legend data={data2} legend={legend2}/><Legend data={data3} legend={legend3}/></div>
       </div>
       <div className='profile-review-content'>
         <div className='review-title'>Twoje recenzje</div>
