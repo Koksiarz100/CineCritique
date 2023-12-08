@@ -206,7 +206,11 @@ export default function App() {
         <div className='app-window'>
           <div className='app-wrapper'>
             {categories.map(category => (
-              <Carousel key={category} info={loadingData} title={categoriesTitles[categories.indexOf(category)]}/>
+              <div className="overflow" key={category}>
+                <div data-aos="fade-right">
+                <Carousel key={category} info={loadingData} title={categoriesTitles[categories.indexOf(category)]}/>
+                </div>
+              </div>
             ))}
           </div>
         </div>
