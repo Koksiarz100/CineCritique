@@ -4,6 +4,8 @@ import React, { useState, FormEvent, useEffect } from 'react'
 import Link from 'next/link'
 import axios from 'axios'
 
+import { API } from '@/app/config/API'
+
 import './styles/login.scss'
 
 interface AuthFormProps {
@@ -21,13 +23,13 @@ const AuthForm: React.FC<AuthFormProps> = ({ formType }) => {
     try {
       let response
       if (formType === 'login') {
-        response = await axios.post('https://real-cyan-bunny-tam.cyclic.app/api/login', { username, password })
+        response = await axios.post(`${API}/api/login`, { username, password })
       } else if (formType === 'register') {
         if (password !== repeatPassword) {
           console.error('Passwords do not match')
           return
         }
-        response = await axios.post('https://real-cyan-bunny-tam.cyclic.app/api/register', { username, password })
+        response = await axios.post(`${API}/api/register`, { username, password })
       }
       if (response) {
         const token = response.data.token
