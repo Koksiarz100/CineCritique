@@ -60,7 +60,7 @@ function Sidebar(image:string, nickname:string, email:string, information:string
   const data2 = [10, 20, 30, 40, 50, 60, 50, 40, 30];
   const data3 = [10, 20, 40];
   const legend = ['Ty', 'Użytkownicy'];
-  const legend2 = ['1✯','1.5✯','2✯','2.5✯','3✯','3.5✯','4✯','4.5✯','5✯'];
+  const legend2 = ['1','1.5','2','2.5','3','3.5','4','4.5','5'];
   const legend3 = ['Docenienia', 'Recenzje', 'Opinie'];
 
   function MainContent(){
