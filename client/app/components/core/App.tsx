@@ -40,6 +40,7 @@ function Carousel(props: any) {
   const { info } = props;
   const category = props.title;
   const cards: any = info ? Object.values(info) : [];
+  const [isHovered, setIsHovered] = useState(false);
 
   const handleNext = useCallback(() => {
     if (isAnimating) return;
@@ -83,10 +84,12 @@ function Carousel(props: any) {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      handleNext();
+      if (!isHovered) {
+        handleNext();
+      }
     }, 5000);
     return () => clearInterval(interval);
-  }, [handleNext]);
+  }, [handleNext, isHovered]);
 
   const renderCards = () => {
     let renderedCards = [];
@@ -102,7 +105,7 @@ function Carousel(props: any) {
   }
 
   return (
-    <div className='carousel-wrapper'>
+    <div className='carousel-wrapper' onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
       <div className='carousel-title'>
         <h2>{category}</h2>
       </div>
@@ -224,7 +227,7 @@ export default function App() {
             >
               {isSearching ? (
                 <div className='app-search'>
-                  <span className='app-search-term'>{searchTerm}</span>
+                  <span className='app-search-term'>Wyszukiwanie: {searchTerm}</span>
                   <MovieCard title='test' description='test' image='/carousel/loading.png' id='test'/>
                   <MovieCard title='test' description='test' image='/carousel/loading.png' id='test'/>
                   <MovieCard title='test' description='test' image='/carousel/loading.png' id='test'/>
@@ -235,7 +238,7 @@ export default function App() {
                 <>
                   {categories.map(category => (
                     <div className="overflow" key={category}>
-                      <div data-aos="fade-left">
+                      <div data-aos="fade-right">
                         <Carousel key={category} info={movies[category]} title={categoriesTitles[categories.indexOf(category)]}/>
                       </div>
                     </div>
