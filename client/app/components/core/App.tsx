@@ -227,7 +227,7 @@ export default function App() {
             >
               {isSearching ? (
                 <div className='app-search'>
-                  <span className='app-search-term'>{searchTerm}</span>
+                  <span className='app-search-term'>Wyszukiwanie: {searchTerm}</span>
                   <MovieCard title='test' description='test' image='/carousel/loading.png' id='test'/>
                   <MovieCard title='test' description='test' image='/carousel/loading.png' id='test'/>
                   <MovieCard title='test' description='test' image='/carousel/loading.png' id='test'/>
