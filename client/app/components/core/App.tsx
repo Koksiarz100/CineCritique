@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import Image from 'next/image';
 import { useSwipeable } from 'react-swipeable';
 import Link from 'next/link';
@@ -140,12 +140,17 @@ function Searchbar({ onSearch }: { onSearch: (e: React.ChangeEvent<HTMLInputElem
 }
 
 function MovieCard(props: any) {
-  const { title, description, image, id } = props;
+  const { info } = props;
+  const cards: any = info ? Object.values(info) : [];
+
+  console.log(cards[2]);
+
+  let imageSrc = cards[2] === 'loading' ? '/carousel/loading.png' : IMAGES_DIR + cards[2];
 
   return (
-    <div className='movie-card-wrapper' id={id}>
+    <div className='movie-card-wrapper' id='0'>
       <div className='movie-card-image-wrapper'>
-        <Image src={image} quality={100} alt={title} width={200} height={300} className='movie-card-image'/>
+        <Image src={imageSrc} quality={100} alt='xd' width={200} height={300} className='movie-card-image'/>
       </div>
       <div className='movie-card-content'>
         <div className='movie-card-nav'>
@@ -153,14 +158,10 @@ function MovieCard(props: any) {
           <button className='movie-card-nav-button'>Dodaj do listy</button>
         </div>
         <div className='movie-card-title'>
-          <h3>{title}</h3>
+          <h3>{cards[0]}</h3>
         </div>
         <div className='movie-card-description'>
-          <p>{description}</p>
-        </div>
-        <div className='movie-card-rating'>
-          <span>Rating</span>
-          <span>90/100</span>
+          <p>{cards[1]}</p>
         </div>
       </div>
     </div>
@@ -168,8 +169,8 @@ function MovieCard(props: any) {
 }
 
 export default function App() {
-  const categories = ['new_films', 'action', 'adventure', 'horror', 'fantasy']
   const categoriesTitles = ['Nowości', 'Akcja', 'Przygodowe', 'Horror', 'Fantasy']
+  const categories = useMemo(() => ['new_films', 'action', 'adventure', 'horror', 'fantasy'], []);
   const { data: movies, loading } = useFetchData(categories);
   const [isSearching, setIsSearching] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -229,14 +230,15 @@ export default function App() {
               timeout={500}
               classNames="fade"
             >
-              {isSearching ? (
+              {
+              isSearching ? (
                 <div className='app-search'>
                   <span className='app-search-term'>Wyszukiwanie: {searchTerm}</span>
-                  <MovieCard title='test' description='test' image='/carousel/loading.png' id='test'/>
-                  <MovieCard title='test' description='test' image='/carousel/loading.png' id='test'/>
-                  <MovieCard title='test' description='test' image='/carousel/loading.png' id='test'/>
-                  <MovieCard title='test' description='test' image='/carousel/loading.png' id='test'/>
-                  <MovieCard title='test' description='test' image='/carousel/loading.png' id='test'/>
+                  <MovieCard info={movies['action'][1]}/>
+                  <MovieCard info={movies['action'][2]}/>
+                  <MovieCard info={movies['action'][3]}/>
+                  <MovieCard info={movies['action'][4]}/>
+                  <MovieCard info={movies['action'][5]}/>
                 </div>
               ) : (
                 <>
