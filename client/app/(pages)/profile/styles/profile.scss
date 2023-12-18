@@ -236,4 +236,10 @@ textarea {
     width: 250px; 
     height: 80px; 
     resize: none; 
+    @media only screen and (max-width: 1050px) {
+        width: 180px; 
+    }
+    @media only screen and (max-width: 768px) {
+        width: 250px; 
+    }
   }
