@@ -54,11 +54,24 @@ function Sidebar({
     }
   };
 
+  const MAX_INPUT_CHARACTERS = 25;
+  const MAX_TEXTAREA_CHARACTERS = 200;
+
   const handleInputChange = (field: keyof UserProfile, value: string) => {
-    setEditedProfile((prevProfile) => ({
-      ...prevProfile,
-      [field]: value,
-    }));
+    let maxLength;
+  
+    if (field === 'information') {
+      maxLength = MAX_TEXTAREA_CHARACTERS;
+    } else {
+      maxLength = MAX_INPUT_CHARACTERS;
+    }
+  
+    if (value.length <= maxLength) {
+      setEditedProfile((prevProfile) => ({
+        ...prevProfile,
+        [field]: value,
+      }));
+    }
   };
 
   const renderEditableField = (field: keyof UserProfile, content: string) => {
