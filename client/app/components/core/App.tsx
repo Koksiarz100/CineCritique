@@ -9,6 +9,8 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
+import Rating from '../interface/Rating/Rating';
+
 import { useFetchData } from '../api/carouselData';
 import { IMAGES_DIR } from '../../config/API';
 
@@ -162,6 +164,7 @@ function MovieCard(props: any) {
         </div>
         <div className='movie-card-description'>
           <p>{cards[1]}</p>
+          <Rating />
         </div>
       </div>
     </div>
