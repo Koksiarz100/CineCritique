@@ -5,12 +5,16 @@ import Image from 'next/image'
 
 import './rating.scss'
 
-export default function Rating() {
-  const [rating, setRating] = useState(0);
+export default function Rating(value: number = 0, isStatic: boolean = false) {
+  const [rating, setRating] = useState(value);
 
   const handleRating = (e: any) => {
-    console.log(e.target.value);
-    setRating(e.target.value);
+    if (isStatic === true) {
+      return;
+    }
+    else {
+      setRating(e.target.value);
+    }
   }
 
   const getImageSrc = (value: number) => {

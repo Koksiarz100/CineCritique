@@ -164,7 +164,7 @@ function MovieCard(props: any) {
         </div>
         <div className='movie-card-description'>
           <p>{cards[1]}</p>
-          <Rating />
+          {Rating()}
         </div>
       </div>
     </div>
