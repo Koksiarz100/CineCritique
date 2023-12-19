@@ -15,6 +15,13 @@
       justify-content: center;
       align-items: center;
       flex-direction: row;
+      scale: 1;
+      transition: scale 0.2s ease-in-out;
+
+      &:hover {
+        scale: 1.2;
+        transition: scale 0.2s ease-in-out;
+      }
   
       .star-button {
         display: block;
