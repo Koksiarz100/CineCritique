@@ -1,0 +1,27 @@
+@use '../../../styles/globals.scss';
+
+.review-loop{
+    padding-top: 5px;
+    .review-item{
+        border-bottom-left-radius: 5%;
+        border-bottom-right-radius: 5%;
+        box-shadow: 0 0 1rem globals.$secondary-color;
+        background-color: rgba(0, 94, 16, 0.5);
+        overflow-wrap: break-word;
+        .movie-title{
+            background-color: rgba(0, 94, 16, 0.5);
+        }
+        .movie-review{
+            padding-left: 10px;
+            padding-right: 10px;
+            padding-bottom: 10px;
+            text-align: justify;
+        }
+        .review-button{
+            padding-bottom: 0.7rem;
+        }
+    }
+    .space-between-reviews{
+        padding-bottom: 2rem;
+    }
+}
