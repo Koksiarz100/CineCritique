@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useSwipeable } from 'react-swipeable';
 import Link from 'next/link';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import axios from 'axios';
 
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -124,7 +125,19 @@ function Carousel(props: any) {
   )
 }
 
-function Searchbar({ onSearch }: { onSearch: (e: React.ChangeEvent<HTMLInputElement>) => void }) {
+function Searchbar({ onSearch }: { onSearch: (data: any) => void }) {
+  
+  const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.persist();
+    const searchValue = e.target.value;
+    try {
+      const response = await axios.get(`http://localhost:5000/search?query=${searchValue}`);
+      onSearch(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className='app-searchbar'>
       <div className='app-searchbar-margin'></div>
@@ -135,7 +148,7 @@ function Searchbar({ onSearch }: { onSearch: (e: React.ChangeEvent<HTMLInputElem
         <button>Wszystko</button>
       </div>
       <div className='app-searchbar-input'>
-        <input type='text' placeholder='Szukaj' onChange={onSearch}/>
+        <input type='text' placeholder='Szukaj' onChange={handleSearch}/>
       </div>
     </div>
   )
@@ -184,13 +197,14 @@ export default function App() {
     AOS.init();
   }, []);
 
-  function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
-    if(e.target.value === '') {
+  function handleSearch(data: any) {
+    console.log(data);
+    if(data === '') {
       setIsSearching(false);
       return;
     }
     else {
-      setSearchTerm(e.target.value);
+      setSearchTerm('test');
       setIsSearching(true);
       return;
     }

@@ -17,6 +17,14 @@ app.use((req, res, next) => {
   next();
 });
 
+app.get('/search', (req, res) => {
+  const query = req.query.query.toLowerCase();
+  const results = Object.values(action).filter(movie =>
+    movie.title.toLowerCase().includes(query)
+  );
+  res.send(results);
+});
+
 app.get('/api/user', (req, res) => {
   const authHeader = req.headers.authorization;
 
