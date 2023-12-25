@@ -74,26 +74,54 @@ function Sidebar({
     }
   };
 
+  const handleDocumentClick = (event: MouseEvent) => {
+    const target = event.target as HTMLElement;
+    if (
+      editedField &&
+      editedProfile &&
+      target.closest('.profile-editable-field') === null
+    ) {
+      onSave(editedProfile);
+      setEditedField(null);
+    }
+  };
+
+  React.useEffect(() => {
+    document.body.addEventListener('click', handleDocumentClick);
+    return () => {
+      document.body.removeEventListener('click', handleDocumentClick);
+    };
+  }, [editedField, editedProfile, onSave]);
+
   const renderEditableField = (field: keyof UserProfile, content: string) => {
     return editedField === field ? (
-      field === 'information' ? (
-        <textarea
-          value={editedProfile[field]}
-          onChange={(e) => handleInputChange(field, e.target.value)}
-          onKeyDown={handleKeyDown}
-          autoFocus
-        />
-      ) : (
-        <input
-          type="text"
-          value={editedProfile[field]}
-          onChange={(e) => handleInputChange(field, e.target.value)}
-          onKeyDown={handleKeyDown}
-          autoFocus
-        />
-      )
+      <div className="profile-editable-field">
+        {field === 'information' ? (
+          <textarea
+            value={editedProfile[field]}
+            onChange={(e) => handleInputChange(field, e.target.value)}
+            onKeyDown={handleKeyDown}
+            autoFocus
+          />
+        ) : (
+          field !== 'image' && (
+            <input
+              type="text"
+              value={editedProfile[field]}
+              onChange={(e) => handleInputChange(field, e.target.value)}
+              onKeyDown={handleKeyDown}
+              autoFocus
+            />
+          )
+        )}
+      </div>
     ) : (
-      <span onDoubleClick={() => handleDoubleClick(field)}>{content}</span>
+      <span
+        className={`profile-editable-field ${field === 'image' ? 'non-editable' : ''}`}
+        onDoubleClick={() => handleDoubleClick(field)}
+      >
+        {content}
+      </span>
     );
   };
 
@@ -109,7 +137,6 @@ function Sidebar({
     </>
   );
 }
-
 
 const data = [13, 800];
 const data2 = [10, 20, 30, 40, 50, 60, 50, 40, 30];
