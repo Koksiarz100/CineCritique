@@ -179,6 +179,14 @@ main {
         background-color: globals.$secondary-color;
         margin-bottom: 50px;
 
+        @media only screen and (max-width: 900px) {
+          width: 90%;
+        }
+
+        @media only screen and (max-width: 768px) {
+          width: 95%;
+        }
+
         .movie-card-image-wrapper {
           display: flex;
           flex-direction: column;
@@ -245,21 +253,20 @@ main {
           .movie-card-description {
             display: flex;
             flex-direction: column;
-            width: 100%;
+            width: calc(100% - 20px);
             height: 100px;
             font-size: 1.0rem;
-            font-weight: 500;
-            text-align: center;
             padding-left: 20px;
           }
 
-          .movie-card-rating{
+          .movie-card-rating {
             display: flex;
             flex-direction: column;
+            justify-content: start;
+            align-items: start;
             width: 100%;
-            height: 50px;
+            height: 100px;
             font-size: 1.0rem;
-            font-weight: 500;
             padding-left: 20px;
           }
         }
