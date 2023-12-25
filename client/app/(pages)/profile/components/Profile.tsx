@@ -2,8 +2,7 @@
 import React from 'react';
 import Image from 'next/image';
 import PieChart from './Pie';
-import '../styles/profile.scss';
-import { UserDataComponent } from '../../../components/api/getUserData';
+import '../styles/profile.scss'; 
 import Legend from './PieLegend';
 import Statistics from './PieStatistics';
 import ReviewComponent from './Reviews';
@@ -19,7 +18,7 @@ type UserProfiles = Record<string, UserProfile>;
 
 const userprofiles: UserProfiles = {
   profile1: {
-    image: '/Default-Profile-Male.jpg', //placeholder image
+    image: '/Default-Profile-Male.jpg', // placeholder image
     nickname: 'John Doe',
     email: 'ladypunk@gmail.com',
     information:
@@ -41,6 +40,7 @@ function Sidebar({
     information,
   });
   const [editedField, setEditedField] = React.useState<keyof UserProfile | null>(null);
+  const [hovered, setHovered] = React.useState(false);
 
   const handleDoubleClick = (field: keyof UserProfile) => {
     const isMobile = window.innerWidth <= 768;
@@ -59,13 +59,13 @@ function Sidebar({
 
   const handleInputChange = (field: keyof UserProfile, value: string) => {
     let maxLength;
-  
+
     if (field === 'information') {
       maxLength = MAX_TEXTAREA_CHARACTERS;
     } else {
       maxLength = MAX_INPUT_CHARACTERS;
     }
-  
+
     if (value.length <= maxLength) {
       setEditedProfile((prevProfile) => ({
         ...prevProfile,
@@ -93,51 +93,120 @@ function Sidebar({
     };
   }, [editedField, editedProfile, onSave]);
 
+  const handlePhotoChangeClick = () => {
+    const fileInput = document.getElementById('profile-image-input');
+    if (fileInput) {
+      fileInput.click();
+    }
+  };
+
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (files && files.length > 0) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const newImage = e.target?.result as string;
+        setEditedProfile((prevProfile) => {
+          if (!prevProfile) {
+            return {
+              image: newImage,
+              nickname,
+              email,
+              information,
+            };
+          }
+
+          return {
+            ...prevProfile,
+            image: newImage,
+          };
+        });
+        onSave({
+          image: newImage,
+          nickname,
+          email,
+          information,
+        });
+      };
+      reader.readAsDataURL(files[0]);
+    }
+  };
+
   const renderEditableField = (field: keyof UserProfile, content: string) => {
-    return editedField === field ? (
-      <div className="profile-editable-field">
-        {field === 'information' ? (
-          <textarea
-            value={editedProfile[field]}
-            onChange={(e) => handleInputChange(field, e.target.value)}
-            onKeyDown={handleKeyDown}
-            autoFocus
-          />
+    const [isMouseOver, setIsMouseOver] = React.useState(false);
+
+    return (
+      <div className={`profile-editable-field ${field}`}>
+        {field === 'image' ? (
+          <div
+            className={`profile-photo-overlay ${isMouseOver ? 'hovered' : ''}`}
+            onMouseOver={() => setIsMouseOver(true)}
+            onMouseOut={() => setIsMouseOver(false)}
+            onClick={handlePhotoChangeClick}
+          >
+            <div className='profile-photo-wrapper'>
+              <Image
+                src={image}
+                quality={100}
+                alt={'Profile Picture'}
+                width={250}
+                height={250}
+                className="profile-photo"
+              />
+            </div>
+          </div>
         ) : (
-          field !== 'image' && (
-            <input
-              type="text"
-              value={editedProfile[field]}
-              onChange={(e) => handleInputChange(field, e.target.value)}
-              onKeyDown={handleKeyDown}
-              autoFocus
-            />
+          editedField === field ? (
+            field === 'information' ? (
+              <textarea
+                value={editedProfile[field]}
+                onChange={(e) => handleInputChange(field, e.target.value)}
+                onKeyDown={handleKeyDown}
+                autoFocus
+              />
+            ) : (
+              <input
+                type="text"
+                value={editedProfile[field]}
+                onChange={(e) => handleInputChange(field, e.target.value)}
+                onKeyDown={handleKeyDown}
+                autoFocus
+              />
+            )
+          ) : (
+            field === 'nickname' || field === 'email' || field === 'information' ? (
+              <span
+                className={`profile-editable-field-content ${['nickname', 'email', 'information'].includes(field) ? '' : 'non-editable'}`}
+                onDoubleClick={() => handleDoubleClick(field)}
+              >
+              {content}
+              </span>
+            ) : null
           )
         )}
+        {field === 'image' && (
+          <input
+            id="profile-image-input"
+            type="file"
+            accept="image/*"
+            style={{ display: 'none' }}
+            onChange={handleImageChange}
+          />
+        )}
       </div>
-    ) : (
-      <span
-        className={`profile-editable-field ${field === 'image' ? 'non-editable' : ''}`}
-        onDoubleClick={() => handleDoubleClick(field)}
-      >
-        {content}
-      </span>
     );
   };
 
   return (
     <>
       <div className="profile-info">Informacje</div>
-      <div className="profile-photo-wrapper" onDoubleClick={() => handleDoubleClick('image')}>
-        <Image src={image} quality={100} alt={'Profile Picture'} width={250} height={250} className="profile-photo" />
-      </div>
+      {renderEditableField('image', '')}
       <div className="profile-nickname">{renderEditableField('nickname', nickname)}</div>
       <div className="profile-email">{renderEditableField('email', email)}</div>
       <div className="profile-information">{renderEditableField('information', information)}</div>
     </>
   );
 }
-
 const data = [13, 800];
 const data2 = [10, 20, 30, 40, 50, 60, 50, 40, 30];
 const data3 = [10, 20, 40];
