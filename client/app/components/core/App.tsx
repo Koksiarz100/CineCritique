@@ -187,7 +187,7 @@ function MovieCard(props: any) {
 }
 
 export default function App() {
-  
+
   const categoriesTitles = ['Nowości', 'Akcja', 'Przygodowe', 'Horror', 'Fantasy']
   const categories = useMemo(() => ['new_films', 'action', 'adventure', 'horror', 'fantasy'], []);
   const { data: movies, loading } = useFetchData(categories);
@@ -257,7 +257,15 @@ export default function App() {
                 isSearching ? (
                   <div className='app-search'>
                     <span className='app-search-term'>Wyszukiwanie: {searchTerm}</span>
-                    {filteredMovies.map((movie: any) => <MovieCard key={movie.id} info={movie} />)}
+                    {
+                      filteredMovies.length > 0 ? (
+                        filteredMovies.map((movie: any) => <MovieCard key={movie.id} info={movie} />)
+                      ) : (
+                        <div className='app-notfound'>
+                          Brak filmów do wyświetlenia
+                        </div>
+                      )
+                    }
                   </div>
                 ) : (
                   <>
