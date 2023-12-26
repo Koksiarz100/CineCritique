@@ -4,7 +4,8 @@ const cors = require('cors');
 const jwt = require('jsonwebtoken');
 
 const secretKey = 'SKwlV6Z55ODDFFxADHDQs7qf7UWivSmEXPpZGiGFsjLfTKUU8rq8Wbh6ntYQS4s'; // Trzeba zmienić w przyszłości
-const { action, adventure, new_films, horror, fantasy } = require('./data');
+const { action, adventure, new_films, horror, fantasy } = require('./data/carousel');
+const { movies } = require('./data/movies');
 const app = express();
 const port = 5000;
 
@@ -19,7 +20,7 @@ app.use((req, res, next) => {
 
 app.get('/search', (req, res) => {
   const query = req.query.query.toLowerCase();
-  const results = Object.values(action).filter(movie =>
+  const results = Object.values(movies).filter(movie =>
     movie.title.toLowerCase().includes(query)
   );
   res.send(results);
