@@ -1,5 +1,5 @@
 'use client'
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import PieChart from './Pie';
 import '../styles/profile.scss'; 
@@ -133,7 +133,7 @@ function Sidebar({
   };
 
   const renderEditableField = (field: keyof UserProfile, content: string) => {
-    const [isMouseOver, setIsMouseOver] = React.useState(false);
+    const [isMouseOver, setIsMouseOver] = useState(false);
 
     return (
       <div className={`profile-editable-field ${field}`}>
