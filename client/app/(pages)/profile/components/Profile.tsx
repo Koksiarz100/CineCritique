@@ -132,9 +132,8 @@ function Sidebar({
     }
   };
 
+  const [isMouseOver, setIsMouseOver] = useState(false);
   const renderEditableField = (field: keyof UserProfile, content: string) => {
-    const [isMouseOver, setIsMouseOver] = useState(false);
-
     return (
       <div className={`profile-editable-field ${field}`}>
         {field === 'image' ? (
