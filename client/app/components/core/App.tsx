@@ -13,6 +13,7 @@ import 'aos/dist/aos.css';
 import Rating from '../interface/Rating/Rating';
 
 import { useFetchData } from '../api/carouselData';
+import { searchMovies } from '../api/searchMovies';
 import { IMAGES_DIR } from '../../config/API';
 
 function Card(title: string, description: string, image: string, id: string, animationClass: string = '', key: string) {
@@ -130,12 +131,8 @@ function Searchbar({ onSearch }: { onSearch: (data: any, searchValue: string) =>
   const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.persist();
     const searchValue = e.target.value;
-    try {
-      const response = await axios.get(`http://localhost:5000/search?query=${searchValue}`);
-      onSearch(response.data, searchValue);
-    } catch (error) {
-      console.error(error);
-    }
+    const data = await searchMovies(searchValue);
+    onSearch(data, searchValue);
   };
 
   return (
@@ -157,8 +154,6 @@ function Searchbar({ onSearch }: { onSearch: (data: any, searchValue: string) =>
 function MovieCard(props: any) {
   const { info } = props;
   const cards: any = info ? Object.values(info) : [];
-
-  console.log(cards[2]);
 
   let imageSrc = cards[2] === 'loading' ? '/carousel/loading.png' : IMAGES_DIR + cards[2];
 
