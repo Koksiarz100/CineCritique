@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { useSwipeable } from 'react-swipeable';
 import Link from 'next/link';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import axios from 'axios';
 
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -38,12 +37,13 @@ function Card(title: string, description: string, image: string, id: string, ani
 }
 
 function Carousel(props: any) {
-  const [animationClass, setAnimationClass] = useState('');
-  const [index, setIndex] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
   const { info } = props;
   const category = props.title;
   const cards: any = info ? Object.values(info) : [];
+
+  const [animationClass, setAnimationClass] = useState('');
+  const [index, setIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
   const handleNext = useCallback(() => {
@@ -174,7 +174,7 @@ function MovieCard(props: any) {
           <p>{cards[1]}</p>
         </div>
         <div className='movie-card-rating'>
-          {Rating()}
+          {Rating(cards[4], true)}
         </div>
       </div>
     </div>
