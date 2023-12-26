@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import Image from 'next/image';
 import PieChart from './Pie';
 import '../styles/profile.scss'; 
@@ -33,14 +33,14 @@ function Sidebar({
   information,
   onSave,
 }: UserProfile & { onSave: (updatedProfile: UserProfile) => void }) {
-  const [editedProfile, setEditedProfile] = React.useState<UserProfile>({
+  const [editedProfile, setEditedProfile] = useState<UserProfile>({
     image,
     nickname,
     email,
     information,
   });
-  const [editedField, setEditedField] = React.useState<keyof UserProfile | null>(null);
-  const [hovered, setHovered] = React.useState(false);
+  const [editedField, setEditedField] = useState<keyof UserProfile | null>(null);
+  const [hovered, setHovered] = useState(false);
 
   const handleDoubleClick = (field: keyof UserProfile) => {
     const isMobile = window.innerWidth <= 768;
@@ -86,7 +86,7 @@ function Sidebar({
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     document.body.addEventListener('click', handleDocumentClick);
     return () => {
       document.body.removeEventListener('click', handleDocumentClick);
@@ -100,7 +100,7 @@ function Sidebar({
     }
   };
 
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (files && files.length > 0) {
       const reader = new FileReader();
@@ -247,8 +247,8 @@ function MainContent() {
 }
 
 export default function Profiles() {
-  const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
-  const [userProfile, setUserProfile] = React.useState({ ...userprofiles.profile1 });
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [userProfile, setUserProfile] = useState({ ...userprofiles.profile1 });
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
