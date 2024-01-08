@@ -24,28 +24,30 @@ const ReviewComponent: React.FC = () => {
   };
 
   return (
-    <div className='review-loop'>
+ <div className='review-loop'>
       {reviews.map((review) => (
-        <>
         <div key={review.id} className='review-item'>
-            <div className='movie-title'>
-                Recenzja dla: {review.movie}
-            </div>
-            <div className='movie-rating'>
-                Ocena: {review.rating}
-            </div>
-            <div className='movie-review'>
-                {expandedReviews.includes(review.id) ? review.rev : review.rev.length > 500 ? `${review.rev.slice(0, 500)}...` : review.rev}
-            </div>
-            <div className='review-button'>
+          <div className='movie-title'>
+            Recenzja dla: {review.movie}
+          </div>
+          <div className='movie-rating'>
+            Ocena: {review.rating}
+          </div>
+          <div className='movie-review'>
+            {expandedReviews.includes(review.id)
+              ? review.rev
+              : review.rev.length > 500
+              ? `${review.rev.slice(0, 500)}...`
+              : review.rev}
+          </div>
+          <div className='review-button'>
             {review.rev.length > 500 && (
-                <button onClick={() => toggleReview(review.id)}>
-                    {expandedReviews.includes(review.id) ? 'Zwiń' : 'Rozwiń'}
-                </button> 
+              <button onClick={() => toggleReview(review.id)}>
+                {expandedReviews.includes(review.id) ? 'Zwiń' : 'Rozwiń'}
+              </button>
             )}
-            </div>
-        </div><div className='space-between-reviews'></div>
-        </>
+          </div>
+        </div>
       ))}
     </div>
   );
