@@ -1,5 +1,7 @@
 'use client'
 
+//Need a lot of more work to make it work properly
+
 import React, { useState } from 'react'
 import Image from 'next/image'
 
