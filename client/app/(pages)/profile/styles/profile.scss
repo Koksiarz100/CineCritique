@@ -91,26 +91,6 @@
             font-size: 1.5rem;
         }
 
-        .profile-photo-wrapper{
-            text-align: center;
-            padding-top: 0.5rem;
-            padding-bottom: 0.5rem;
-            .profile-photo{
-                width:250px; 
-                height:250px;
-                border: 0.5rem solid globals.$secondary-color;
-                border-radius: 50%;
-                @media only screen and (min-width: 769px) {
-                    width:190px; 
-                    height:190px;
-                }
-                @media only screen and (min-width: 1050px) {
-                    width:250px; 
-                    height:250px;
-                }
-            }
-        }
-
         .profile-nickname{
             text-align: center;
             font-size: 1.4rem;
@@ -129,6 +109,48 @@
                 padding-left: 0.7rem;
                 padding-right: 0.7rem;
             }
+        }
+    }
+    .profile-photo-overlay {
+        margin-top: 0.7rem;
+        margin-bottom: 0.7rem;
+        width:250px; 
+        height:250px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        @media only screen and (min-width: 769px) {
+            width:190px; 
+            height:190px;
+        }
+        @media only screen and (min-width: 1050px) {
+            width:250px; 
+            height:250px;
+        }
+        
+        .profile-photo-wrapper{
+            z-index: 1001;
+            text-align: center;
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-radius: 50%;
+            .profile-photo{
+                width:250px; 
+                height:250px;
+                border: 0.5rem solid globals.$secondary-color;
+                border-radius: 50%;
+                @media only screen and (min-width: 769px) {
+                    width:190px; 
+                    height:190px;
+                }
+                @media only screen and (min-width: 1050px) {
+                    width:250px; 
+                    height:250px;
+                }
+            }   
         }
     }
 
@@ -243,3 +265,4 @@ textarea {
         width: 250px; 
     }
   }
+  
