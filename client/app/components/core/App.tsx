@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { useSwipeable } from 'react-swipeable';
 import Link from 'next/link';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import axios from 'axios';
 
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -13,6 +12,7 @@ import 'aos/dist/aos.css';
 import Rating from '../interface/Rating/Rating';
 
 import { useFetchData } from '../api/carouselData';
+import { searchMovies } from '../api/searchMovies';
 import { IMAGES_DIR } from '../../config/API';
 
 function Card(title: string, description: string, image: string, id: string, animationClass: string = '', key: string) {
@@ -37,12 +37,13 @@ function Card(title: string, description: string, image: string, id: string, ani
 }
 
 function Carousel(props: any) {
-  const [animationClass, setAnimationClass] = useState('');
-  const [index, setIndex] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
   const { info } = props;
   const category = props.title;
   const cards: any = info ? Object.values(info) : [];
+
+  const [animationClass, setAnimationClass] = useState('');
+  const [index, setIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
   const handleNext = useCallback(() => {
@@ -125,17 +126,13 @@ function Carousel(props: any) {
   )
 }
 
-function Searchbar({ onSearch }: { onSearch: (data: any) => void }) {
+function Searchbar({ onSearch }: { onSearch: (data: any, searchValue: string) => void }) {
   
   const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.persist();
     const searchValue = e.target.value;
-    try {
-      const response = await axios.get(`http://localhost:5000/search?query=${searchValue}`);
-      onSearch(response.data);
-    } catch (error) {
-      console.error(error);
-    }
+    const data = await searchMovies(searchValue);
+    onSearch(data, searchValue);
   };
 
   return (
@@ -158,8 +155,6 @@ function MovieCard(props: any) {
   const { info } = props;
   const cards: any = info ? Object.values(info) : [];
 
-  console.log(cards[2]);
-
   let imageSrc = cards[2] === 'loading' ? '/carousel/loading.png' : IMAGES_DIR + cards[2];
 
   return (
@@ -179,7 +174,7 @@ function MovieCard(props: any) {
           <p>{cards[1]}</p>
         </div>
         <div className='movie-card-rating'>
-          {Rating()}
+          {Rating(cards[4], true)}
         </div>
       </div>
     </div>
@@ -187,25 +182,29 @@ function MovieCard(props: any) {
 }
 
 export default function App() {
+
   const categoriesTitles = ['Nowości', 'Akcja', 'Przygodowe', 'Horror', 'Fantasy']
   const categories = useMemo(() => ['new_films', 'action', 'adventure', 'horror', 'fantasy'], []);
   const { data: movies, loading } = useFetchData(categories);
   const [isSearching, setIsSearching] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [filteredMovies, setFilteredMovies] = useState([]);
 
   useEffect(() => {
     AOS.init();
   }, []);
 
-  function handleSearch(data: any) {
-    console.log(data);
-    if(data === '') {
+  function handleSearch(data: any, searchValue: string) {
+
+    if(searchValue === '') {
       setIsSearching(false);
+      setFilteredMovies([]);
       return;
     }
     else {
-      setSearchTerm('test');
+      setSearchTerm(searchValue);
       setIsSearching(true);
+      setFilteredMovies(data);
       return;
     }
   }
@@ -250,26 +249,31 @@ export default function App() {
               classNames="fade"
             >
               {
-              isSearching ? (
-                <div className='app-search'>
-                  <span className='app-search-term'>Wyszukiwanie: {searchTerm}</span>
-                  <MovieCard info={movies['action'][1]}/>
-                  <MovieCard info={movies['action'][2]}/>
-                  <MovieCard info={movies['action'][3]}/>
-                  <MovieCard info={movies['action'][4]}/>
-                  <MovieCard info={movies['action'][5]}/>
-                </div>
-              ) : (
-                <>
-                  {categories.map(category => (
-                    <div className="overflow" key={category}>
-                      <div data-aos="fade-right">
-                        <Carousel key={category} info={movies[category]} title={categoriesTitles[categories.indexOf(category)]}/>
+                isSearching ? (
+                  <div className='app-search'>
+                    <span className='app-search-term'>Wyszukiwanie: {searchTerm}</span>
+                    {
+                      filteredMovies.length > 0 ? (
+                        filteredMovies.map((movie: any) => <MovieCard key={movie.id} info={movie} />)
+                      ) : (
+                        <div className='app-notfound'>
+                          Brak filmów do wyświetlenia
+                        </div>
+                      )
+                    }
+                  </div>
+                ) : (
+                  <>
+                    {categories.map(category => (
+                      <div className="overflow" key={category}>
+                        <div data-aos="fade-right">
+                          <Carousel key={category} info={movies[category]} title={categoriesTitles[categories.indexOf(category)]}/>
+                        </div>
                       </div>
-                    </div>
-                  ))}
-                </>
-              )}
+                    ))}
+                  </>
+                )
+              }
             </CSSTransition>
           </TransitionGroup>
         </div>

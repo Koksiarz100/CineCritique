@@ -21,6 +21,9 @@ export default function Rating(value: number = 0, isStatic: boolean = false) {
   }
 
   const handleMouseOver = (value: number) => {
+    if (isStatic) {
+      return;
+    }
     setHoverRating(value);
   }
 
