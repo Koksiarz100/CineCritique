@@ -4,7 +4,6 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import Image from 'next/image';
 import { useSwipeable } from 'react-swipeable';
 import Link from 'next/link';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -242,40 +241,34 @@ export default function App() {
       <Searchbar onSearch={handleSearch} />
       <div className='app-window'>
         <div className='app-wrapper'>
-          <TransitionGroup>
-            <CSSTransition
-              key={isSearching ? 'search' : 'carousel'}
-              timeout={500}
-              classNames="fade"
-            >
-              {
-                isSearching ? (
-                  <div className='app-search'>
-                    <span className='app-search-term'>Wyszukiwanie: {searchTerm}</span>
-                    {
-                      filteredMovies.length > 0 ? (
-                        filteredMovies.map((movie: any) => <MovieCard key={movie.id} info={movie} />)
-                      ) : (
-                        <div className='app-notfound'>
-                          Brak filmów do wyświetlenia
-                        </div>
-                      )
-                    }
-                  </div>
-                ) : (
-                  <>
-                    {categories.map(category => (
-                      <div className="overflow" key={category}>
-                        <div data-aos="fade-right">
-                          <Carousel key={category} info={movies[category]} title={categoriesTitles[categories.indexOf(category)]}/>
-                        </div>
+          {
+            isSearching ? (
+              <div className='app-search'>
+                <div data-aos="fade-right">
+                  <span className='app-search-term'>Wyszukiwanie: {searchTerm}</span>
+                  {
+                    filteredMovies.length > 0 ? (
+                      filteredMovies.map((movie: any) => <MovieCard key={movie.id} info={movie} />)
+                    ) : (
+                      <div className='app-notfound'>
+                        Brak filmów do wyświetlenia
                       </div>
-                    ))}
-                  </>
-                )
-              }
-            </CSSTransition>
-          </TransitionGroup>
+                    )
+                  }
+                </div>
+              </div>
+            ) : (
+              <>
+                {categories.map(category => (
+                  <div className="overflow" key={category}>
+                    <div data-aos="fade-right">
+                      <Carousel key={category} info={movies[category]} title={categoriesTitles[categories.indexOf(category)]}/>
+                    </div>
+                  </div>
+                ))}
+              </>
+            )
+          }
         </div>
       </div>
     </>
