@@ -244,7 +244,7 @@ export default function App() {
           {
             isSearching ? (
               <div className='app-search'>
-                <div data-aos="fade-right">
+                <main data-aos="fade-right">
                   <span className='app-search-term'>Wyszukiwanie: {searchTerm}</span>
                   {
                     filteredMovies.length > 0 ? (
@@ -255,7 +255,7 @@ export default function App() {
                       </div>
                     )
                   }
-                </div>
+                </main>
               </div>
             ) : (
               <>
