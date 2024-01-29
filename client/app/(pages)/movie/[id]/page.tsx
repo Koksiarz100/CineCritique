@@ -17,8 +17,8 @@ async function fetchMovie(id: string) {
   }
 }
 
-export default function page({ params }: { params: { id: string } }) {
-  const [movie, setMovie] = useState(null);
+export default function Page({ params }: { params: { id: string } }) {
+  const [Movie, setMovie] = useState(null);
 
   useEffect(() => {
     console.log(params.id);
