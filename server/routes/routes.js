@@ -14,13 +14,14 @@ exports.setupRoutes = (app) => {
 
   app.get('/movie/:id', (req, res) => {
     const movieId = req.params.id;
-    const movie = movies[movieId];
+    const movie = Object.values(movies).find(movie => movie.id === movieId);
   
     if (movie) {
       res.json(movie);
     } else {
-      res.status(404).send('Film nie znaleziony');
+      res.status(404).send('Film nie znaleziony: ' + movieId);
     }
+    console.log('API request! (movies)');
   });
 
   app.get('/search', (req, res) => {
@@ -29,6 +30,7 @@ exports.setupRoutes = (app) => {
       movie.title.toLowerCase().includes(query)
     );
     res.send(results);
+    console.log('API request! (search results)');
   });
 
   app.get('/api/user', (req, res) => {
@@ -52,6 +54,7 @@ exports.setupRoutes = (app) => {
     } else {
       res.sendStatus(401);
     }
+    console.log('API request! (user data)');
   });
 
   app.post('/api/login', (req, res) => {
@@ -63,6 +66,7 @@ exports.setupRoutes = (app) => {
     } else {
       res.status(401).send('Unauthorized');
     }
+    console.log('API request! (login auth)');
   });
   
   app.get('/api', (req, res) => {
@@ -75,6 +79,7 @@ exports.setupRoutes = (app) => {
     else {
       res.status(404).send('Not Found');
     }
+    console.log('API request! (carousel)');
   });
   
   app.use('/images', express.static('server/images'));
