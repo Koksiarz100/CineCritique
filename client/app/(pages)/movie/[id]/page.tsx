@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import axios from 'axios';
@@ -9,10 +9,8 @@ import './styles/move.scss'
 
 async function fetchMovie(id: string) {
   try {
-    const response = await axios.get(`http://localhost:3000/movie/${id}`);
-    const movie = response.data;
-    console.log(movie);
-    return movie;
+    const response = await axios.get(`http://localhost:5000/movie/${id}`);
+    return response.data;
   } catch (error) {
     console.error('Błąd sieci', error);
     throw error;
@@ -20,8 +18,18 @@ async function fetchMovie(id: string) {
 }
 
 export default function page({ params }: { params: { id: string } }) {
-  
-  fetchMovie(params.id);
+  const [movie, setMovie] = useState(null);
+
+  useEffect(() => {
+    console.log(params.id);
+    async function fetchData() {
+      const result = await fetchMovie(params.id);
+      setMovie(result);
+      console.log(result);
+    }
+
+    fetchData();
+  }, [params.id]);
   
   return (
     <div className='movie-site-wrapper'>
