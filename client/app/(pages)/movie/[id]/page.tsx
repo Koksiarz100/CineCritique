@@ -1,10 +1,28 @@
+'use client'
+
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import axios from 'axios';
 
 import './styles/move.scss'
 
+async function fetchMovie(id: string) {
+  try {
+    const response = await axios.get(`http://localhost:3000/movie/${id}`);
+    const movie = response.data;
+    console.log(movie);
+    return movie;
+  } catch (error) {
+    console.error('Błąd sieci', error);
+    throw error;
+  }
+}
+
 export default function page({ params }: { params: { id: string } }) {
+  
+  fetchMovie(params.id);
+  
   return (
     <div className='movie-site-wrapper'>
       <div className='movie-nav'>
@@ -25,14 +43,6 @@ export default function page({ params }: { params: { id: string } }) {
             <span className='movie-description-text'>
               Test
             </span>
-          </div>
-        </div>
-        <div className='movie-info' id='description'>
-          <div className='movie-info-title'>
-            Informacje
-          </div>
-          <div className='movie-info-main'>
-            <span>Id filmu: {params.id}</span>
           </div>
         </div>
         <div className='movie-cast' id='cast'>
