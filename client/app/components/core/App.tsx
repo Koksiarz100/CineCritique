@@ -127,7 +127,6 @@ function Carousel(props: any) {
 }
 
 function Searchbar({ onSearch }: { onSearch: (data: any, searchValue: string) => void }) {
-  
   const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.persist();
     const searchValue = e.target.value;
@@ -157,14 +156,18 @@ function MovieCard(props: any) {
 
   let imageSrc = cards[2] === 'loading' ? '/carousel/loading.png' : IMAGES_DIR + cards[2];
 
+  const handleClick = () => {
+    window.location.href = `/movie/${cards[3]}`;
+  }
+
   return (
-    <div className='movie-card-wrapper' id='0'>
+    <div className='movie-card-wrapper' id={cards[3]}>
       <div className='movie-card-image-wrapper'>
         <Image src={imageSrc} quality={100} alt='xd' width={200} height={300} className='movie-card-image'/>
       </div>
       <div className='movie-card-content'>
         <div className='movie-card-nav'>
-          <button className='movie-card-nav-button'>Odtwórz</button>
+          <button className='movie-card-nav-button' onClick={handleClick}>Zobacz</button>
           <button className='movie-card-nav-button'>Dodaj do listy</button>
         </div>
         <div className='movie-card-title'>
@@ -174,6 +177,7 @@ function MovieCard(props: any) {
           <p>{cards[1]}</p>
         </div>
         <div className='movie-card-rating'>
+          <p>{cards[4]}/100</p>
           {Rating(cards[4], true)}
         </div>
       </div>
@@ -182,7 +186,6 @@ function MovieCard(props: any) {
 }
 
 export default function App() {
-
   const categoriesTitles = ['Nowości', 'Akcja', 'Przygodowe', 'Horror', 'Fantasy']
   const categories = useMemo(() => ['new_films', 'action', 'adventure', 'horror', 'fantasy'], []);
   const { data: movies, loading } = useFetchData(categories);

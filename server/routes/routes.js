@@ -12,6 +12,17 @@ function getUserFromDatabase(userId) {
 
 exports.setupRoutes = (app) => {
 
+  app.get('/movie/:id', (req, res) => {
+    const movieId = req.params.id;
+    const movie = movies[movieId];
+  
+    if (movie) {
+      res.json(movie);
+    } else {
+      res.status(404).send('Film nie znaleziony');
+    }
+  });
+
   app.get('/search', (req, res) => {
     const query = req.query.query.toLowerCase();
     const results = Object.values(movies).filter(movie =>
