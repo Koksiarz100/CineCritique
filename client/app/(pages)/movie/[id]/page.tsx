@@ -10,7 +10,7 @@ import './styles/move.scss'
 import { API } from '../../../config/API';
 import { IMAGES_DIR } from '../../../config/API';
 
-interface Movie {
+interface MovieType {
   title: string;
   description: string;
   image: string;
