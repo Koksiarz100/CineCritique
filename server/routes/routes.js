@@ -10,6 +10,10 @@ function getUserFromDatabase(userId) {
   return { id: userId, username: 'John Doe' };
 }
 
+var carousel = 0;
+
+exports.carousel = carousel;
+
 exports.setupRoutes = (app) => {
 
   app.get('/movie/:id', (req, res) => {
@@ -79,7 +83,8 @@ exports.setupRoutes = (app) => {
     else {
       res.status(404).send('Not Found');
     }
-    console.log('API request! (carousel)');
+    carousel++;
+    console.log('API request! (carousel) '+ carousel);
   });
   
   app.use('/images', express.static('server/images'));
