@@ -7,9 +7,20 @@ import axios from 'axios';
 
 import './styles/move.scss'
 
+import { API } from '@/config/API';
+import { IMAGES_DIR } from '@/config/API';
+
+interface MovieType {
+  title: string;
+  description: string;
+  image: string;
+  id: string;
+  rating: number;
+}
+
 async function fetchMovie(id: string) {
   try {
-    const response = await axios.get(`http://localhost:5000/movie/${id}`);
+    const response = await axios.get(`${API}/movie/${id}`);
     return response.data;
   } catch (error) {
     console.error('Błąd sieci', error);
@@ -18,7 +29,7 @@ async function fetchMovie(id: string) {
 }
 
 export default function Page({ params }: { params: { id: string } }) {
-  const [Movie, setMovie] = useState(null);
+  const [Movie, setMovie] = useState<MovieType | null>(null);
 
   useEffect(() => {
     console.log(params.id);
@@ -30,6 +41,8 @@ export default function Page({ params }: { params: { id: string } }) {
 
     fetchData();
   }, [params.id]);
+
+  let imageSrc = Movie ? (Movie.image === 'loading' ? '/carousel/loading.png' : IMAGES_DIR + Movie.image) : '/carousel/loading.png';
   
   return (
     <div className='movie-site-wrapper'>
@@ -42,14 +55,14 @@ export default function Page({ params }: { params: { id: string } }) {
       <div className='movie-wrapper'>
         <div className='movie-main-info' id='info'>
           <div className='movie-image'>
-            <Image src='/placeholder.png' quality={100} alt='test' width={200} height={300} className='card-image'/>
+            <Image src={imageSrc} quality={100} alt='test' width={200} height={300} className='card-image'/>
           </div>
           <div className='movie-description'>
             <span className='movie-title-text'>
-              Test
+              {Movie ? Movie.title : 'loading'}
             </span>
             <span className='movie-description-text'>
-              Test
+              {Movie ? Movie.description : 'loading'}
             </span>
           </div>
         </div>
@@ -66,7 +79,7 @@ export default function Page({ params }: { params: { id: string } }) {
             Recenzje
           </div>
           <div className='movie-reviews-description'>
-            Test
+            {Movie ? Movie.rating : 'loading'}
           </div>
         </div>
       </div>

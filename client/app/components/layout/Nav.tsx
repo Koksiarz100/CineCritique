@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 
-import { UserDataComponent } from '../api/getUserData'
+import { UserDataComponent } from '@/shared/api/getUserData'
 
 function Nav() {
   const [token, setToken] = useState<string | null>(null);

@@ -8,11 +8,11 @@ import Link from 'next/link';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
-import Rating from '../interface/Rating/Rating';
+import Rating from '@/shared/interface/Rating/Rating';
 
-import { useFetchData } from '../api/carouselData';
-import { searchMovies } from '../api/searchMovies';
-import { IMAGES_DIR } from '../../config/API';
+import { useFetchData } from '@/shared/api/carouselData';
+import { searchMovies } from '@/shared/api/searchMovies';
+import { IMAGES_DIR } from '@/config/API';
 
 function Card(title: string, description: string, image: string, id: string, animationClass: string = '', key: string) {
   var ID = `/movie/${id}`;
