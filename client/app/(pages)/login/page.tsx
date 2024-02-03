@@ -4,7 +4,7 @@ import React, { useState, FormEvent, useEffect } from 'react'
 import Link from 'next/link'
 import axios from 'axios'
 
-import { API } from '@/app/config/API'
+import { API } from '@/config/API'
 
 import './styles/login.scss'
 

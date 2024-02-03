@@ -1,5 +1,5 @@
 const express = require('express');
-const { setupMiddleware } = require('./middleware');
+const { setupMiddleware } = require('./middleware/middleware');
 const { setupRoutes, carousel } = require('./routes/routes');
 
 const app = express();

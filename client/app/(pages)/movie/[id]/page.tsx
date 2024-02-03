@@ -7,8 +7,8 @@ import axios from 'axios';
 
 import './styles/move.scss'
 
-import { API } from '../../../config/API';
-import { IMAGES_DIR } from '../../../config/API';
+import { API } from '@/config/API';
+import { IMAGES_DIR } from '@/config/API';
 
 interface MovieType {
   title: string;
