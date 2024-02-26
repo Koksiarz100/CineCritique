@@ -9,6 +9,7 @@ import './styles/move.scss'
 
 import { API } from '@/config/API';
 import { IMAGES_DIR } from '@/config/API';
+import  SmallNav  from '@/shared/interface/SmallNav'; 
 
 interface MovieType {
   title: string;
@@ -44,14 +45,12 @@ export default function Page({ params }: { params: { id: string } }) {
 
   let imageSrc = Movie ? (Movie.image === 'loading' ? '/carousel/loading.png' : IMAGES_DIR + Movie.image) : '/carousel/loading.png';
   
+  const Titles = ['Informacje', 'Obsada', 'Recenzje'];
+  const Ids = ['info', 'cast', 'reviews'];
+
   return (
     <div className='movie-site-wrapper'>
-      <div className='movie-nav'>
-        <Link href='#info'>Dane</Link>
-        <Link href='#description'>Opis</Link>
-        <Link href='#cast'>Obsada</Link>
-        <Link href='#reviews'>Recenzje</Link>
-      </div>
+      {SmallNav(Titles, Ids)}
       <div className='movie-wrapper'>
         <div className='movie-main-info' id='info'>
           <div className='movie-image'>
