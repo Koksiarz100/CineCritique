@@ -73,7 +73,7 @@ exports.setupRoutes = (app) => {
     console.log('API request! (login auth)');
   });
   
-  app.get('/api', (req, res) => {
+  app.get('/api/carousel', (req, res) => {
     const categoriesParam = req.query.categories;
     const categoriesList = categoriesParam.split(','); // przekształca ciąg kategorii na tablicę
     const categories = { action, adventure, new_films, horror, fantasy };

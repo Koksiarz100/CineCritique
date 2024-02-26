@@ -4,7 +4,7 @@ import { API } from '../../config/API';
 
 async function fetchCategoryData(categories: string[]) {
   try {
-    const response = await axios.get(`${API}/api`, {
+    const response = await axios.get(`${API}/api/carousel`, {
       params: {
         categories: categories.join(',')
       }
