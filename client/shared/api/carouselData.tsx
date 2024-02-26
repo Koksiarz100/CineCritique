@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { API } from '../../config/API';
 
-async function fetchCategoryData(category: string) {
+async function fetchCategoryData(categories: string[]) {
   try {
-    const response = await axios.get(`${API}/api`, {
+    const response = await axios.get(`${API}/api/carousel`, {
       params: {
-        categories: category
+        categories: categories.join(',')
       }
     });
     return response.data;
@@ -22,18 +22,9 @@ export function useFetchData(categories: string[]) {
 
   useEffect(() => {
     const fetchData = async () => {
-      let result: Record<string, any> = {};
-      let errorOccurred = false;
-      for (const category of categories) {
-        const response = await fetchCategoryData(category);
-        if (response && Object.keys(response).length > 0) {
-          result[category] = response;
-        } else {
-          errorOccurred = true;
-        }
-      }
-      setData(result);
-      if (!errorOccurred) {
+      const response = await fetchCategoryData(categories);
+      if (response && Object.keys(response).length > 0) {
+        setData(response);
         setLoading(false);
       }
     };

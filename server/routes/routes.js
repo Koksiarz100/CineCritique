@@ -73,16 +73,24 @@ exports.setupRoutes = (app) => {
     console.log('API request! (login auth)');
   });
   
-  app.get('/api', (req, res) => {
-    const category = req.query.categories;
+  app.get('/api/carousel', (req, res) => {
+    const categoriesParam = req.query.categories;
+    const categoriesList = categoriesParam.split(','); // przekształca ciąg kategorii na tablicę
     const categories = { action, adventure, new_films, horror, fantasy };
-    
-    if (categories[category]) {
-      res.status(200).json(categories[category]);
-    } 
-    else {
+    const result = {};
+  
+    categoriesList.forEach(category => {
+      if (categories[category]) {
+        result[category] = categories[category];
+      }
+    });
+  
+    if (Object.keys(result).length > 0) {
+      res.status(200).json(result);
+    } else {
       res.status(404).send('Not Found');
     }
+  
     carousel++;
     console.log('API request! (carousel) '+ carousel);
   });

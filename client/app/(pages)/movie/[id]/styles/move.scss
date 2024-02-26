@@ -7,46 +7,6 @@
   width: 100%;
   color: white;
 
-  .movie-nav {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 50px;
-    background-color: globals.$secondary-color;
-    position: sticky;
-    top: 50px;
-    z-index: 1000;
-
-    a {
-      text-decoration: none;
-      color: white;
-      font-size: 1.2rem;
-      margin: 0 20px 0 20px;
-    }
-
-    a:after {
-      content: '';
-      display: block;
-      position: relative;
-      top: 3px;
-      width: 0;
-      height: 2px;
-      background-color: globals.$accent-color;
-      transition: width .3s;
-    }
-
-    a:hover:after {
-      width: 100%;
-      transition: width .3s;
-    }
-
-    a:hover {
-      color: globals.$accent-color;
-      transition: color 0.3s ease;
-    }
-  }
-
   .movie-wrapper {
     display: flex;
     flex-direction: column;

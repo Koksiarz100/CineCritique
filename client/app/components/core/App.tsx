@@ -4,36 +4,13 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import Image from 'next/image';
 import { useSwipeable } from 'react-swipeable';
 import Link from 'next/link';
-
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 import Rating from '@/shared/interface/Rating/Rating';
-
 import { useFetchData } from '@/shared/api/carouselData';
 import { searchMovies } from '@/shared/api/searchMovies';
 import { IMAGES_DIR } from '@/config/API';
-
-function Card(title: string, description: string, image: string, id: string, animationClass: string = '', key: string) {
-  var ID = `/movie/${id}`;
-  return(
-    <Link href={ID} key={key}>
-      <div className={`card-wrapper ${animationClass}`}>
-        <div className='card-image-wrapper'>
-          <Image src={image} quality={100} alt={title} width={200} height={300} className='card-image'/>
-        </div>
-        <div className='card-content'>
-          <div className='card-title'>
-            <h3>{title}</h3>
-          </div>
-          <div className='card-description'>
-            <p>{description}</p>
-          </div>
-        </div>
-      </div>
-    </Link>
-  );
-}
 
 function Carousel(props: any) {
   const { info } = props;
@@ -44,6 +21,27 @@ function Carousel(props: any) {
   const [index, setIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+
+  function Card(title: string, description: string, image: string, id: string, animationClass: string = '', key: string) {
+    var ID = `/movie/${id}`;
+    return(
+      <Link href={ID} key={key}>
+        <div className={`card-wrapper ${animationClass}`}>
+          <div className='card-image-wrapper'>
+            <Image src={image} quality={100} alt={title} width={200} height={300} className='card-image'/>
+          </div>
+          <div className='card-content'>
+            <div className='card-title'>
+              <h3>{title}</h3>
+            </div>
+            <div className='card-description'>
+              <p>{description}</p>
+            </div>
+          </div>
+        </div>
+      </Link>
+    );
+  }
 
   const handleNext = useCallback(() => {
     if (isAnimating) return;
@@ -73,17 +71,17 @@ function Carousel(props: any) {
     }, 200);
   }
 
-  useEffect(() => {
-    if (index === cards.length) {
-      setIndex(0);
-    }
-  }, [index, cards.length]);
-
   const swipeHandlers = useSwipeable({
     onSwipedLeft: () => handleNext(),
     onSwipedRight: () => handlePrev(),
     trackMouse: true
   });
+
+  useEffect(() => {
+    if (index === cards.length) {
+      setIndex(0);
+    }
+  }, [index, cards.length]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -149,41 +147,6 @@ function Searchbar({ onSearch }: { onSearch: (data: any, searchValue: string) =>
   )
 }
 
-function MovieCard(props: any) {
-  const { info } = props;
-  const cards: any = info ? Object.values(info) : [];
-
-  let imageSrc = cards[2] === 'loading' ? '/carousel/loading.png' : IMAGES_DIR + cards[2];
-
-  const handleClick = () => {
-    window.location.href = `/movie/${cards[3]}`;
-  }
-
-  return (
-    <div className='movie-card-wrapper' id={cards[3]}>
-      <div className='movie-card-image-wrapper'>
-        <Image src={imageSrc} quality={100} alt='xd' width={200} height={300} className='movie-card-image'/>
-      </div>
-      <div className='movie-card-content'>
-        <div className='movie-card-nav'>
-          <button className='movie-card-nav-button' onClick={handleClick}>Zobacz</button>
-          <button className='movie-card-nav-button'>Dodaj do listy</button>
-        </div>
-        <div className='movie-card-title'>
-          <h3>{cards[0]}</h3>
-        </div>
-        <div className='movie-card-description'>
-          <p>{cards[1]}</p>
-        </div>
-        <div className='movie-card-rating'>
-          <p>{cards[4]}/100</p>
-          {Rating(cards[4], true)}
-        </div>
-      </div>
-    </div>
-  )
-}
-
 export default function App() {
   const categoriesTitles = ['Nowości', 'Akcja', 'Przygodowe', 'Horror', 'Fantasy']
   const categories = useMemo(() => ['new_films', 'action', 'adventure', 'horror', 'fantasy'], []);
@@ -196,23 +159,8 @@ export default function App() {
     AOS.init();
   }, []);
 
-  function handleSearch(data: any, searchValue: string) {
-
-    if(searchValue === '') {
-      setIsSearching(false);
-      setFilteredMovies([]);
-      return;
-    }
-    else {
-      setSearchTerm(searchValue);
-      setIsSearching(true);
-      setFilteredMovies(data);
-      return;
-    }
-  }
-
-  if (loading) {
-    const loadingData = {
+  function mainScreen() { // Main screen
+    const Data = {
       1: {
         title: 'Loading',
         description: '',
@@ -221,18 +169,93 @@ export default function App() {
       }
     }
 
+    function MovieCard(props: any) { // Cards on search screen
+      const { info } = props;
+      const cards: any = info ? Object.values(info) : [];
+      let imageSrc = cards[2] === 'loading' ? '/carousel/loading.png' : IMAGES_DIR + cards[2];
+
+      const handleClick = () => {
+        window.location.href = `/movie/${cards[3]}`;
+      }
+    
+      return (
+        <div className='movie-card-wrapper' id={cards[3]}>
+          <div className='movie-card-image-wrapper'>
+            <Image src={imageSrc} quality={100} alt='xd' width={200} height={300} className='movie-card-image'/>
+          </div>
+          <div className='movie-card-content'>
+            <div className='movie-card-nav'>
+              <button className='movie-card-nav-button' onClick={handleClick}>Zobacz</button>
+              <button className='movie-card-nav-button'>Dodaj do listy</button>
+            </div>
+            <div className='movie-card-title'>
+              <h3>{cards[0]}</h3>
+            </div>
+            <div className='movie-card-description'>
+              <p>{cards[1]}</p>
+            </div>
+            <div className='movie-card-rating'>
+              <p>{cards[4]}/100</p>
+              {Rating(cards[4], true)}
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+    function handleSearch(data: any, searchValue: string) { // Changing between search and main screen
+      if(searchValue === '') {
+        setIsSearching(false);
+        setFilteredMovies([]);
+        return;
+      }
+      else {
+        setSearchTerm(searchValue);
+        setIsSearching(true);
+        setFilteredMovies(data);
+        return;
+      }
+    }
+
     return (
       <>
         <Searchbar onSearch={handleSearch} />
         <div className='app-window'>
           <div className='app-wrapper'>
-            {categories.map(category => (
-              <div className="overflow" key={category}>
-                <div data-aos="fade-right">
-                <Carousel key={category} info={loadingData} title={categoriesTitles[categories.indexOf(category)]}/>
+            {
+              isSearching ? (
+                <div className='app-search'>
+                  <main data-aos="fade-right">
+                    <span className='app-search-term'>Wyszukiwanie: {searchTerm}</span>
+                    {
+                      filteredMovies.length > 0 ? (
+                        filteredMovies.map((movie: any) => <MovieCard key={movie.id} info={movie} />)
+                      ) : (
+                        <div className='app-notfound'>
+                          Brak filmów do wyświetlenia
+                        </div>
+                      )
+                    }
+                  </main>
                 </div>
-              </div>
-            ))}
+              ) : (
+                <>
+                  {categories.map(category => (
+                    <div className="overflow" key={category}>
+                      <div data-aos="fade-right">
+                        {
+                          loading ? (
+                          <Carousel key={category} info={Data} title={categoriesTitles[categories.indexOf(category)]}/>
+                          ) : (
+                          <Carousel key={category} info={movies[category]} title={categoriesTitles[categories.indexOf(category)]}/>
+                          )
+                        }
+                      </div>
+                    </div>
+                  ))}
+                </>
+              )
+            }
           </div>
         </div>
       </>
@@ -240,40 +263,6 @@ export default function App() {
   }
 
   return (
-    <>
-      <Searchbar onSearch={handleSearch} />
-      <div className='app-window'>
-        <div className='app-wrapper'>
-          {
-            isSearching ? (
-              <div className='app-search'>
-                <main data-aos="fade-right">
-                  <span className='app-search-term'>Wyszukiwanie: {searchTerm}</span>
-                  {
-                    filteredMovies.length > 0 ? (
-                      filteredMovies.map((movie: any) => <MovieCard key={movie.id} info={movie} />)
-                    ) : (
-                      <div className='app-notfound'>
-                        Brak filmów do wyświetlenia
-                      </div>
-                    )
-                  }
-                </main>
-              </div>
-            ) : (
-              <>
-                {categories.map(category => (
-                  <div className="overflow" key={category}>
-                    <div data-aos="fade-right">
-                      <Carousel key={category} info={movies[category]} title={categoriesTitles[categories.indexOf(category)]}/>
-                    </div>
-                  </div>
-                ))}
-              </>
-            )
-          }
-        </div>
-      </div>
-    </>
-  );
+    mainScreen()
+  )
 }
