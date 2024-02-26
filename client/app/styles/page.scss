@@ -53,6 +53,7 @@ main {
         outline: none;
         transition: color 0.3s ease;
         cursor: pointer;
+        user-select: none;
 
         @media only screen and (max-width: 768px) {
           font-size: 0.9rem;
@@ -298,6 +299,7 @@ main {
       height: auto;
       padding-bottom: 40px;
       transform: translateX(0);
+      user-select: none;
 
       &.hidden {
         opacity: 0;
