@@ -390,11 +390,13 @@ main {
                 height: 310px;
                 width: 400px;
                 transition: height 0.3s ease, width 0.3s;
+                transition-delay: 0.2s;
 
                 .card-content {
                   visibility: visible;
                   opacity: 1;
                   transition: visibility 0s, opacity 0.5s linear;
+                  transition-delay: 0.2s;
                 }
               }
 
