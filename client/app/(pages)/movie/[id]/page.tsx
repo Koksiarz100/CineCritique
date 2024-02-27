@@ -1,11 +1,10 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
-import Link from 'next/link'
-import Image from 'next/image'
+import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import axios from 'axios';
 
-import './styles/move.scss'
+import './styles/move.scss';
 
 import { API } from '@/config/API';
 import { IMAGES_DIR } from '@/config/API';
