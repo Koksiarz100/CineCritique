@@ -124,6 +124,8 @@ function Carousel(props: any) {
 }
 
 function Searchbar({ onSearch }: { onSearch: (data: any, searchValue: string) => void }) {
+  const [filterState, setFilterState] = useState('polecane');
+
   const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.persist();
     const searchValue = e.target.value;
@@ -131,14 +133,20 @@ function Searchbar({ onSearch }: { onSearch: (data: any, searchValue: string) =>
     onSearch(data, searchValue);
   };
 
+  const handleFilter = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.persist();
+    setFilterState(e.currentTarget.innerText.toLowerCase());
+    console.log(filterState); // Testing
+  }
+
   return (
     <div className='app-searchbar'>
       <div className='app-searchbar-margin'></div>
       <div className='app-searchbar-buttons'>
-        <button>Polecane</button>
-        <button>Filmy</button>
-        <button>Seriale</button>
-        <button>Wszystko</button>
+        <button onClick={handleFilter}>Polecane</button>
+        <button onClick={handleFilter}>Filmy</button>
+        <button onClick={handleFilter}>Seriale</button>
+        <button onClick={handleFilter}>Wszystko</button>
       </div>
       <div className='app-searchbar-input'>
         <input type='text' placeholder='Szukaj' onChange={handleSearch}/>

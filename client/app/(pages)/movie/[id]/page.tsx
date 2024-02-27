@@ -32,7 +32,6 @@ export default function Page({ params }: { params: { id: string } }) {
   const [Movie, setMovie] = useState<MovieType | null>(null);
 
   useEffect(() => {
-    console.log(params.id);
     async function fetchData() {
       const result = await fetchMovie(params.id);
       setMovie(result);

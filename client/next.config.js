@@ -17,15 +17,3 @@ module.exports = {
     ],
   },
 }
-
-// Production
-/*
-module.exports = {
-  sassOptions: {
-    includePaths: [path.join(__dirname, 'styles')],
-  },
-  images: {
-    domains: ['cine-critique-site.cyclic.app'],
-  },
-}
-*/
