@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect, useCallback, useMemo } from 'react'
+import React, { useState, useEffect, useCallback, useMemo, use } from 'react'
 import Image from 'next/image';
 import { useSwipeable } from 'react-swipeable';
 import Link from 'next/link';
@@ -15,6 +15,7 @@ import { IMAGES_DIR } from '@/config/API';
 function Carousel(props: any) {
   const { info } = props;
   const category = props.title;
+  const filter = props.filter; // Need to add filter to the request
   const cards: any = info ? Object.values(info) : [];
 
   const [animationClass, setAnimationClass] = useState('');
@@ -123,7 +124,7 @@ function Carousel(props: any) {
   )
 }
 
-function Searchbar({ onSearch }: { onSearch: (data: any, searchValue: string) => void }) {
+function Searchbar({ onSearch, sendFilterState }: { onSearch: (data: any, searchValue: string) => void, sendFilterState: (filterState: string) => void}) {
   const [filterState, setFilterState] = useState('polecane');
 
   const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -136,7 +137,7 @@ function Searchbar({ onSearch }: { onSearch: (data: any, searchValue: string) =>
   const handleFilter = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.persist();
     setFilterState(e.currentTarget.innerText.toLowerCase());
-    console.log(filterState); // Testing
+    sendFilterState(filterState);
   }
 
   return (
@@ -162,6 +163,7 @@ export default function App() {
   const [isSearching, setIsSearching] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredMovies, setFilteredMovies] = useState([]);
+  const [filterState, setFilterState] = useState('polecane');
 
   useEffect(() => {
     AOS.init();
@@ -225,9 +227,13 @@ export default function App() {
       }
     }
 
+    function getFilterState(filterState: string) {
+      setFilterState(filterState);
+    }
+
     return (
       <>
-        <Searchbar onSearch={handleSearch} />
+        <Searchbar onSearch={handleSearch} sendFilterState={getFilterState}/>
         <div className='app-window'>
           <div className='app-wrapper'>
             {
@@ -253,9 +259,9 @@ export default function App() {
                       <div data-aos="fade-right">
                         {
                           loading ? (
-                          <Carousel key={category} info={Data} title={categoriesTitles[categories.indexOf(category)]}/>
+                          <Carousel key={category} info={Data} title={categoriesTitles[categories.indexOf(category)]} filter={filterState}/>
                           ) : (
-                          <Carousel key={category} info={movies[category]} title={categoriesTitles[categories.indexOf(category)]}/>
+                          <Carousel key={category} info={movies[category]} title={categoriesTitles[categories.indexOf(category)]} filter={filterState}/>
                           )
                         }
                       </div>

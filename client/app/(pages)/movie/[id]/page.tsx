@@ -35,7 +35,6 @@ export default function Page({ params }: { params: { id: string } }) {
     async function fetchData() {
       const result = await fetchMovie(params.id);
       setMovie(result);
-      console.log(result);
     }
 
     fetchData();
